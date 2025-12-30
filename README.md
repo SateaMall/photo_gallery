@@ -1,6 +1,6 @@
 # photo_gallery
 
-Public photo gallery built with React and Spring Boot
+Public photo gallery built with Typescript React and Java Spring Boot
 
 # Important
 
