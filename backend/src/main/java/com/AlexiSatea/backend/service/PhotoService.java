@@ -1,9 +1,10 @@
 package com.AlexiSatea.backend.service;
 
 
-import com.AlexiSatea.backend.model.Owner;
-import com.AlexiSatea.backend.model.Photo;
+import com.AlexiSatea.backend.model.*;
+import com.AlexiSatea.backend.repo.AlbumRepository;
 import com.AlexiSatea.backend.repo.PhotoRepository;
+import com.AlexiSatea.backend.repo.AlbumPhotoRepository;
 import com.AlexiSatea.backend.storage.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,9 +27,11 @@ import java.util.UUID;
 public class PhotoService {
 
     private final PhotoRepository photoRepository;
+    private final AlbumRepository albumRepository;
+    private final AlbumPhotoRepository albumPhotoRepository;
     private final StorageService storageService;
 
-    // keep it simple for now; you can expand later (HEIC, etc.)
+    // We can expand later (HEIC, etc.)
     private static final Set<String> ALLOWED_CONTENT_TYPES = Set.of(
             "image/jpeg",
             "image/png",
@@ -35,13 +39,15 @@ public class PhotoService {
     );
 
     @Transactional
-    public Photo upload(MultipartFile file, Owner owner, UUID albumId) {
+    public Photo upload(MultipartFile file, Owner owner, UUID albumId, List<Theme> themes) {
+        // Check if the file is valid
         if (file == null || file.isEmpty()) throw new IllegalArgumentException("File is empty");
         String contentType = file.getContentType();
         if (contentType == null || !ALLOWED_CONTENT_TYPES.contains(contentType)) {
             throw new IllegalArgumentException("Unsupported content type: " + contentType);
         }
 
+        //Create the Photo ID
         UUID id = UUID.randomUUID();
 
         String ext = switch (contentType) {
@@ -60,25 +66,46 @@ public class PhotoService {
                 ext
         );
 
+        // Store the file
         try {
             storageService.store(storageKey, file.getInputStream(), file.getSize(), contentType);
         } catch (IOException e) {
             throw new RuntimeException("Failed reading upload stream", e);
         }
 
+        // Build the photo instance
         Photo photo = Photo.builder()
                 .id(id) // set id ourselves (works even with @GeneratedValue; but better remove @GeneratedValue if you do this)
                 .owner(owner)
-                .albumId(albumId)
+                .themes( themes == null ? List.of() : themes)
                 .storageKey(storageKey)
                 .originalFilename(safeName(file.getOriginalFilename()))
                 .contentType(contentType)
                 .sizeBytes(file.getSize())
                 .createdAt(Instant.now())
                 .build();
+        photo = photoRepository.save(photo);
+        if (albumId != null) {
+            Album album = albumRepository.findById(albumId)
+                    .orElseThrow(() -> new IllegalArgumentException("Album not found: " + albumId));
 
-        return photoRepository.save(photo);
+            int nextPos = albumPhotoRepository.findNextPosition(albumId);
+
+            AlbumPhoto link = AlbumPhoto.builder()
+                    .id(new AlbumPhotoId(album.getId(), photo.getId()))
+                    .album(album)
+                    .photo(photo)
+                    .position(nextPos)
+                    .addedAt(Instant.now())
+                    .build();
+
+            albumPhotoRepository.save(link);
+        }
+
+        return photo;
     }
+
+
 
     @Transactional(readOnly = true)
     public Page<Photo> listByOwner(Owner owner, Pageable pageable) {

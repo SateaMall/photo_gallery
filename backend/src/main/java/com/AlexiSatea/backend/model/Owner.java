@@ -1,6 +1,6 @@
 package com.AlexiSatea.backend.model;
 
-public enum Owner {
-    Satea,
-    Alexis
-}
+//Who owns a photo
+public enum Owner { SATEA, ALEXIS }
+
+
