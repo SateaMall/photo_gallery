@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -21,15 +23,24 @@ public class PublicPhotoController {
 
     private final PhotoService photoService;
 
-    @GetMapping
+
     public Page<PhotoResponse> list(@RequestParam Owner owner, Pageable pageable) {
-        return photoService.listByOwner(owner, pageable).map(PhotoResponse::from);
+        Page<Photo> photos = photoService.listByOwner(owner, pageable);
+
+        List<UUID> photoIds = photos.getContent().stream().map(Photo::getId).toList();
+        Map<UUID, List<UUID>> albumIdsByPhoto = photoService.albumIdsByPhotoIds(photoIds);
+
+        return photos.map(photo ->
+                PhotoResponse.from(photo, albumIdsByPhoto.getOrDefault(photo.getId(), List.of()))
+        );
     }
+
 
     @GetMapping("/{id}")
     public PhotoResponse get(@PathVariable UUID id) {
         Photo p = photoService.get(id);
-        return PhotoResponse.from(p);
+        List<UUID> albumIds = photoService.albumIdsOfPhoto(p);
+        return PhotoResponse.from(p, albumIds);
     }
 
     @GetMapping("/{id}/file")

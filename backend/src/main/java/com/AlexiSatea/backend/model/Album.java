@@ -31,6 +31,7 @@ public class Album {
     @Column(length = 2000)
     private String description;
 
+    @Builder.Default
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("position ASC")
     private List<AlbumPhoto> photoLinks = new ArrayList<>();

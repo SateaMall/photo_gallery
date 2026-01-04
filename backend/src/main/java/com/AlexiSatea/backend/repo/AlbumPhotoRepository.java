@@ -13,15 +13,54 @@ public interface AlbumPhotoRepository extends JpaRepository<AlbumPhoto, AlbumPho
 
     @Query("select coalesce(max(ap.position), 0) + 1 from AlbumPhoto ap where ap.album.id = :albumId")
     int findNextPosition(@Param("albumId") UUID albumId);
+
     boolean existsByAlbum_IdAndPhoto_Id(UUID albumId, UUID photoId);
+
     boolean existsById(AlbumPhotoId id);
 
     @Query("""
         select ap
         from AlbumPhoto ap
-        join fetch ap.photo p
+        join fetch ap.photo
         where ap.album.id = :albumId
         order by ap.position asc, ap.addedAt asc
     """)
     List<AlbumPhoto> findByAlbumIdWithPhoto(@Param("albumId") UUID albumId);
+
+    @Query("""
+        select ap
+        from AlbumPhoto ap
+        join fetch ap.album
+        where ap.photo.id = :photoId
+    """)
+    List<AlbumPhoto> findByPhotoIdWithAlbum(@Param("photoId") UUID photoId);
+
+    @Query("""
+        select ap.photo.id
+        from AlbumPhoto ap
+        where ap.album.id = :albumId
+    """)
+    List<UUID> findPhotoIdsByAlbumId(@Param("albumId") UUID albumId);
+
+    @Query("""
+        select ap.album.id
+        from AlbumPhoto ap
+        where ap.photo.id = :photoId
+    """)
+
+    List<UUID> findAlbumIdsByPhotoId(@Param("photoId") UUID photoId);
+
+
+    interface PhotoAlbumIdRow {
+        UUID getPhotoId();
+        UUID getAlbumId();
+    }
+
+    @Query("""
+        select ap.photo.id as photoId, ap.album.id as albumId
+        from AlbumPhoto ap
+        where ap.photo.id in :photoIds
+    """)
+    List<PhotoAlbumIdRow> findAlbumIdsByPhotoIds(@Param("photoIds") List<UUID> photoIds);
 }
+

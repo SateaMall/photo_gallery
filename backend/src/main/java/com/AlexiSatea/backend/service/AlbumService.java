@@ -1,5 +1,6 @@
 package com.AlexiSatea.backend.service;
 
+import com.AlexiSatea.backend.dto.AlbumPhotoItem;
 import com.AlexiSatea.backend.dto.AlbumResponse;
 import com.AlexiSatea.backend.model.*;
 import com.AlexiSatea.backend.repo.AlbumPhotoRepository;
@@ -36,7 +37,7 @@ public class AlbumService {
                 .description(description)
                 .build();
         album = albumRepository.save(album);
-        return album;
+        return AlbumResponse.from(album,List.of());
     }
 
     @Transactional
@@ -69,13 +70,12 @@ public class AlbumService {
         album.setDescription(description);
 
         albumRepository.save(album);
-        var links = albumPhotoRepository.findByAlbumIdWithPhoto(id); //TODO remove when it works
         return new AlbumResponse(
                 album.getId(),
                 album.getTitle(),
                 album.getScope(),
                 album.getDescription(),
-                List.of()  //TODO Correct since its returning nothing
+                AlbumPhotoItem.from(album.getPhotoLinks())
         );
     }
 
@@ -95,13 +95,13 @@ public class AlbumService {
         }
         //TODO Work on the order of other photos in the album after delete
         albumPhotoRepository.deleteById(id);
+
     }
     @Transactional(readOnly = true)
     public AlbumResponse getAlbum(UUID albumId) {
         Album album = albumRepository.findById(albumId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Album not found"));
-
-        var links = albumPhotoRepository.findByAlbumIdWithPhoto(albumId);
-        return AlbumResponse.from(album, links);
+        List<AlbumPhoto> relations  = albumPhotoRepository.findByAlbumIdWithPhoto(albumId);
+        return AlbumResponse.from(album,relations);
     }
 }

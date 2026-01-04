@@ -1,6 +1,7 @@
 package com.AlexiSatea.backend.dto;
 
 
+import com.AlexiSatea.backend.model.AlbumPhoto;
 import com.AlexiSatea.backend.model.Owner;
 import com.AlexiSatea.backend.model.Photo;
 import com.AlexiSatea.backend.model.Theme;
@@ -20,8 +21,7 @@ public record PhotoResponse(
         List<UUID> albumIds,
         String fileUrl
 ) {
-    public static PhotoResponse from(Photo p) {
-        List<UUID>  AlbumIds = p.getAlbumLinks().stream().map(link -> link.getAlbum().getId()).distinct().toList();
+    public static PhotoResponse from(Photo p, List<UUID> albumIds) {
         return new PhotoResponse(
                 p.getId(),
                 p.getOwner(),
@@ -29,7 +29,7 @@ public record PhotoResponse(
                 p.getSizeBytes(),
                 p.getCreatedAt(),
                 p.getThemes(),
-                AlbumIds,
+                albumIds,
                 "/api/photos/" + p.getId() + "/file"
         );
     }

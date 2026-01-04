@@ -19,8 +19,10 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +50,7 @@ public class PhotoService {
         }
 
         //Create the Photo ID
-        UUID id = UUID.randomUUID();
+        UUID photoID = UUID.randomUUID();
 
         String ext = switch (contentType) {
             case "image/jpeg" -> "jpg";
@@ -62,7 +64,7 @@ public class PhotoService {
                 owner.name(),
                 now.getYear(),
                 now.getMonthValue(),
-                id,
+                photoID,
                 ext
         );
 
@@ -75,7 +77,7 @@ public class PhotoService {
 
         // Build the photo instance
         Photo photo = Photo.builder()
-                .id(id) // set id ourselves (works even with @GeneratedValue; but better remove @GeneratedValue if you do this)
+                .id(photoID) // set id ourselves (works even with @GeneratedValue; but better remove @GeneratedValue if you do this)
                 .owner(owner)
                 .themes( themes == null ? List.of() : themes)
                 .storageKey(storageKey)
@@ -88,18 +90,18 @@ public class PhotoService {
         if (albumId != null) {
             Album album = albumRepository.findById(albumId)
                     .orElseThrow(() -> new IllegalArgumentException("Album not found: " + albumId));
+            if (albumPhotoRepository.existsByAlbum_IdAndPhoto_Id(albumId, photoID)) {
+                throw new IllegalArgumentException("Photo already in album");
+            }
+            int position = albumPhotoRepository.findNextPosition(albumId);
 
-            int nextPos = albumPhotoRepository.findNextPosition(albumId);
-
-            AlbumPhoto link = AlbumPhoto.builder()
-                    .id(new AlbumPhotoId(album.getId(), photo.getId()))
-                    .album(album)
+            AlbumPhoto relation= AlbumPhoto.builder()
                     .photo(photo)
-                    .position(nextPos)
+                    .album(album)
+                    .position(position)
                     .addedAt(Instant.now())
                     .build();
-
-            albumPhotoRepository.save(link);
+            albumPhotoRepository.save(relation);
         }
 
         return photo;
@@ -131,9 +133,31 @@ public class PhotoService {
         photoRepository.delete(photo);
     }
 
+    public List<UUID> albumIdsOfPhoto( Photo photo) {
+        return albumPhotoRepository.findAlbumIdsByPhotoId(photo.getId());
+    }
+
     private String safeName(String name) {
         if (name == null) return "unknown";
         // remove path parts, keep it simple
         return name.replace("\\", "/").substring(name.lastIndexOf('/') + 1);
     }
-}
+
+
+    public Map<UUID, List<UUID>> albumIdsByPhotoIds(List<UUID> photoIds) {
+        if (photoIds == null || photoIds.isEmpty()) return Map.of();
+        var rows = albumPhotoRepository.findAlbumIdsByPhotoIds(photoIds);
+        // group albumIds by photoId
+        return rows.stream()
+                .collect(Collectors.groupingBy(
+                        AlbumPhotoRepository.PhotoAlbumIdRow::getPhotoId,
+                        Collectors.mapping(
+                                AlbumPhotoRepository.PhotoAlbumIdRow::getAlbumId,
+                                Collectors.collectingAndThen(Collectors.toList(), list -> list.stream().distinct().toList())
+                        )
+                ));
+    }
+    }
+
+
+

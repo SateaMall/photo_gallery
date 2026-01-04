@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +29,8 @@ public class AdminPhotoController {
             @RequestParam(required = false) List<Theme> themes
     ) {
         Photo photo = photoService.upload(file, owner, albumId,themes);
-        return PhotoResponse.from(photo);
+        List<UUID> albumIds = photoService.albumIdsOfPhoto(photo);
+        return PhotoResponse.from(photo, albumIds);
     }
 
     @DeleteMapping("/{id}")
