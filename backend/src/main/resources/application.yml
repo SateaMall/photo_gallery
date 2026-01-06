@@ -3,8 +3,8 @@ spring:
     name: backend
   datasource:
     url: jdbc:postgresql://localhost:5432/photo_gallery
-    username: postgres
-    password: postgres
+    username: photo
+    password: photo
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,3 +22,4 @@ app:
     type: local
     local:
       root-path: ./storage
+
