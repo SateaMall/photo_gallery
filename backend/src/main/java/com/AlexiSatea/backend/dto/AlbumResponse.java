@@ -1,7 +1,7 @@
 package com.AlexiSatea.backend.dto;
 
 import com.AlexiSatea.backend.model.*;
-import com.AlexiSatea.backend.repo.AlbumRepository;
+import com.AlexiSatea.backend.model.Enum.AlbumScope;
 
 import java.util.List;
 import java.util.UUID;

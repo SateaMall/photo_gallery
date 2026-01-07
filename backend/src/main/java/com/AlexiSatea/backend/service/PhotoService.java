@@ -2,6 +2,8 @@ package com.AlexiSatea.backend.service;
 
 
 import com.AlexiSatea.backend.model.*;
+import com.AlexiSatea.backend.model.Enum.Owner;
+import com.AlexiSatea.backend.model.Enum.Theme;
 import com.AlexiSatea.backend.repo.AlbumRepository;
 import com.AlexiSatea.backend.repo.PhotoRepository;
 import com.AlexiSatea.backend.repo.AlbumPhotoRepository;

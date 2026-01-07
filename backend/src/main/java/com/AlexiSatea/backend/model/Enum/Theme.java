@@ -1,4 +1,4 @@
-package com.AlexiSatea.backend.model;
+package com.AlexiSatea.backend.model.Enum;
 
 
 import lombok.Getter;

@@ -1,6 +1,8 @@
 package com.AlexiSatea.backend.dto;
 
 import com.AlexiSatea.backend.model.*;
+import com.AlexiSatea.backend.model.Enum.Owner;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;

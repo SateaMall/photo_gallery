@@ -1,7 +1,7 @@
 package com.AlexiSatea.backend.controller;
 
 import com.AlexiSatea.backend.dto.AlbumResponse;
-import com.AlexiSatea.backend.model.*;
+import com.AlexiSatea.backend.model.Enum.AlbumScope;
 import com.AlexiSatea.backend.service.AlbumService;
 
 import lombok.RequiredArgsConstructor;

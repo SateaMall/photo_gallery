@@ -2,7 +2,7 @@ package com.AlexiSatea.backend.controller;
 
 
 import com.AlexiSatea.backend.dto.PhotoResponse;
-import com.AlexiSatea.backend.model.Owner;
+import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Photo;
 import com.AlexiSatea.backend.service.PhotoService;
 import lombok.RequiredArgsConstructor;

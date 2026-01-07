@@ -1,5 +1,7 @@
 package com.AlexiSatea.backend.model;
 
+import com.AlexiSatea.backend.model.Enum.Owner;
+import com.AlexiSatea.backend.model.Enum.Theme;
 import jakarta.persistence.*;
 import lombok.*;
 

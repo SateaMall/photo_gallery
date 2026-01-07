@@ -1,13 +1,11 @@
 package com.AlexiSatea.backend.dto;
 
 
-import com.AlexiSatea.backend.model.AlbumPhoto;
-import com.AlexiSatea.backend.model.Owner;
+import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Photo;
-import com.AlexiSatea.backend.model.Theme;
+import com.AlexiSatea.backend.model.Enum.Theme;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 // Template of the photo that is sent !

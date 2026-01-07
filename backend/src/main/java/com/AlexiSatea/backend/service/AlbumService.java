@@ -3,6 +3,7 @@ package com.AlexiSatea.backend.service;
 import com.AlexiSatea.backend.dto.AlbumPhotoItem;
 import com.AlexiSatea.backend.dto.AlbumResponse;
 import com.AlexiSatea.backend.model.*;
+import com.AlexiSatea.backend.model.Enum.AlbumScope;
 import com.AlexiSatea.backend.repo.AlbumPhotoRepository;
 import com.AlexiSatea.backend.repo.AlbumRepository;
 import com.AlexiSatea.backend.repo.PhotoRepository;
