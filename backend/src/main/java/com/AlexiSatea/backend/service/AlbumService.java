@@ -102,7 +102,15 @@ public class AlbumService {
     public AlbumResponse getAlbum(UUID albumId) {
         Album album = albumRepository.findById(albumId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Album not found"));
-        List<AlbumPhoto> relations  = albumPhotoRepository.findByAlbumIdWithPhoto(albumId);
-        return AlbumResponse.from(album,relations);
+        List<AlbumPhoto> relations = albumPhotoRepository.findByAlbumIdWithPhoto(albumId);
+        return AlbumResponse.from(album, relations);
+    }
+    @Transactional(readOnly = true)
+    public List<AlbumReviewResponse> getAlbums() {
+        //TODO create a dto that returns a review of all albums : (first photo, number of photos, scoop, title, description,id)
+        List<Album> albums = albumRepository.findAll();
+
+        return AlbumReviewResponse.from(albums);
+        }
     }
 }

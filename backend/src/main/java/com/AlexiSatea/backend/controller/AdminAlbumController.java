@@ -53,8 +53,5 @@ public class AdminAlbumController {
     ) {
         albumService.removePhotoFromAlbum(albumId, photoId);
     }
-    @GetMapping("/{id}")
-    public AlbumResponse getAlbum(@PathVariable UUID id) {
-        return albumService.getAlbum(id);
-    }
+
 }

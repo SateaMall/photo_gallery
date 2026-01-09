@@ -12,6 +12,7 @@ public record AlbumResponse(
         AlbumScope scope,
         String description,
         List<AlbumPhotoItem> photos
+
 ) {
     public static AlbumResponse from(Album album, List<AlbumPhoto> albumPhotos) {
         return new AlbumResponse(
@@ -19,7 +20,7 @@ public record AlbumResponse(
                 album.getTitle(),
                 album.getScope(),
                 album.getDescription(),
-                albumPhotos.stream().map(AlbumPhotoItem::from).toList()
+                AlbumPhotoItem.from(albumPhotos)
         );
     }
 }

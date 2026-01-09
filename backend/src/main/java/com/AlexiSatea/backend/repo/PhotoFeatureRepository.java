@@ -15,7 +15,8 @@ public interface PhotoFeatureRepository extends JpaRepository<PhotoFeature, UUID
 
     Optional<PhotoFeature> findByPhoto_IdAndContext(UUID photoId, FeatureContext context);
 
-// if we want the homepage for Satea - Context = PERSONAL, owner = SATEA
+// Context = {PERSONAL,SHARED}
+//Owner = {SATEA, ALEXIS}
 // if we want the homepage for Shared - Context = SHARED, Owner = null
     @Query("""
     select pf
