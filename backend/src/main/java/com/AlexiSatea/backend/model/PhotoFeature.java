@@ -51,7 +51,6 @@ public class PhotoFeature {
 
     @PrePersist
     void onCreate() {
-        if (id == null) id = UUID.randomUUID();
         if (featuredAt == null) featuredAt = Instant.now();
     }
 }

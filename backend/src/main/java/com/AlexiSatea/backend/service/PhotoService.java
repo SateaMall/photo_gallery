@@ -2,9 +2,11 @@ package com.AlexiSatea.backend.service;
 
 
 import com.AlexiSatea.backend.model.*;
+import com.AlexiSatea.backend.model.Enum.FeatureContext;
 import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Enum.Theme;
 import com.AlexiSatea.backend.repo.AlbumRepository;
+import com.AlexiSatea.backend.repo.PhotoFeatureRepository;
 import com.AlexiSatea.backend.repo.PhotoRepository;
 import com.AlexiSatea.backend.repo.AlbumPhotoRepository;
 import com.AlexiSatea.backend.storage.StorageService;
@@ -34,6 +36,7 @@ public class PhotoService {
     private final AlbumRepository albumRepository;
     private final AlbumPhotoRepository albumPhotoRepository;
     private final StorageService storageService;
+    private final PhotoFeatureRepository photoFeatureRepository;
 
     // We can expand later (HEIC, etc.)
     private static final Set<String> ALLOWED_CONTENT_TYPES = Set.of(
@@ -42,6 +45,8 @@ public class PhotoService {
             "image/webp"
     );
 
+
+    /**********************************         Photo APIs         ******************************/
     @Transactional
     public Photo upload(MultipartFile file, Owner owner, UUID albumId, List<Theme> themes) {
         // Check if the file is valid
@@ -135,9 +140,7 @@ public class PhotoService {
         photoRepository.delete(photo);
     }
 
-    public List<UUID> albumIdsOfPhoto( Photo photo) {
-        return albumPhotoRepository.findAlbumIdsByPhotoId(photo.getId());
-    }
+
 
     private String safeName(String name) {
         if (name == null) return "unknown";
@@ -145,6 +148,10 @@ public class PhotoService {
         return name.replace("\\", "/").substring(name.lastIndexOf('/') + 1);
     }
 
+    /**********************************         Album-Photo APIs         ******************************/
+    public List<UUID> albumIdsOfPhoto( Photo photo) {
+        return albumPhotoRepository.findAlbumIdsByPhotoId(photo.getId());
+    }
 
     public Map<UUID, List<UUID>> albumIdsByPhotoIds(List<UUID> photoIds) {
         if (photoIds == null || photoIds.isEmpty()) return Map.of();
@@ -159,7 +166,49 @@ public class PhotoService {
                         )
                 ));
     }
+
+
+
+    /**********************************         PhotoFeature APIs         ******************************/
+    @Transactional
+    public Integer AddUpdatePhotoFeature(UUID photoId, Integer index, FeatureContext context, Boolean enabled) {
+        if (index != null && index < 0) {
+            throw new IllegalArgumentException("index must be >= 0");
+        }
+
+        Photo photo = photoRepository.findById(photoId)
+                .orElseThrow(() -> new IllegalArgumentException("Photo not found: " + photoId));
+
+        PhotoFeature pf = photoFeatureRepository
+                .findByPhotoIdAndContext(photoId, context)
+                .orElseGet(() -> PhotoFeature.builder()
+                        .photo(photo)
+                        .context(context)
+                        .build()
+                );
+
+        // if enabled param not sent => default true
+        pf.setEnabled(enabled == null ? true : enabled);
+
+        // if index param not sent => keep null or set null if you want to "clear" ordering
+        pf.setOrderIndex(index);
+
+        // update timestamp when (re)featured or modified
+        pf.setFeaturedAt(Instant.now());
+
+        photoFeatureRepository.save(pf);
+
+        return pf.getOrderIndex();
     }
+
+    public void deletePhotoFeature(UUID photoId, FeatureContext context) {
+        PhotoFeature pf = photoFeatureRepository.findByPhotoIdAndContext(photoId, context)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "PhotoFeature not found for photoId=" + photoId + ", context=" + context
+                ));
+        photoFeatureRepository.delete(pf);
+    }
+}
 
 
 

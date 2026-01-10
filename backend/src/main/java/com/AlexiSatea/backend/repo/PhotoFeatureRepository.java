@@ -12,8 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface PhotoFeatureRepository extends JpaRepository<PhotoFeature, UUID> {
-
-    Optional<PhotoFeature> findByPhoto_IdAndContext(UUID photoId, FeatureContext context);
+    Optional<PhotoFeature> findByPhotoIdAndContext(UUID photoId, FeatureContext context);
 
 // Context = {PERSONAL,SHARED}
 //Owner = {SATEA, ALEXIS}
