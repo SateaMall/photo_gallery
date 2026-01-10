@@ -1,6 +1,7 @@
 package com.AlexiSatea.backend.controller;
 
 import com.AlexiSatea.backend.dto.AlbumResponse;
+import com.AlexiSatea.backend.dto.AlbumViewResponse;
 import com.AlexiSatea.backend.service.AlbumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,9 @@ public class PublicAlbumController {
         return albumService.getAlbum(id);
     }
 
-    @GetMapping
-    public List<AlbumResponse> getAlbums() {
+    @GetMapping("/view")
+    public List<AlbumViewResponse> getAlbums() {
         return albumService.getAlbums();
     }
+
 }

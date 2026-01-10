@@ -2,6 +2,7 @@ package com.AlexiSatea.backend.service;
 
 import com.AlexiSatea.backend.dto.AlbumPhotoItem;
 import com.AlexiSatea.backend.dto.AlbumResponse;
+import com.AlexiSatea.backend.dto.AlbumViewResponse;
 import com.AlexiSatea.backend.model.*;
 import com.AlexiSatea.backend.model.Enum.AlbumScope;
 import com.AlexiSatea.backend.repo.AlbumPhotoRepository;
@@ -106,11 +107,9 @@ public class AlbumService {
         return AlbumResponse.from(album, relations);
     }
     @Transactional(readOnly = true)
-    public List<AlbumReviewResponse> getAlbums() {
-        //TODO create a dto that returns a review of all albums : (first photo, number of photos, scoop, title, description,id)
-        List<Album> albums = albumRepository.findAll();
-
-        return AlbumReviewResponse.from(albums);
+    public List<AlbumViewResponse> getAlbums() {
+            List<AlbumViewRow> Rows= albumRepository.findAlbumViews();
+        return AlbumViewResponse.from(Rows);
         }
     }
-}
+

@@ -58,7 +58,7 @@ public class Photo {
     @Column(name = "theme", nullable = false, length = 50)
     private List<Theme> themes = new ArrayList<>();
 
-    //To add country & city?
+    //ToDo add country & city or just location??
 
 
 
