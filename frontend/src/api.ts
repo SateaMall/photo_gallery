@@ -176,7 +176,7 @@ export type AlbumResponse = {
 };
 
 export async function getAlbum(id: string) {
-  return request<AlbumResponse>(`/api/admin/albums/${encodeURIComponent(id)}`, {
+  return request<AlbumResponse>(`/api/albums/${encodeURIComponent(id)}`, {
     method: "GET",
   });
 }

@@ -188,7 +188,7 @@ public class PhotoService {
                 );
 
         // if enabled param not sent => default true
-        pf.setEnabled(enabled == null ? true : enabled);
+        pf.setEnabled(enabled == null || enabled);
 
         // if index param not sent => keep null or set null if you want to "clear" ordering
         pf.setOrderIndex(index);

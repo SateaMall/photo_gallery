@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 // Template of the photo that is sent !
 public record PhotoResponse(
-         UUID id,
+        UUID id,
         Owner owner,
         String contentType,
         long sizeBytes,

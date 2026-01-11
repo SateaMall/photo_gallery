@@ -22,9 +22,5 @@ public class PublicAlbumController {
         return albumService.getAlbum(id);
     }
 
-    @GetMapping("/view")
-    public List<AlbumViewResponse> getAlbums() {
-        return albumService.getAlbums();
-    }
 
 }

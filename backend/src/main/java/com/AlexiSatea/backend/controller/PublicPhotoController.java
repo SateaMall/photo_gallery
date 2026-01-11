@@ -54,4 +54,5 @@ public class PublicPhotoController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + p.getOriginalFilename() + "\"")
                 .body(resource);
     }
+
 }
