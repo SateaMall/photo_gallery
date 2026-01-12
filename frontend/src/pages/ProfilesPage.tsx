@@ -5,6 +5,8 @@ import bgSatea from "../assets/bg-satea.jpg";
 import bgShared from "../assets/bg-shared.jpg";
 import bgAlexis from "../assets/bg-alexis.jpg";
 import { UserIcon, LinkIcon } from "../components/Icons";
+import { Navbar } from "../components/Navbar";
+
 type Profile = {
   id: "SATEA" | "SHARED" | "ALEXIS";
   label: string;
@@ -76,11 +78,10 @@ export default function ProfilesPages() {
   
 
   return (
+
+
     <div className="page" style={{ backgroundImage: `url(${currentBg})` }}>
-     
-        <div className="ps-header">
-          <div className="ps-gallery">Satea & Alexis Gallery</div>
-        </div>
+         {<Navbar />}
           <div className="ps-grid">
             {PROFILES.map((p) => {
               const isShared = p.id === "SHARED";
@@ -105,5 +106,6 @@ export default function ProfilesPages() {
         })}
           </div>
     </div>
+
   );
 }
