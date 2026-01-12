@@ -1,6 +1,6 @@
 package com.AlexiSatea.backend.repo;
 
-import com.AlexiSatea.backend.model.Owner;
+import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Photo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -2,7 +2,9 @@ package com.AlexiSatea.backend.service;
 
 import com.AlexiSatea.backend.dto.AlbumPhotoItem;
 import com.AlexiSatea.backend.dto.AlbumResponse;
+import com.AlexiSatea.backend.dto.AlbumViewResponse;
 import com.AlexiSatea.backend.model.*;
+import com.AlexiSatea.backend.model.Enum.AlbumScope;
 import com.AlexiSatea.backend.repo.AlbumPhotoRepository;
 import com.AlexiSatea.backend.repo.AlbumRepository;
 import com.AlexiSatea.backend.repo.PhotoRepository;
@@ -101,7 +103,13 @@ public class AlbumService {
     public AlbumResponse getAlbum(UUID albumId) {
         Album album = albumRepository.findById(albumId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Album not found"));
-        List<AlbumPhoto> relations  = albumPhotoRepository.findByAlbumIdWithPhoto(albumId);
-        return AlbumResponse.from(album,relations);
+        List<AlbumPhoto> relations = albumPhotoRepository.findByAlbumIdWithPhoto(albumId);
+        return AlbumResponse.from(album, relations);
     }
-}
+    @Transactional(readOnly = true)
+    public List<AlbumViewResponse> getAlbums() {
+            List<AlbumViewRow> Rows= albumRepository.findAlbumViews();
+        return AlbumViewResponse.from(Rows);
+        }
+    }
+

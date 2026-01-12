@@ -1,0 +1,28 @@
+package com.AlexiSatea.backend.dto;
+
+import com.AlexiSatea.backend.model.AlbumViewRow;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+public record AlbumViewResponse (
+        UUID albumId,
+        UUID firstPhotoId,
+        String title,
+        String description,
+        Integer numberOfPhotos,
+        String fileUrl
+)
+{
+    public static List<AlbumViewResponse> from (List<AlbumViewRow> Rows){
+        List<AlbumViewResponse> list = new ArrayList<>();
+
+        for(AlbumViewRow row:Rows){
+            int count = row.getNumberOfPhotos() == null ? 0 : row.getNumberOfPhotos();
+            String coverUrl = (row.getFirstPhotoId() == null) ? null : ("/api/photos/" + row.getFirstPhotoId() + "/file");
+            list.add(new AlbumViewResponse(row.getAlbumId(),row.getFirstPhotoId(),row.getTitle(), row.getDescription(), count,coverUrl));
+        }
+        return list;
+    }
+}

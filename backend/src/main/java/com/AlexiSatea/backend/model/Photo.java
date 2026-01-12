@@ -1,5 +1,7 @@
 package com.AlexiSatea.backend.model;
 
+import com.AlexiSatea.backend.model.Enum.Owner;
+import com.AlexiSatea.backend.model.Enum.Theme;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -56,7 +58,7 @@ public class Photo {
     @Column(name = "theme", nullable = false, length = 50)
     private List<Theme> themes = new ArrayList<>();
 
-    //To add country & city?
+    //ToDo add country & city or just location??
 
 
 

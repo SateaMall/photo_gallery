@@ -1,7 +1,7 @@
 package com.AlexiSatea.backend.dto;
 
 import com.AlexiSatea.backend.model.*;
-import com.AlexiSatea.backend.repo.AlbumRepository;
+import com.AlexiSatea.backend.model.Enum.AlbumScope;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +12,7 @@ public record AlbumResponse(
         AlbumScope scope,
         String description,
         List<AlbumPhotoItem> photos
+
 ) {
     public static AlbumResponse from(Album album, List<AlbumPhoto> albumPhotos) {
         return new AlbumResponse(
@@ -19,7 +20,7 @@ public record AlbumResponse(
                 album.getTitle(),
                 album.getScope(),
                 album.getDescription(),
-                albumPhotos.stream().map(AlbumPhotoItem::from).toList()
+                AlbumPhotoItem.from(albumPhotos)
         );
     }
 }

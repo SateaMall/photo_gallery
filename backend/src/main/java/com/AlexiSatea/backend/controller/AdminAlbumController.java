@@ -1,7 +1,7 @@
 package com.AlexiSatea.backend.controller;
 
 import com.AlexiSatea.backend.dto.AlbumResponse;
-import com.AlexiSatea.backend.model.*;
+import com.AlexiSatea.backend.model.Enum.AlbumScope;
 import com.AlexiSatea.backend.service.AlbumService;
 
 import lombok.RequiredArgsConstructor;
@@ -53,8 +53,5 @@ public class AdminAlbumController {
     ) {
         albumService.removePhotoFromAlbum(albumId, photoId);
     }
-    @GetMapping("/{id}")
-    public AlbumResponse getAlbum(@PathVariable UUID id) {
-        return albumService.getAlbum(id);
-    }
+
 }
