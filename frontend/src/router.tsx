@@ -17,18 +17,17 @@ export const router = createBrowserRouter([
 
   { path: "/profiles", element: <ProfilesPage /> },
 
-  {
-    path: "/:context(satea|alexis|shared)",
-    element: <GalleryLayout />,
-    children: [
-      { index: true, element: <HomePage /> },
-
-      { path: "albums", element: <AlbumsPage /> },
-      { path: "albums/:albumId", element: <AlbumPage /> },
-      { path: "photos", element: <PhotosPage /> },
-      { path: "photos/:photoId", element: <PhotoPage /> },
-      { path: "contact", element: <ContactPage /> },
-    ],
-  },
+{
+  path: ":context",
+  element: <GalleryLayout />,
+  children: [
+    { index: true, element: <HomePage /> },
+    { path: "albums", element: <AlbumsPage /> },
+    { path: "albums/:albumId", element: <AlbumPage /> },
+    { path: "photos", element: <PhotosPage /> },
+    { path: "photos/:photoId", element: <PhotoPage /> },
+    { path: "contact", element: <ContactPage /> },
+  ],
+},
   { path: "*", element: <NotFound /> } 
 ]);

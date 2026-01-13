@@ -1,4 +1,5 @@
-
-export default function  NotFound () {
-    return <div>Not Found Page</div>;
+import { useLocation } from "react-router-dom";
+export default function NotFound() {
+  const loc = useLocation();
+  return <div>Not Found: {loc.pathname}</div>;
 }

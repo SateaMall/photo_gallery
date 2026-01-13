@@ -1,9 +1,35 @@
+import { Link, NavLink, useLocation, useParams } from "react-router-dom";
+
 export function Navbar() {
+  const { context } = useParams(); // "satea" | "alexis" | "shared" | undefined
+  const location = useLocation();
+
+  // "shared mode" when:
+  // - we are on /profiles
+  // - OR context is shared
+  const isSharedMode = location.pathname.startsWith("/profiles") || context === "shared";
+
+  const brandText = isSharedMode
+    ? "Mohamad Satea Almallouhi × Alexis Cordier"
+    : context === "alexis"
+      ? "Alexis Cordier"
+      : "Mohamad Satea Almallouhi";
+
+  // Where brand click should go
+  const brandTo = isSharedMode ? "/shared" : `/${context}`;
+
+  // Base for albums/photos links
+  const base = isSharedMode ? "/shared" : `/${context}`;
+
   return (
-    <nav
-      className="navbar navbar-expand-lg navbar-dark"
-    >
-      <a className="navbar-brand"   style={{ backgroundColor: "#c2c2c20c", marginLeft: "30px", fontSize: "20px" }} href="#">Satea</a>
+    <nav className="navbar navbar-expand-lg navbar-dark">
+      <Link
+        className="navbar-brand"
+        style={{ backgroundColor: "#c2c2c20c", marginLeft: "30px", fontSize: "20px" }}
+        to={brandTo}
+      >
+        {brandText}
+      </Link>
 
       <button
         className="navbar-toggler"
@@ -20,27 +46,31 @@ export function Navbar() {
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link" href="#">Albums</a>
+            <NavLink className="nav-link" to={`${base}/albums`}>Albums</NavLink>
           </li>
-
           <li className="nav-item">
-            <a className="nav-link" href="#">Photos</a>
+            <NavLink className="nav-link" to={`${base}/photos`}>Photos</NavLink>
           </li>
 
           <li className="nav-item dropdown">
-            <a
-              className="nav-link dropdown-toggle"
-              href="#"
+            <button
+              className="nav-link dropdown-toggle btn btn-link"
               id="navbarDropdownMenuLink"
-              role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
+              type="button"
+              style={{ textDecoration: "none" }}
             >
-              Profiles
-            </a>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style={{ backgroundColor: "#d4d1d19e" }}>
-              <li><a className="dropdown-item" href="#">Satea</a></li>
-              <li><a className="dropdown-item" href="#">Alexis</a></li>
+              Spaces
+            </button>
+
+            <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><Link className="dropdown-item" to="/shared">Shared</Link></li>
+              <li><hr className="dropdown-divider" /></li>
+              <li><Link className="dropdown-item" to="/satea">Satea</Link></li>
+              <li><Link className="dropdown-item" to="/alexis">Alexis</Link></li>
+              <li><hr className="dropdown-divider" /></li>
+              <li><Link className="dropdown-item" to="/profiles">Profile picker</Link></li>
             </ul>
           </li>
         </ul>
