@@ -2,9 +2,8 @@ export function Navbar() {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark"
-      style={{ backgroundColor: "#c2c2c20c", marginLeft: "30px", fontSize: "18px" }}
     >
-      <a className="navbar-brand" href="#">Satea</a>
+      <a className="navbar-brand"   style={{ backgroundColor: "#c2c2c20c", marginLeft: "30px", fontSize: "20px" }} href="#">Satea</a>
 
       <button
         className="navbar-toggler"
@@ -39,7 +38,6 @@ export function Navbar() {
             >
               Profiles
             </a>
-
             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style={{ backgroundColor: "#d4d1d19e" }}>
               <li><a className="dropdown-item" href="#">Satea</a></li>
               <li><a className="dropdown-item" href="#">Alexis</a></li>

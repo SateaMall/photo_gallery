@@ -80,7 +80,7 @@
 
 /* The label inside the cube - Phone */
 .ps-label{
-  font-size: 25px;
+  font-size: 20px;
   opacity: 0.9;
 }
 .ps-card:hover .ps-label {
@@ -110,9 +110,10 @@
 /* Phone */
 .ps-card{
   font-size: 25px;
-  width: 200px;
-  height: 200px;
+  width: 170px;
+  height: 170px;
 }
+
 .ps-grid{
   min-height: calc(75vh - 120px); 
   gap: 18px;
