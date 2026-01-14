@@ -8,54 +8,50 @@ import { UserIcon, LinkIcon } from "../components/Icons";
 import { Navbar } from "../components/Navbar";
 
 type Profile = {
-  id: "SATEA" | "SHARED" | "ALEXIS";
+  id: "satea" | "shared" | "alexis";
   label: string;
-  avatar?: { type: "initials"; text: string; bg: string };
+  avatar?: { type: "initials"; bg: string };
 };
 
 const PROFILES: Profile[] = [
       {
-    id: "SATEA",
+    id: "satea",
     label: "Mohamad Satea Almallouhi",
-    avatar: { type: "initials", text: "SA", bg: "#d98a8652"},
+    avatar: { type: "initials", bg: "#d98a8652"},
   },
       {
-    id: "SHARED",
+    id: "shared",
     label: "Shared space",
-    avatar: { type: "initials", text: "SH", bg:"#5b67816f"   },
+    avatar: { type: "initials", bg:"#5b67816f"   },
   },
   {
-    id: "ALEXIS",
+    id: "alexis",
     label: "Alexis Cordier",
-    avatar: { type: "initials", text: "AC", bg: "#8e8b6b73" },
+    avatar: { type: "initials", bg: "#8e8b6b73" },
   },
 ];
 
 const BG_BY_ID: Record<Profile["id"], string> = {
-  SATEA: bgSatea,
-  SHARED: bgShared,
-  ALEXIS: bgAlexis,
+  satea: bgSatea,
+  shared: bgShared,
+  alexis: bgAlexis,
 };
-
-/* Route context helper */
-function toRouteContext(id: Profile["id"]): "satea" | "alexis" | "shared" {
-  if (id === "SATEA") return "satea";
-  if (id === "ALEXIS") return "alexis";
-  return "shared";
-}
 
 
 export default function ProfilesPages() {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
 
+/* Background switcher */
   const [hoveredId, setHoveredId] = useState<Profile["id"] | null>(null);
 
   const currentBg = useMemo(() => {
     return hoveredId ? BG_BY_ID[hoveredId] : bgShared;
   }, [hoveredId]);
 
+
+
  async function onPickProfile(p: Profile) {
-    const routeContext = toRouteContext(p.id);
+    const routeContext = p.id; // "satea" | "alexis" | "shared"
     /*  API 
     const apiContext = toApiContext(p.id);
 
@@ -84,7 +80,7 @@ export default function ProfilesPages() {
          {<Navbar />}
           <div className="ps-grid">
             {PROFILES.map((p) => {
-              const isShared = p.id === "SHARED";
+              const isShared = p.id === "shared";
               return(
               <button
                 key={p.id}
