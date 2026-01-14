@@ -26,35 +26,35 @@
   min-height: calc(75vh - 120px); 
   display: flex;
   justify-content: center; 
-  align-items: center;     
-  display: flex;
-  align-items: center;
+  align-items: center; 
+  flex-direction:row;    
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 2%;
 }
 
-/* Phones: vertical stack */
+/* left column 
 .ps-grid{
+  width: 320px;
+  padding: 60px 40px;
+  display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 36px;
+  align-items: flex-start;
 }
+*/
 
-/* Big screens: one line (horizontal) */
-@media (min-width: 900px){
-  .ps-grid{
-    flex-direction: row;
-    gap: 40px;
-  }
-}
+
 
 /* THE CUBE */
 .ps-card{
   font-family: var(--font-serif);
-  font-size: 25px;
-  width: 220px;
-  height: 220px;
   border-radius: 26px;
   backdrop-filter: blur(10px);
   background: rgba(255,255,255,0.08);  
-  border: 1px solid rgba(0, 0, 0, 0.364);
+  border: 3px solid rgba(0, 0, 0, 0.364);
   color: rgb(255, 255, 255);
   display: grid;
   place-items: center;
@@ -63,23 +63,24 @@
     0 10px 22px rgba(0, 0, 0, 0.373),
     0 0 0 1px rgba(255,255,255,0.12) inset;
   cursor: pointer;
-  
+  padding: 20px;
 }
+
+
 
 /* HOVER: background changes + a bit bigger + more shadow */
 .ps-card:hover{
   background: rgba(255,255,255,0.18);
   transform: scale(1.05);
-
   box-shadow:
     0 18px 38px rgba(0, 0, 0, 0.548),
     0 6px 14px rgba(0, 0, 0, 0.358),
     0 0 0 1px rgba(255, 255, 255, 0.346) inset;
 }
 
-/* The label inside the cube */
+/* The label inside the cube - Phone */
 .ps-label{
-  font-size: 25px;
+  font-size: 20px;
   opacity: 0.9;
 }
 .ps-card:hover .ps-label {
@@ -101,7 +102,46 @@
 }
 
 .ps-card:hover .ps-icon {
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(-4px) scale(1.05);
   background: rgba(0,0,0,0.26);
   color: rgba(255,255,255,0.95);
+}
+
+/* Phone */
+.ps-card{
+  font-size: 25px;
+  width: 170px;
+  height: 170px;
+}
+
+.ps-grid{
+  min-height: calc(75vh - 120px); 
+  gap: 18px;
+}
+
+/* Phone screen */
+@media (min-width: 900px){
+  .ps-grid{
+    min-height: calc(75vh - 120px); 
+    gap: 40px;
+
+
+  }
+
+  .ps-card{
+    font-size: 25px;
+    width: 300px;
+    height: 300px;
+  }
+  
+  .ps-label{
+    font-size: 28px;
+  }
+
+  .ps-icon {
+    width: 55px;
+    height: 55px;
+    }
+
+    
 }

@@ -13,7 +13,7 @@ import {
   addPhotoToAlbum,
   removePhotoFromAlbum,
   getAlbum,
-} from "./api";
+} from "./admin_api";
 
 const THEMES: { value: Theme; label: string }[] = [
   { value: "STREET_SOCIETY", label: "Street & Society" },
@@ -85,7 +85,7 @@ export default function App() {
     }
   }
 const [albumIdToShow, setAlbumIdToShow] = useState("");
-const [album, setAlbum] = useState<import("./api").AlbumResponse | null>(null);
+const [album, setAlbum] = useState<import("./admin_api").AlbumResponse | null>(null);
 
 
   return (

@@ -25,7 +25,6 @@ public class AlbumService {
     private final PhotoRepository photoRepository;
     private final AlbumRepository albumRepository;
     private final AlbumPhotoRepository albumPhotoRepository;
-    private final StorageService storageService;
 
     @Transactional
     public AlbumResponse  createAlbum(String title, AlbumScope scope, String description) {
