@@ -2,7 +2,7 @@ package com.AlexiSatea.backend.repo;
 
 
 import com.AlexiSatea.backend.model.Album;
-import com.AlexiSatea.backend.model.AlbumViewRow;
+import com.AlexiSatea.backend.model.Interface.AlbumViewRow;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

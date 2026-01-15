@@ -33,6 +33,8 @@ public class Photo {
     @Column(nullable = false, length = 255)
     private String originalFilename;
 
+
+
     @Column(nullable = false, length = 100)
     private String contentType; // e.g. Jpeg, JPG ..
 
@@ -41,6 +43,7 @@ public class Photo {
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
+
 
     @Builder.Default
     @OneToMany(mappedBy = "photo", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -57,6 +60,9 @@ public class Photo {
     @Enumerated(EnumType.STRING)
     @Column(name = "theme", nullable = false, length = 50)
     private List<Theme> themes = new ArrayList<>();
+    
+    @Column(nullable = true, length = 255)
+    private String description;
 
     //ToDo add country & city or just location??
 

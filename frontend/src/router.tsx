@@ -3,8 +3,8 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 
 import ProfilesPage from "./pages/ProfilesPage";
 import GalleryLayout from "./layouts/GalleryLayout";
-
-import HomePage from "./pages/HomePage";
+import RootLayout from "./layouts/RootLayout.tsx";
+import Homepage from "./pages/homepage/HomePage.tsx";
 import AlbumsPage from "./pages/AlbumsPage";
 import AlbumPage from "./pages/AlbumPage";
 import PhotosPage from "./pages/PhotosPage";
@@ -13,7 +13,9 @@ import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 
 export const router = createBrowserRouter([
-  { path: "/", element: <Navigate to="/profiles" replace /> },
+  { path: "/",  element: <RootLayout />, children: [
+
+  { index : true, element: <Navigate to="/profiles" /> },
 
   { path: "/profiles", element: <ProfilesPage /> },
 
@@ -21,7 +23,7 @@ export const router = createBrowserRouter([
   path: ":context",
   element: <GalleryLayout />,
   children: [
-    { index: true, element: <HomePage /> },
+    { index: true, element: <Homepage /> },
     { path: "albums", element: <AlbumsPage /> },
     { path: "albums/:albumId", element: <AlbumPage /> },
     { path: "photos", element: <PhotosPage /> },
@@ -30,4 +32,5 @@ export const router = createBrowserRouter([
   ],
 },
   { path: "*", element: <NotFound /> } 
+] },
 ]);

@@ -32,8 +32,7 @@ public class AdminPhotoController {
             @RequestParam(required = false) List<Theme> themes
     ) {
         Photo photo = photoService.upload(file, owner, albumId,themes);
-        List<UUID> albumIds = photoService.albumIdsOfPhoto(photo);
-        return PhotoResponse.from(photo, albumIds);
+        return PhotoResponse.from(photo, null);
     }
 
     @DeleteMapping("/{id}")

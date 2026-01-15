@@ -49,8 +49,8 @@ public interface AlbumPhotoRepository extends JpaRepository<AlbumPhoto, AlbumPho
     """)
 
     List<UUID> findAlbumIdsByPhotoId(@Param("photoId") UUID photoId);
-
-
+}
+    /*
     interface PhotoAlbumIdRow {
         UUID getPhotoId();
         UUID getAlbumId();
@@ -62,5 +62,6 @@ public interface AlbumPhotoRepository extends JpaRepository<AlbumPhoto, AlbumPho
         where ap.photo.id in :photoIds
     """)
     List<PhotoAlbumIdRow> findAlbumIdsByPhotoIds(@Param("photoIds") List<UUID> photoIds);
-}
+
+    */
 

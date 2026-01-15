@@ -4,6 +4,7 @@ package com.AlexiSatea.backend.dto;
 import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Photo;
 import com.AlexiSatea.backend.model.Enum.Theme;
+import com.AlexiSatea.backend.model.PhotoFeature;
 
 import java.time.Instant;
 import java.util.List;
@@ -16,10 +17,14 @@ public record PhotoResponse(
         long sizeBytes,
         Instant createdAt,
         List<Theme> themes,
-        List<UUID> albumIds,
+        String description,
+        Integer index,
         String fileUrl
 ) {
-    public static PhotoResponse from(Photo p, List<UUID> albumIds) {
+    public static PhotoResponse from(Photo p) {
+        return  from(p,null);
+    }
+    public static PhotoResponse from(Photo p, PhotoFeature pf) {
         return new PhotoResponse(
                 p.getId(),
                 p.getOwner(),
@@ -27,7 +32,8 @@ public record PhotoResponse(
                 p.getSizeBytes(),
                 p.getCreatedAt(),
                 p.getThemes(),
-                albumIds,
+                p.getDescription(),
+                pf != null ?pf.getOrderIndex() : null,
                 "/api/photos/" + p.getId() + "/file"
         );
     }

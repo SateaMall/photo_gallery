@@ -1,6 +1,6 @@
 package com.AlexiSatea.backend.dto;
 
-import com.AlexiSatea.backend.model.AlbumViewRow;
+import com.AlexiSatea.backend.model.Interface.AlbumViewRow;
 
 import java.util.ArrayList;
 import java.util.List;

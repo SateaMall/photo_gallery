@@ -1,16 +1,17 @@
 package com.AlexiSatea.backend.controller;
 
 import com.AlexiSatea.backend.dto.AlbumViewResponse;
+import com.AlexiSatea.backend.dto.PhotoResponse;
+import com.AlexiSatea.backend.model.Enum.FeatureContext;
+import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Photo;
 import com.AlexiSatea.backend.service.AlbumService;
 import com.AlexiSatea.backend.service.PhotoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,7 +23,9 @@ public class PublicHomepageController {
     public List<AlbumViewResponse> getAlbums() {
         return albumService.getAlbums();
     }
-    /*@PostMapping("/photos")
-    public List<Photo>
-*/
+    @GetMapping("/photos/{context}/{owner}")
+    public List<PhotoResponse> getPhotos(@PathVariable FeatureContext context, @PathVariable Owner owner) {
+        return photoService.getPhotos(owner,  context);
+    }
+
 }
