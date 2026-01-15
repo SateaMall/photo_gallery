@@ -153,7 +153,7 @@ public class PhotoService {
     public List<UUID> albumIdsOfPhoto( Photo photo) {
         return albumPhotoRepository.findAlbumIdsByPhotoId(photo.getId());
     }
-
+    @Transactional(readOnly = true)
     public List <PhotoResponse> getPhotos (Owner owner, FeatureContext context){
         return photoRepository.findFeatured(context, owner)
                 .stream()
