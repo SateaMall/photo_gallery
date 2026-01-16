@@ -6,12 +6,7 @@ import bgShared from "../assets/bg-shared.jpg";
 import bgAlexis from "../assets/bg-alexis.jpg";
 import { UserIcon, LinkIcon } from "../components/Icons";
 import { Navbar } from "../components/Navbar";
-
-type Profile = {
-  id: "satea" | "shared" | "alexis";
-  label: string;
-  avatar?: { type: "initials"; bg: string };
-};
+import type { Profile } from "../types/profilesPage";
 
 const PROFILES: Profile[] = [
       {
@@ -52,22 +47,10 @@ export default function ProfilesPages() {
 
  async function onPickProfile(p: Profile) {
     const routeContext = p.id; // "satea" | "alexis" | "shared"
-    /*  API 
-    const apiContext = toApiContext(p.id);
+    // 1) set profile in the backend
 
-    // 1) call API (send p.id + derived context)
-    // adjust URL/body to your backend
-    await fetch("/api/public/select-profile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        profileId: p.id,
-        context: apiContext, // PERSONAL or SHARED
-      }),
-    });
-
-    // 2) go to homepage for that context
-    */
+    
+    // 2) navigate to the context root
     navigate(`/${routeContext}`);
   }
 
