@@ -1,0 +1,32 @@
+.album-card {
+  display: grid;
+  gap: 10px;
+}
+
+.album-cover {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #111;
+}
+
+.album-cover--empty {
+  display: grid;
+  place-items: center;
+  color: #888;
+}
+
+.album-meta {
+  display: grid;
+  gap: 4px;
+}
+
+.album-title {
+  font-weight: 600;
+}
+
+.album-sub {
+  font-size: 13px;
+  color: #aaa;
+}

@@ -1,14 +1,17 @@
 spring:
   application:
     name: backend
+
   datasource:
     url: jdbc:postgresql://localhost:5432/photo_gallery
     username: photo
     password: photo
+
   jpa:
     hibernate:
       ddl-auto: update
     open-in-view: false
+
   servlet:
     multipart:
       max-file-size: 25MB
@@ -22,4 +25,3 @@ app:
     type: local
     local:
       root-path: ./storage
-

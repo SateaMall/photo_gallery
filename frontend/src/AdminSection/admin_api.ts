@@ -1,16 +1,4 @@
-// src/api.ts
-export type Owner = "SATEA" | "ALEXIS";
-
-export type Theme =
-  | "STREET_SOCIETY"
-  | "PEOPLE_EMOTION"
-  | "NATURE_ENVIRONMENT"
-  | "ARCHITECTURE_SPACES"
-  | "MOOD_ATMOSPHERE"
-  | "CONCEPTUAL_ARTISTIC"
-  | "DOCUMENTARY_SOCIAL";
-
-export type AlbumScope = "SATEA" | "ALEXIS" | "SHARED";
+import type { Scope, Owner, Theme } from "../types/types";
 
 export type PhotoResponse = {
   id: string;
@@ -75,7 +63,7 @@ export async function deletePhoto(id: string) {
 /** POST /api/admin/albums?title&scope&description */
 export async function createAlbum(args: {
   title: string;
-  scope: AlbumScope;
+  scope: Scope;
   description?: string;
 }) {
   const params = new URLSearchParams();
@@ -96,7 +84,7 @@ export async function createAlbum(args: {
 export async function updateAlbum(args: {
   id: string;
   title: string;
-  scope: AlbumScope;
+  scope: Scope;
   description?: string;
 }) {
   const params = new URLSearchParams();
@@ -169,7 +157,7 @@ export type AlbumPhotoItem = {
 export type AlbumResponse = {
   id: string;
   title: string;
-  scope: AlbumScope;
+  scope: Scope;
   description: string | null;
   createdAt: string;
   photos: AlbumPhotoItem[];

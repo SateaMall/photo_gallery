@@ -2,7 +2,8 @@ package com.AlexiSatea.backend.repo;
 
 
 import com.AlexiSatea.backend.model.Album;
-import com.AlexiSatea.backend.model.AlbumViewRow;
+import com.AlexiSatea.backend.model.Enum.AlbumScope;
+import com.AlexiSatea.backend.model.Interface.AlbumViewRow;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AlbumRepository extends JpaRepository<Album, UUID> {
-
+//  :#{#scope.name()} is used bcz using :scope would return the index of the enum (smallint)
 
     @Query(value = """
     select distinct on (ap.album_id)
@@ -21,12 +22,13 @@ public interface AlbumRepository extends JpaRepository<Album, UUID> {
         count(*) over (partition by ap.album_id) as numberOfPhotos
     from albums a
     left join album_photos ap on ap.album_id = a.id
+    where a.scope =  :#{#scope.name()}
     order by
         ap.album_id,
         ap.position asc nulls last,
         ap.added_at asc
     """, nativeQuery = true)
-    List<AlbumViewRow> findAlbumViews();
+    List<AlbumViewRow> findAlbumViews(AlbumScope scope);
 
 
 

@@ -1,6 +1,7 @@
 package com.AlexiSatea.backend.service;
 
 
+import com.AlexiSatea.backend.dto.PhotoResponse;
 import com.AlexiSatea.backend.model.*;
 import com.AlexiSatea.backend.model.Enum.FeatureContext;
 import com.AlexiSatea.backend.model.Enum.Owner;
@@ -47,6 +48,25 @@ public class PhotoService {
 
 
     /**********************************         Photo APIs         ******************************/
+
+
+    @Transactional(readOnly = true)
+    public List <PhotoResponse> getPhotos (Owner owner, FeatureContext context){
+        return photoRepository.findFeatured(context, owner)
+                .stream()
+                .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()))
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List <PhotoResponse> getPhotos (FeatureContext context){
+        return photoRepository.findFeatured(context,null)
+                .stream()
+                .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()))
+                .toList();
+    }
+
+
     @Transactional
     public Photo upload(MultipartFile file, Owner owner, UUID albumId, List<Theme> themes) {
         // Check if the file is valid
@@ -153,6 +173,7 @@ public class PhotoService {
         return albumPhotoRepository.findAlbumIdsByPhotoId(photo.getId());
     }
 
+    /*
     public Map<UUID, List<UUID>> albumIdsByPhotoIds(List<UUID> photoIds) {
         if (photoIds == null || photoIds.isEmpty()) return Map.of();
         var rows = albumPhotoRepository.findAlbumIdsByPhotoIds(photoIds);
@@ -166,7 +187,7 @@ public class PhotoService {
                         )
                 ));
     }
-
+*/
 
 
     /**********************************         PhotoFeature APIs         ******************************/

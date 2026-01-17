@@ -1,4 +1,4 @@
-package com.AlexiSatea.backend.model;
+package com.AlexiSatea.backend.model.Interface;
 
 import java.util.UUID;
 

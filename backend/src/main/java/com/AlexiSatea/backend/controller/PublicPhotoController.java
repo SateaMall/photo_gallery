@@ -23,24 +23,10 @@ public class PublicPhotoController {
 
     private final PhotoService photoService;
 
-
-    public Page<PhotoResponse> list(@RequestParam Owner owner, Pageable pageable) {
-        Page<Photo> photos = photoService.listByOwner(owner, pageable);
-
-        List<UUID> photoIds = photos.getContent().stream().map(Photo::getId).toList();
-        Map<UUID, List<UUID>> albumIdsByPhoto = photoService.albumIdsByPhotoIds(photoIds);
-
-        return photos.map(photo ->
-                PhotoResponse.from(photo, albumIdsByPhoto.getOrDefault(photo.getId(), List.of()))
-        );
-    }
-
-
     @GetMapping("/{id}")
     public PhotoResponse get(@PathVariable UUID id) {
         Photo p = photoService.get(id);
-        List<UUID> albumIds = photoService.albumIdsOfPhoto(p);
-        return PhotoResponse.from(p, albumIds);
+        return PhotoResponse.from(p);
     }
 
     @GetMapping("/{id}/file")

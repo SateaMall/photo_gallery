@@ -1,16 +1,18 @@
 package com.AlexiSatea.backend.controller;
 
 import com.AlexiSatea.backend.dto.AlbumViewResponse;
+import com.AlexiSatea.backend.dto.PhotoResponse;
+import com.AlexiSatea.backend.model.Enum.AlbumScope;
+import com.AlexiSatea.backend.model.Enum.FeatureContext;
+import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Photo;
 import com.AlexiSatea.backend.service.AlbumService;
 import com.AlexiSatea.backend.service.PhotoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,11 +20,19 @@ import java.util.List;
 public class PublicHomepageController {
     private final AlbumService albumService;
     private final PhotoService photoService;
-    @GetMapping("/albums")
-    public List<AlbumViewResponse> getAlbums() {
-        return albumService.getAlbums();
+    @GetMapping("/albums/{scope}")
+    public List<AlbumViewResponse> getAlbums(@PathVariable AlbumScope scope) {
+        return albumService.getAlbums(scope);
     }
-    /*@PostMapping("/photos")
-    public List<Photo>
-*/
+    @GetMapping("/photos/{scope}")
+    public List<PhotoResponse> getPhotos(@PathVariable AlbumScope scope) {
+        if (scope== AlbumScope.SHARED) {
+            return photoService.getPhotos(FeatureContext.SHARED);
+        }
+        else {
+            Owner owner = scope== AlbumScope.ALEXIS ? Owner.ALEXIS : Owner.SATEA;
+        return photoService.getPhotos(owner,  FeatureContext.PERSONAL);
+        }
+    }
+
 }

@@ -10,15 +10,12 @@ export function Navbar() {
   const isSharedMode = location.pathname.startsWith("/profiles") || context === "shared";
 
   const brandText = isSharedMode
-    ? "Mohamad Satea Almallouhi × Alexis Cordier"
+    ? "Almallouhi &  Cordier"
     : context === "alexis"
       ? "Alexis Cordier"
       : "Mohamad Satea Almallouhi";
 
-  // Where brand click should go
-  const brandTo = isSharedMode ? "/shared" : `/${context}`;
-
-  // Base for albums/photos links
+  // Base for albums/photos links and brand
   const base = isSharedMode ? "/shared" : `/${context}`;
 
   return (
@@ -26,7 +23,7 @@ export function Navbar() {
       <Link
         className="navbar-brand"
         style={{ backgroundColor: "#c2c2c20c", marginLeft: "30px", fontSize: "20px" }}
-        to={brandTo}
+        to={base}
       >
         {brandText}
       </Link>

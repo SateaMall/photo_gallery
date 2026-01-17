@@ -1,0 +1,18 @@
+.hp {
+  padding: 18px 22px;
+}
+
+.hp-title {
+  margin: 0 0 14px;
+  font-size: 22px;
+}
+
+.hp-error {
+  color: #ff6b6b;
+}
+
+.hp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
