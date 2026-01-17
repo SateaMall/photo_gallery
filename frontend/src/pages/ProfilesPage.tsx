@@ -6,7 +6,7 @@ import bgShared from "../assets/bg-shared.jpg";
 import bgAlexis from "../assets/bg-alexis.jpg";
 import { UserIcon, LinkIcon } from "../components/Icons";
 import { Navbar } from "../components/Navbar";
-import type { Profile } from "../types/profilesPage";
+import type { Profile } from "../types/types";
 
 const PROFILES: Profile[] = [
       {
@@ -47,10 +47,7 @@ export default function ProfilesPages() {
 
  async function onPickProfile(p: Profile) {
     const routeContext = p.id; // "satea" | "alexis" | "shared"
-    // 1) set profile in the backend
-
-    
-    // 2) navigate to the context root
+    // set profile in the backend & Go
     navigate(`/${routeContext}`);
   }
 

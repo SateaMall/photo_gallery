@@ -1,4 +1,4 @@
-import type { AlbumViewResponse } from "../types/homepage";
+import type { AlbumViewResponse } from "../types/types";
 import { photoFileUrl } from "../api/photos";
 import "./AlbumCard.css";
 

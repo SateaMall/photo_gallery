@@ -11,8 +11,7 @@ public record AlbumViewResponse (
         UUID firstPhotoId,
         String title,
         String description,
-        Integer numberOfPhotos,
-        String fileUrl
+        Integer numberOfPhotos
 )
 {
     public static List<AlbumViewResponse> from (List<AlbumViewRow> Rows){
@@ -20,8 +19,7 @@ public record AlbumViewResponse (
 
         for(AlbumViewRow row:Rows){
             int count = row.getNumberOfPhotos() == null ? 0 : row.getNumberOfPhotos();
-            String coverUrl = (row.getFirstPhotoId() == null) ? null : ("/api/photos/" + row.getFirstPhotoId() + "/file");
-            list.add(new AlbumViewResponse(row.getAlbumId(),row.getFirstPhotoId(),row.getTitle(), row.getDescription(), count,coverUrl));
+            list.add(new AlbumViewResponse(row.getAlbumId(),row.getFirstPhotoId(),row.getTitle(), row.getDescription(), count));
         }
         return list;
     }

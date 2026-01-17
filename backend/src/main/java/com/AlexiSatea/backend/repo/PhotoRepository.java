@@ -5,6 +5,7 @@ import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Interface.PhotoAndFeature;
 import com.AlexiSatea.backend.model.Photo;
 import com.AlexiSatea.backend.model.PhotoFeature;
+import jakarta.annotation.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -35,7 +36,7 @@ public interface PhotoRepository extends JpaRepository<Photo, UUID> {
 """)
     List<PhotoAndFeature> findFeatured(
             @Param("context") FeatureContext context,
-            @Param("owner") Owner owner
+            @Param("owner") @Nullable Owner owner
     );
 
 }

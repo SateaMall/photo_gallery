@@ -33,7 +33,8 @@ public class Photo {
     @Column(nullable = false, length = 255)
     private String originalFilename;
 
-
+    @Column(nullable = false, length = 150)
+    private String title;
 
     @Column(nullable = false, length = 100)
     private String contentType; // e.g. Jpeg, JPG ..
@@ -60,7 +61,7 @@ public class Photo {
     @Enumerated(EnumType.STRING)
     @Column(name = "theme", nullable = false, length = 50)
     private List<Theme> themes = new ArrayList<>();
-    
+
     @Column(nullable = true, length = 255)
     private String description;
 

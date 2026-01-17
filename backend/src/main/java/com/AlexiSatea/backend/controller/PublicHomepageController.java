@@ -2,6 +2,7 @@ package com.AlexiSatea.backend.controller;
 
 import com.AlexiSatea.backend.dto.AlbumViewResponse;
 import com.AlexiSatea.backend.dto.PhotoResponse;
+import com.AlexiSatea.backend.model.Enum.AlbumScope;
 import com.AlexiSatea.backend.model.Enum.FeatureContext;
 import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Photo;
@@ -19,13 +20,19 @@ import java.util.UUID;
 public class PublicHomepageController {
     private final AlbumService albumService;
     private final PhotoService photoService;
-    @GetMapping("/albums")
-    public List<AlbumViewResponse> getAlbums() {
-        return albumService.getAlbums();
+    @GetMapping("/albums/{scope}")
+    public List<AlbumViewResponse> getAlbums(@PathVariable AlbumScope scope) {
+        return albumService.getAlbums(scope);
     }
-    @GetMapping("/photos/{context}/{owner}")
-    public List<PhotoResponse> getPhotos(@PathVariable FeatureContext context, @PathVariable Owner owner) {
-        return photoService.getPhotos(owner,  context);
+    @GetMapping("/photos/{scope}")
+    public List<PhotoResponse> getPhotos(@PathVariable AlbumScope scope) {
+        if (scope== AlbumScope.SHARED) {
+            return photoService.getPhotos(FeatureContext.SHARED);
+        }
+        else {
+            Owner owner = scope== AlbumScope.ALEXIS ? Owner.ALEXIS : Owner.SATEA;
+        return photoService.getPhotos(owner,  FeatureContext.PERSONAL);
+        }
     }
 
 }

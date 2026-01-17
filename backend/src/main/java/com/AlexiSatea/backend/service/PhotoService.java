@@ -48,6 +48,25 @@ public class PhotoService {
 
 
     /**********************************         Photo APIs         ******************************/
+
+
+    @Transactional(readOnly = true)
+    public List <PhotoResponse> getPhotos (Owner owner, FeatureContext context){
+        return photoRepository.findFeatured(context, owner)
+                .stream()
+                .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()))
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List <PhotoResponse> getPhotos (FeatureContext context){
+        return photoRepository.findFeatured(context,null)
+                .stream()
+                .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()))
+                .toList();
+    }
+
+
     @Transactional
     public Photo upload(MultipartFile file, Owner owner, UUID albumId, List<Theme> themes) {
         // Check if the file is valid
@@ -153,13 +172,7 @@ public class PhotoService {
     public List<UUID> albumIdsOfPhoto( Photo photo) {
         return albumPhotoRepository.findAlbumIdsByPhotoId(photo.getId());
     }
-    @Transactional(readOnly = true)
-    public List <PhotoResponse> getPhotos (Owner owner, FeatureContext context){
-        return photoRepository.findFeatured(context, owner)
-                .stream()
-                .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()))
-                .toList();
-    }
+
     /*
     public Map<UUID, List<UUID>> albumIdsByPhotoIds(List<UUID> photoIds) {
         if (photoIds == null || photoIds.isEmpty()) return Map.of();

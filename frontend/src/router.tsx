@@ -4,7 +4,7 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 import ProfilesPage from "./pages/ProfilesPage";
 import GalleryLayout from "./layouts/GalleryLayout";
 import RootLayout from "./layouts/RootLayout.tsx";
-import Homepage from "./pages/homepage/HomePage.tsx";
+import Homepage from "./pages/homepage/Homepage.tsx";
 import AlbumsPage from "./pages/AlbumsPage";
 import AlbumPage from "./pages/AlbumPage";
 import PhotosPage from "./pages/PhotosPage";

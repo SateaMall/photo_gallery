@@ -23,10 +23,6 @@ public class PublicPhotoController {
 
     private final PhotoService photoService;
 
-
-
-
-
     @GetMapping("/{id}")
     public PhotoResponse get(@PathVariable UUID id) {
         Photo p = photoService.get(id);

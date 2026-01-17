@@ -106,8 +106,8 @@ public class AlbumService {
         return AlbumResponse.from(album, relations);
     }
     @Transactional(readOnly = true)
-    public List<AlbumViewResponse> getAlbums() {
-            List<AlbumViewRow> Rows= albumRepository.findAlbumViews();
+    public List<AlbumViewResponse> getAlbums(AlbumScope scope) {
+            List<AlbumViewRow> Rows= albumRepository.findAlbumViews(scope);
         return AlbumViewResponse.from(Rows);
         }
     }
