@@ -31,28 +31,36 @@ export default function Homepage() {
   if (loading) return <div className="hp">Loading…</div>;
   if (error) return <div className="hp hp-error">{error}</div>;
 
-  return (
-    <div>
-    <div className="hp">
-      <h1 className="hp-title">Albums</h1>
+return (
+  <div className="homepage">
+    {/* Photos */}
+    <section className="hp-section">
+      <header className="hp-head">
+        <h1 className="hp-title">Photos</h1>
+        <a className="hp-link" href={`/${context}/photos`}>See more →</a>
+      </header>
 
-      <div className="hp-grid">
-        {albums.map((a) => (
-          <AlbumCard key={a.albumId} album={a} />
-        ))}
-      </div>
-    </div>
-    
-        <div className="hp">
-      <h1 className="hp-title">photos</h1>
-
-      <div className="hp-grid">
+      <div className="photos-masonry">
         {photos.map((p) => (
           <PhotoCard key={p.id} photo={p} />
         ))}
       </div>
-    </div>
-    
-    </div>
-  );
+    </section>
+
+    {/* Albums */}
+    <section className="hp-section">
+      <header className="hp-head">
+        <h1 className="hp-title">Albums</h1>
+        <a className="hp-link" href={`/${context}/albums`}>See more →</a>
+      </header>
+
+      <div className="albums-grid">
+        {albums.map((a) => (
+          <AlbumCard key={a.albumId} album={a} />
+        ))}
+      </div>
+    </section>
+  </div>
+);
+
 }

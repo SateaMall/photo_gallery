@@ -1,18 +1,133 @@
-.hp {
-  padding: 18px 22px;
+.homepage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 18px 60px;
+}
+
+/* section spacing */
+.hp-section {
+  margin-bottom: 42px;
+}
+
+.hp-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 8px 2px 16px;
 }
 
 .hp-title {
-  margin: 0 0 14px;
+  margin: 0;
   font-size: 22px;
+  font-weight: 650;
+  letter-spacing: 0.2px;
+  text-transform: lowercase; /* matches your "photos" sketch vibe */
 }
 
-.hp-error {
-  color: #ff6b6b;
+.hp-link {
+  font-size: 14px;
+  text-decoration: none;
+  opacity: 0.8;
+}
+.hp-link:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
-.hp-grid {
+/* ----------------------------- */
+/* PHOTOS: rhythmic masonry layout */
+/* ----------------------------- */
+
+/* Masonry using CSS columns (best “rhythmic” look without JS) */
+.photos-masonry {
+  column-gap: 18px;
+  columns: 1;
+}
+
+@media (min-width: 520px) {
+  .photos-masonry { columns: 2; }
+}
+@media (min-width: 900px) {
+  .photos-masonry { columns: 3; }
+}
+@media (min-width: 1200px) {
+  .photos-masonry { columns: 4; }
+}
+
+.photo-card {
+  break-inside: avoid;
+  margin: 0 0 18px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  transform: translateZ(0);
+}
+
+.photo-img {
+  width: 100%;
+  height: auto;       /* keeps natural photo ratio */
+  display: block;     /* removes inline-gap issues */
+  object-fit: cover;
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.photo-card:hover .photo-img {
+  transform: scale(1.02);
+  opacity: 0.98;
+}
+
+/* ----------------------------- */
+/* ALBUMS: clean regular grid      */
+/* ----------------------------- */
+
+.albums-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
+}
+
+@media (min-width: 800px) {
+  .albums-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.album-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+}
+
+.album-cover {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.album-cover--empty {
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.album-meta {
+  padding: 12px 12px 14px;
+}
+
+.album-title {
+  font-weight: 650;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.album-sub {
+  margin-top: 4px;
+  font-size: 13px;
+  opacity: 0.75;
 }
