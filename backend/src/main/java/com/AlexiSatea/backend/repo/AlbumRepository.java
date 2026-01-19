@@ -21,7 +21,7 @@ public interface AlbumRepository extends JpaRepository<Album, UUID> {
         ap.photo_id as firstPhotoId,
         count(*) over (partition by ap.album_id) as numberOfPhotos
     from albums a
-    left join album_photos ap on ap.album_id = a.id
+    inner join album_photos ap on ap.album_id = a.id
     where a.scope =  :#{#scope.name()}
     order by
         ap.album_id,
