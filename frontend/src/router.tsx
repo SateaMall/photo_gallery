@@ -11,12 +11,12 @@ import PhotosPage from "./pages/PhotosPage";
 import PhotoPage from "./pages/PhotoPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
+import AdminPage from "./AdminSection/admin_upload";
 
 export const router = createBrowserRouter([
   { path: "/",  element: <RootLayout />, children: [
-
   { index : true, element: <Navigate to="/profiles" /> },
-
+  { path: "/admin", element: <AdminPage /> },
   { path: "/profiles", element: <ProfilesPage /> },
 
 {

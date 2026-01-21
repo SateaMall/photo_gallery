@@ -15,14 +15,15 @@ export function Navbar() {
       ? "Alexis Cordier"
       : "Mohamad Satea Almallouhi";
 
+      const backgroundColor = context === "undefined" ? "#c2c2c20c" : "#1a1818e5"
   // Base for albums/photos links and brand
   const base = isSharedMode ? "/shared" : `/${context}`;
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: backgroundColor }}>
       <Link
         className="navbar-brand"
-        style={{ backgroundColor: "#c2c2c20c", marginLeft: "30px", fontSize: "20px" }}
+        style={{  marginLeft: "30px", fontSize: "20px" }}
         to={base}
       >
         {brandText}

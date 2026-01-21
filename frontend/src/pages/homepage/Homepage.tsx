@@ -8,51 +8,137 @@ import { useParams } from "react-router-dom";
 import type { PhotoResponse } from "../../types/types";
 
 export default function Homepage() {
-  const { context } = useParams(); // "satea" | "alexis" | "shared"
-  const [albums, setAlbums] = useState<AlbumViewResponse[]>([]);
-  const [photos, setPhotos] = useState<PhotoResponse[]>([]);
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const { context } = useParams(); // "satea" | "alexis" | "shared"
+const scope = context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED";
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState<string | null>(null);
+
+
+
+/**** **** **** **** PHOTOS **** **** **** ****/
+  const PAGE_SIZE = 20;
+  const FIRST_VISIBLE = 12;
+  const [photos, setPhotos] = useState<PhotoResponse[]>([]);
+  const [page, setPage] = useState(0); // backend page index
+  const [visibleCount, setVisibleCount] = useState(FIRST_VISIBLE);
+  const [hasMorePages, setHasMorePages] = useState(true);
+  const [initialRevealDone, setInitialRevealDone] = useState(false);
+  const hasHiddenInCurrent =
+  !initialRevealDone && visibleCount < photos.length;
+// Context can change (via routing), we need to reset when that happens
+useEffect(() => {
+  setPhotos([]);
+  setPage(0);
+  setVisibleCount(FIRST_VISIBLE);
+  setHasMorePages(true);
+}, [context]);
+
+useEffect(() => {
+  if (initialRevealDone) {
+    setVisibleCount(photos.length);
+  }
+}, [photos.length, initialRevealDone]);
+
+// Fetch photos when page or scope changes
+useEffect(() => {
+  setLoading(true);
+  fetchHomepagePhotos(scope, page, PAGE_SIZE)
+    .then((res) => {
+      setPhotos((prev) => {
+        // 🔒 prevent duplicate pages
+        const existingIds = new Set(prev.map(p => p.id));
+        const newPhotos = res.content.filter(p => !existingIds.has(p.id));
+        return [...prev, ...newPhotos];
+      });
+
+      setHasMorePages(!res.last);
+    })
+    .catch((e) => setError(e.message))
+    .finally(() => setLoading(false));
+}, [scope, page]);
+
+function revealHidden() {
+  setVisibleCount(photos.length);
+    setInitialRevealDone(true); // 👈 mark as done forever
+}
+
+function loadMore() {
+  setPage((p) => p + 1); // triggers API
+  
+}
+
+/**** **** **** **** ALBUMS **** **** **** ****/
+
+  const [albums, setAlbums] = useState<AlbumViewResponse[]>([]);
+
 
   useEffect(() => {
     fetchHomepageAlbums(context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED")
       .then(setAlbums)
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [context]);
 
-  useEffect(() => {
-    fetchHomepagePhotos(context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED")
-      .then(setPhotos)
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false))},
-       []);
+
+
   if (loading) return <div className="hp">Loading…</div>;
   if (error) return <div className="hp hp-error">{error}</div>;
 
-  return (
-    <div>
-    <div className="hp">
-      <h1 className="hp-title">Albums</h1>
 
-      <div className="hp-grid">
+
+return (
+  <div className="homepage">
+    {/* Photos */}
+    <section className="hp-section">
+      <header className="hp-head">
+        <h1 className="hp-title">Photos</h1>
+      </header>
+
+     <div className={`photos-preview ${hasHiddenInCurrent ? "is-clamped" : ""}`}>
+    <div className="photos-masonry">
+      {photos.slice(0, visibleCount).map((p) => (
+        <PhotoCard key={p.id} photo={p} />
+      ))}
+    </div>
+
+    {/* FIRST SEE MORE (fade reveal) */}
+    {hasHiddenInCurrent && (
+      <>
+        <div className="photos-fade" />
+        <div className="photos-more">
+          <button className="hp-more-btn" onClick={revealHidden}>
+            See more
+          </button>
+        </div>
+      </>
+    )}
+  </div>
+
+  {/* SECOND SEE MORE (pagination) */}
+  {!hasHiddenInCurrent && hasMorePages && (
+    <div style={{ textAlign: "center", marginTop: 20 }}>
+      <button className="hp-more-btn" onClick={loadMore}>
+        Load more photos
+      </button>
+    </div>
+  )}
+</section>
+
+
+    {/* Albums */}
+    <section className="hp-section">
+      <header className="hp-head">
+        <h1 className="hp-title">Albums</h1>
+      </header>
+
+      <div className="albums-grid">
         {albums.map((a) => (
           <AlbumCard key={a.albumId} album={a} />
         ))}
       </div>
-    </div>
-    
-        <div className="hp">
-      <h1 className="hp-title">photos</h1>
+    </section>
+  </div>
+);
 
-      <div className="hp-grid">
-        {photos.map((p) => (
-          <PhotoCard key={p.id} photo={p} />
-        ))}
-      </div>
-    </div>
-    
-    </div>
-  );
 }

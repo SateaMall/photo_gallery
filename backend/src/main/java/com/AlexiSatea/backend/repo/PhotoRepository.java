@@ -19,7 +19,7 @@ import java.util.UUID;
 public interface PhotoRepository extends JpaRepository<Photo, UUID> {
     Page<Photo> findByOwnerOrderByCreatedAtDesc(Owner owner, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"themes"})
+
     @Query("""
     select p as photo, pf as photoFeature
     from Photo p
@@ -34,9 +34,10 @@ public interface PhotoRepository extends JpaRepository<Photo, UUID> {
       pf.featuredAt desc,
       p.createdAt desc
 """)
-    List<PhotoAndFeature> findFeatured(
+    Page<PhotoAndFeature> findFeatured(
             @Param("context") FeatureContext context,
-            @Param("owner") @Nullable Owner owner
+            @Param("owner") @Nullable Owner owner,
+            Pageable pageable
     );
 
 }

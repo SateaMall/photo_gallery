@@ -43,8 +43,6 @@ export default function ProfilesPages() {
     return hoveredId ? BG_BY_ID[hoveredId] : bgShared;
   }, [hoveredId]);
 
-
-
  async function onPickProfile(p: Profile) {
     const routeContext = p.id; // "satea" | "alexis" | "shared"
     // set profile in the backend & Go
@@ -57,7 +55,7 @@ export default function ProfilesPages() {
 
 
     <div className="page" style={{ backgroundImage: `url(${currentBg})` }}>
-         {<Navbar />}
+       
           <div className="ps-grid">
             {PROFILES.map((p) => {
               const isShared = p.id === "shared";

@@ -6,6 +6,16 @@ export type AlbumViewResponse = {
   numberOfPhotos: number;
 };
 
+export type PageResponse<T> = {
+  content: T[];
+  number: number;        // current page (0-based)
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
+};
+
 export type PhotoResponse = {
   id: string;
   owner: Owner;

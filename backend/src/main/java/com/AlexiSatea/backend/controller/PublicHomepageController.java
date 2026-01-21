@@ -9,6 +9,9 @@ import com.AlexiSatea.backend.model.Photo;
 import com.AlexiSatea.backend.service.AlbumService;
 import com.AlexiSatea.backend.service.PhotoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,13 +28,19 @@ public class PublicHomepageController {
         return albumService.getAlbums(scope);
     }
     @GetMapping("/photos/{scope}")
-    public List<PhotoResponse> getPhotos(@PathVariable AlbumScope scope) {
+    public Page<PhotoResponse> getPhotos(
+            @PathVariable AlbumScope scope,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+
         if (scope== AlbumScope.SHARED) {
-            return photoService.getPhotos(FeatureContext.SHARED);
+            return photoService.getPhotos(FeatureContext.SHARED,pageable);
         }
         else {
             Owner owner = scope== AlbumScope.ALEXIS ? Owner.ALEXIS : Owner.SATEA;
-        return photoService.getPhotos(owner,  FeatureContext.PERSONAL);
+        return photoService.getPhotos(owner,  FeatureContext.PERSONAL,pageable);
         }
     }
 

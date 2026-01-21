@@ -2,9 +2,6 @@
 
 import { useMemo, useState } from "react";
 import {
-  type AlbumScope,
-  type Theme,
-  type Owner,
   uploadPhoto,
   deletePhoto,
   createAlbum,
@@ -13,7 +10,12 @@ import {
   addPhotoToAlbum,
   removePhotoFromAlbum,
   getAlbum,
-} from "./AdminSection/admin_api";
+} from "./admin_api";
+import {
+  type Scope,
+  type Theme,
+  type Owner} from "../types/types"
+
 
 const THEMES: { value: Theme; label: string }[] = [
   { value: "STREET_SOCIETY", label: "Street & Society" },
@@ -25,7 +27,7 @@ const THEMES: { value: Theme; label: string }[] = [
 ];
 
 const OWNERS: Owner[] = ["SATEA", "ALEXIS"];
-const SCOPES: AlbumScope[] = ["SATEA", "ALEXIS", "SHARED"];
+const SCOPES: Scope[] = ["SATEA", "ALEXIS", "SHARED"];
 
 function Card(props: { title: string; children: React.ReactNode }) {
   return (
@@ -45,7 +47,7 @@ function Row(props: { label: string; children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export default function AdminPage() {
   const [log, setLog] = useState<any>(null);
 
   // Upload state
@@ -53,13 +55,12 @@ export default function App() {
   const [owner, setOwner] = useState<Owner>("SATEA");
   const [albumId, setAlbumId] = useState("");
   const [themes, setThemes] = useState<Theme[]>([]);
-
   // Photo delete
   const [photoIdToDelete, setPhotoIdToDelete] = useState("");
 
   // Album create/update/delete
   const [albumTitle, setAlbumTitle] = useState("");
-  const [albumScope, setAlbumScope] = useState<AlbumScope>("SATEA");
+  const [albumScope, setAlbumScope] = useState<Scope>("SATEA");
   const [albumDesc, setAlbumDesc] = useState("");
 
   const [albumIdToUpdate, setAlbumIdToUpdate] = useState("");
@@ -85,7 +86,7 @@ export default function App() {
     }
   }
 const [albumIdToShow, setAlbumIdToShow] = useState("");
-const [album, setAlbum] = useState<import("./AdminSection/admin_api").AlbumResponse | null>(null);
+const [album, setAlbum] = useState<import("./admin_api").AlbumResponse | null>(null);
 
 
   return (
@@ -176,7 +177,7 @@ const [album, setAlbum] = useState<import("./AdminSection/admin_api").AlbumRespo
         </Row>
 
         <Row label="Scope">
-          <select value={albumScope} onChange={(e) => setAlbumScope(e.target.value as AlbumScope)}>
+          <select value={albumScope} onChange={(e) => setAlbumScope(e.target.value as Scope)}>
             {SCOPES.map((s) => (
               <option key={s} value={s}>
                 {s}
@@ -219,7 +220,7 @@ const [album, setAlbum] = useState<import("./AdminSection/admin_api").AlbumRespo
         </Row>
 
         <Row label="Scope">
-          <select value={albumScope} onChange={(e) => setAlbumScope(e.target.value as AlbumScope)}>
+          <select value={albumScope} onChange={(e) => setAlbumScope(e.target.value as Scope)}>
             {SCOPES.map((s) => (
               <option key={s} value={s}>
                 {s}
