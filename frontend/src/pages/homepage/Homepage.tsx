@@ -5,15 +5,22 @@ import { AlbumCard } from "../../components/AlbumCard";
 import { PhotoCard } from "../../components/PhotoCard";
 import "./HomePage.css";
 import { useParams } from "react-router-dom";
-import type { PhotoResponse } from "../../types/types";
+import type { PhotoResponse,PageResponse } from "../../types/types";
 
 export default function Homepage() {
+  const PAGE_SIZE = 20;
+  const [photoPage, setPhotoPage] = useState<PageResponse<PhotoResponse> | null>(null);
+  const [photoPageIndex, setPhotoPageIndex] = useState(0);
   const { context } = useParams(); // "satea" | "alexis" | "shared"
   const [albums, setAlbums] = useState<AlbumViewResponse[]>([]);
   const [photos, setPhotos] = useState<PhotoResponse[]>([]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // How many photos visible on homepage
+  const STEP = 12;
+ const [visibleCount, setVisibleCount] = useState(STEP);
 
   useEffect(() => {
     fetchHomepageAlbums(context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED")
@@ -31,6 +38,10 @@ export default function Homepage() {
   if (loading) return <div className="hp">Loading…</div>;
   if (error) return <div className="hp hp-error">{error}</div>;
 
+
+  const shownPhotos = photos.slice(0, visibleCount);
+  const hasMore = visibleCount < photos.length;
+
 return (
   <div className="homepage">
     {/* Photos */}
@@ -40,12 +51,30 @@ return (
         <a className="hp-link" href={`/${context}/photos`}>See more →</a>
       </header>
 
-      <div className="photos-masonry">
-        {photos.map((p) => (
-          <PhotoCard key={p.id} photo={p} />
-        ))}
-      </div>
-    </section>
+      <div className={`photos-preview ${hasMore ? "is-clamped" : ""}`}>
+          <div className="photos-masonry">
+            {shownPhotos.map((p) => (
+              <PhotoCard key={p.id} photo={p} />
+            ))}
+          </div>
+
+          {hasMore && (
+            <>
+              <div className="photos-fade" />
+              <div className="photos-more">
+                <button
+                  type="button"
+                  className="hp-more-btn"
+                  onClick={() => setVisibleCount((c) => Math.min(c + STEP, photos.length))}
+                >
+                  See more
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+
 
     {/* Albums */}
     <section className="hp-section">
