@@ -5,42 +5,87 @@ import { AlbumCard } from "../../components/AlbumCard";
 import { PhotoCard } from "../../components/PhotoCard";
 import "./HomePage.css";
 import { useParams } from "react-router-dom";
-import type { PhotoResponse,PageResponse } from "../../types/types";
+import type { PhotoResponse } from "../../types/types";
 
 export default function Homepage() {
+
+const { context } = useParams(); // "satea" | "alexis" | "shared"
+const scope = context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED";
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState<string | null>(null);
+
+
+
+/**** **** **** **** PHOTOS **** **** **** ****/
   const PAGE_SIZE = 20;
-  const [photoPage, setPhotoPage] = useState<PageResponse<PhotoResponse> | null>(null);
-  const [photoPageIndex, setPhotoPageIndex] = useState(0);
-  const { context } = useParams(); // "satea" | "alexis" | "shared"
-  const [albums, setAlbums] = useState<AlbumViewResponse[]>([]);
+  const FIRST_VISIBLE = 12;
   const [photos, setPhotos] = useState<PhotoResponse[]>([]);
+  const [page, setPage] = useState(0); // backend page index
+  const [visibleCount, setVisibleCount] = useState(FIRST_VISIBLE);
+  const [hasMorePages, setHasMorePages] = useState(true);
+  const [initialRevealDone, setInitialRevealDone] = useState(false);
+  const hasHiddenInCurrent =
+  !initialRevealDone && visibleCount < photos.length;
+// Context can change (via routing), we need to reset when that happens
+useEffect(() => {
+  setPhotos([]);
+  setPage(0);
+  setVisibleCount(FIRST_VISIBLE);
+  setHasMorePages(true);
+}, [context]);
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+useEffect(() => {
+  if (initialRevealDone) {
+    setVisibleCount(photos.length);
+  }
+}, [photos.length, initialRevealDone]);
 
-  // How many photos visible on homepage
-  const STEP = 12;
- const [visibleCount, setVisibleCount] = useState(STEP);
+// Fetch photos when page or scope changes
+useEffect(() => {
+  setLoading(true);
+  fetchHomepagePhotos(scope, page, PAGE_SIZE)
+    .then((res) => {
+      setPhotos((prev) => {
+        // 🔒 prevent duplicate pages
+        const existingIds = new Set(prev.map(p => p.id));
+        const newPhotos = res.content.filter(p => !existingIds.has(p.id));
+        return [...prev, ...newPhotos];
+      });
+
+      setHasMorePages(!res.last);
+    })
+    .catch((e) => setError(e.message))
+    .finally(() => setLoading(false));
+}, [scope, page]);
+
+function revealHidden() {
+  setVisibleCount(photos.length);
+    setInitialRevealDone(true); // 👈 mark as done forever
+}
+
+function loadMore() {
+  setPage((p) => p + 1); // triggers API
+  
+}
+
+/**** **** **** **** ALBUMS **** **** **** ****/
+
+  const [albums, setAlbums] = useState<AlbumViewResponse[]>([]);
+
 
   useEffect(() => {
     fetchHomepageAlbums(context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED")
       .then(setAlbums)
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [context]);
 
-  useEffect(() => {
-    fetchHomepagePhotos(context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED")
-      .then(setPhotos)
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false))},
-       []);
+
+
   if (loading) return <div className="hp">Loading…</div>;
   if (error) return <div className="hp hp-error">{error}</div>;
 
 
-  const shownPhotos = photos.slice(0, visibleCount);
-  const hasMore = visibleCount < photos.length;
 
 return (
   <div className="homepage">
@@ -48,39 +93,43 @@ return (
     <section className="hp-section">
       <header className="hp-head">
         <h1 className="hp-title">Photos</h1>
-        <a className="hp-link" href={`/${context}/photos`}>See more →</a>
       </header>
 
-      <div className={`photos-preview ${hasMore ? "is-clamped" : ""}`}>
-          <div className="photos-masonry">
-            {shownPhotos.map((p) => (
-              <PhotoCard key={p.id} photo={p} />
-            ))}
-          </div>
+     <div className={`photos-preview ${hasHiddenInCurrent ? "is-clamped" : ""}`}>
+    <div className="photos-masonry">
+      {photos.slice(0, visibleCount).map((p) => (
+        <PhotoCard key={p.id} photo={p} />
+      ))}
+    </div>
 
-          {hasMore && (
-            <>
-              <div className="photos-fade" />
-              <div className="photos-more">
-                <button
-                  type="button"
-                  className="hp-more-btn"
-                  onClick={() => setVisibleCount((c) => Math.min(c + STEP, photos.length))}
-                >
-                  See more
-                </button>
-              </div>
-            </>
-          )}
+    {/* FIRST SEE MORE (fade reveal) */}
+    {hasHiddenInCurrent && (
+      <>
+        <div className="photos-fade" />
+        <div className="photos-more">
+          <button className="hp-more-btn" onClick={revealHidden}>
+            See more
+          </button>
         </div>
-      </section>
+      </>
+    )}
+  </div>
+
+  {/* SECOND SEE MORE (pagination) */}
+  {!hasHiddenInCurrent && hasMorePages && (
+    <div style={{ textAlign: "center", marginTop: 20 }}>
+      <button className="hp-more-btn" onClick={loadMore}>
+        Load more photos
+      </button>
+    </div>
+  )}
+</section>
 
 
     {/* Albums */}
     <section className="hp-section">
       <header className="hp-head">
         <h1 className="hp-title">Albums</h1>
-        <a className="hp-link" href={`/${context}/albums`}>See more →</a>
       </header>
 
       <div className="albums-grid">

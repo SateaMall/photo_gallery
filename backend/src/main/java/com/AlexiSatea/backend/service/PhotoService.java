@@ -53,15 +53,12 @@ public class PhotoService {
     @Transactional(readOnly = true)
     public Page <PhotoResponse> getPhotos (Owner owner, FeatureContext context, Pageable pageable){
         return photoRepository.findFeatured(context, owner, pageable)
-                .stream()
-                .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()))
-                .toList();
+                .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()));
     }
 
     @Transactional(readOnly = true)
     public Page <PhotoResponse> getPhotos (FeatureContext context, Pageable pageable){
         return photoRepository.findFeatured(context,null,pageable)
-                .stream()
                 .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()));
     }
 
