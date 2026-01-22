@@ -3,7 +3,7 @@ import { photoFileUrl } from "../api/photos";
 import "./AlbumCard.css";
 
 export function AlbumCard({ album }: { album: AlbumViewResponse }) {
-  const cover = album.firstPhotoId ? photoFileUrl(album.firstPhotoId) : null;
+  const cover = album.firstPhotoId ? photoFileUrl(album.firstPhotoId, "MEDIUM") : null;
 
   return (
     <article className="album-card">

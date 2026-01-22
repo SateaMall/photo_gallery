@@ -22,7 +22,7 @@ public class AlbumPhoto {
     // It will load it only when we ask it too with getphoto() or getalbum(),
     // Important for performance!
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("albumId") // THis will dtock the albumId in sql and not the instance!
+    @MapsId("albumId") // This will stock the albumId in SQL and not the instance!
     @JoinColumn(name = "album_id", nullable = false)
     private Album album;
 

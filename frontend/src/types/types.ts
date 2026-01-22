@@ -1,3 +1,4 @@
+
 export type AlbumViewResponse = {
   albumId: string;
   firstPhotoId: string | null;
@@ -20,7 +21,6 @@ export type PhotoResponse = {
   id: string;
   owner: Owner;
   context: Context;
-  siezeBytes: number;
   createdAt: string; // ISO date string
   themes: Theme[]
   title: string;
@@ -43,9 +43,10 @@ export type Owner = "SATEA" | "ALEXIS";
 
 export type Context = "PERSONAL" | "SHARED";
 
-
 export type Profile = {
   id: "satea" | "shared" | "alexis";
   label: string;
   avatar?: { type: "initials"; bg: string };
 };
+
+export type photoVariant= "ORIGINAL"| "MEDIUM"| "THUMB";
