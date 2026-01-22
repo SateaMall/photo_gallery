@@ -1,6 +1,8 @@
 .photo-card {
   display: grid;
   gap: 10px;
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 380px;
 }
 
 .image{
@@ -9,6 +11,7 @@
   object-fit: cover;
   border-radius: 10px;
   background: #111;
+  will-change: transform;
 }
 
 .image--empty {

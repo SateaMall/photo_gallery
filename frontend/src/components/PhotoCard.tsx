@@ -22,7 +22,10 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
         if (e.key === "Enter" || e.key === " ") onPickPhoto(photo.id);
       }}
     >
-      <img className="photo-img" src={image} alt={photo.title} loading="lazy" />
+      <img className="photo-img" src={image} alt={photo.title} 
+        loading="lazy"
+        decoding="async"
+        fetchPriority="low" />
     </article>
   );
 }
