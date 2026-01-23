@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { fetchHomepageAlbums, fetchHomepagePhotos} from "../../api/homepage";
 import type { AlbumViewResponse } from "../../types/types";
 import { AlbumCard } from "../../components/AlbumCard";
@@ -6,7 +6,6 @@ import { PhotoCard } from "../../components/PhotoCard";
 import "./HomePage.css";
 import { useParams } from "react-router-dom";
 import type { PhotoResponse } from "../../types/types";
-
 export default function Homepage() {
 
 const { context } = useParams(); // "satea" | "alexis" | "shared"
@@ -26,6 +25,10 @@ const [error, setError] = useState<string | null>(null);
   const [initialRevealDone, setInitialRevealDone] = useState(false);
   const hasHiddenInCurrent =
   !initialRevealDone && visibleCount < photos.length;
+  const restoreScrollYRef = useRef<number | null>(null);
+  const [photosLoading, setPhotosLoading] = useState(false);
+
+
 // Context can change (via routing), we need to reset when that happens
 useEffect(() => {
   setPhotos([]);
@@ -38,11 +41,11 @@ useEffect(() => {
   if (initialRevealDone) {
     setVisibleCount(photos.length);
   }
-}, [photos.length, initialRevealDone]);
+ }, [photos.length, initialRevealDone]);
 
 // Fetch photos when page or scope changes
 useEffect(() => {
-  setLoading(true);
+  setPhotosLoading(true);
   fetchHomepagePhotos(scope, page, PAGE_SIZE)
     .then((res) => {
       setPhotos((prev) => {
@@ -55,8 +58,21 @@ useEffect(() => {
       setHasMorePages(!res.last);
     })
     .catch((e) => setError(e.message))
-    .finally(() => setLoading(false));
+    .finally(() => setPhotosLoading(false));
 }, [scope, page]);
+
+useEffect(() => {
+  if (restoreScrollYRef.current == null) return;
+
+  // wait for DOM paint + layout
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: restoreScrollYRef.current!, behavior: "auto" });
+      restoreScrollYRef.current = null;
+    });
+  });
+}, [photos.length]);
+
 
 function revealHidden() {
   setVisibleCount(photos.length);
@@ -64,25 +80,27 @@ function revealHidden() {
 }
 
 function loadMore() {
+  restoreScrollYRef.current = window.scrollY;
   setPage((p) => p + 1); // triggers API
-  
 }
 
 /**** **** **** **** ALBUMS **** **** **** ****/
 
   const [albums, setAlbums] = useState<AlbumViewResponse[]>([]);
-
+  const [albumsLoading, setAlbumsLoading] = useState(false);
 
   useEffect(() => {
+     setAlbumsLoading(true);
     fetchHomepageAlbums(context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED")
       .then(setAlbums)
       .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
+      .finally(() => setAlbumsLoading(false));
   }, [context]);
 
 
 
-  if (loading) return <div className="hp">Loading…</div>;
+  
+  if (photosLoading) return <div className="hp">Photos Loading…</div>;
   if (error) return <div className="hp hp-error">{error}</div>;
 
 
@@ -94,7 +112,7 @@ return (
       <header className="hp-head">
         <h1 className="hp-title">Photos</h1>
       </header>
-
+{photosLoading && (<div className="hp">Photos Loading…</div>)}
      <div className={`photos-preview ${hasHiddenInCurrent ? "is-clamped" : ""}`}>
     <div className="photos-masonry">
       {photos.slice(0, visibleCount).map((p) => (
@@ -117,7 +135,7 @@ return (
 
   {/* SECOND SEE MORE (pagination) */}
   {!hasHiddenInCurrent && hasMorePages && (
-    <div style={{ textAlign: "center", marginTop: 20 }}>
+    <div style={{ textAlign: "center", marginTop: 20 }} >
       <button className="hp-more-btn" onClick={loadMore}>
         Load more photos
       </button>
@@ -131,7 +149,7 @@ return (
       <header className="hp-head">
         <h1 className="hp-title">Albums</h1>
       </header>
-
+      {albumsLoading && (<div className="hp">Albums Loading…</div>)}
       <div className="albums-grid">
         {albums.map((a) => (
           <AlbumCard key={a.albumId} album={a} />

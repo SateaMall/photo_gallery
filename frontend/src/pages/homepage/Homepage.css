@@ -31,20 +31,13 @@
 /* ----------------------------- */
 
 /* Masonry using CSS columns (best “rhythmic” look without JS) */
+
 .photos-masonry {
-  column-gap: 18px;
-  columns: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
 }
 
-@media (min-width: 520px) {
-  .photos-masonry { columns: 2; }
-}
-@media (min-width: 900px) {
-  .photos-masonry { columns: 3; }
-}
-@media (min-width: 1200px) {
-  .photos-masonry { columns: 4; }
-}
 
 .photo-card {
   break-inside: avoid;
@@ -54,11 +47,13 @@
   background: rgba(255, 255, 255, 0.04);
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
   transform: translateZ(0);
+  aspect-ratio: 4 / 5;   /* ✅ choose your vibe */
+
 }
 
 .photo-img {
   width: 100%;
-  height: auto;       /* keeps natural photo ratio */
+  height: 100%;     
   display: block;     /* removes inline-gap issues */
   object-fit: cover;
   transition: transform 220ms ease, opacity 220ms ease;
@@ -69,26 +64,9 @@
   opacity: 0.98;
 }
 
-.photos-masonry {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 18px;
-}
 
-.photo-card {
-  border-radius: 16px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
-  aspect-ratio: 4 / 5;   /* ✅ choose your vibe */
-}
 
-.photo-img {
-  width: 100%;
-  height: 100%;          /* ✅ fill the tile */
-  display: block;
-  object-fit: cover;
-}
+
 
 /******* show photos on columns 
 /* Beautifull but we end up with alot of limitaions and bugs
@@ -133,10 +111,7 @@
 
 
 */
-.photo-card:hover .photo-img {
-  transform: scale(1.02);
-  opacity: 0.98;
-}
+
 
 
 /* PHOTOS PREVIEW: clamp + fade + button */

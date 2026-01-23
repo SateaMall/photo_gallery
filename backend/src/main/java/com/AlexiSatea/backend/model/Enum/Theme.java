@@ -5,7 +5,6 @@ import lombok.Getter;
 
 @Getter
 public enum Theme {
-
     STREET_SOCIETY("Street & Society"),
     PEOPLE_EMOTION("People & Emotion"),
     NATURE_ENVIRONMENT("Nature & Environment"),
