@@ -14,11 +14,13 @@ export function AlbumCard({ album }: { album: AlbumViewResponse }) {
       )}
 
       <div className="album-meta">
-        <div className="album-title">{album.title}</div>
-        <div className="album-sub">
-          {album.numberOfPhotos} photo{album.numberOfPhotos === 1 ? "" : "s"}
-        </div>
-      </div>
+         <div className="album-title">{album.title}</div>
+         <div className="album-sub">
+           <div className="album-count">
+             {album.numberOfPhotos} photo{album.numberOfPhotos === 1 ? "" : "s"}
+           </div>
+         </div>
+       </div>
     </article>
   );
 }

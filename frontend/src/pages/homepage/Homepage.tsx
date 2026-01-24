@@ -10,7 +10,6 @@ export default function Homepage() {
 
 const { context } = useParams(); // "satea" | "alexis" | "shared"
 const scope = context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED";
-const [loading, setLoading] = useState(true);
 const [error, setError] = useState<string | null>(null);
 
 
@@ -97,13 +96,7 @@ function loadMore() {
       .finally(() => setAlbumsLoading(false));
   }, [context]);
 
-
-
-  
-  if (photosLoading) return <div className="hp">Photos Loading…</div>;
   if (error) return <div className="hp hp-error">{error}</div>;
-
-
 
 return (
   <div className="homepage">
