@@ -5,9 +5,7 @@ import ProfilesPage from "./pages/ProfilesPage";
 import GalleryLayout from "./layouts/GalleryLayout";
 import RootLayout from "./layouts/RootLayout.tsx";
 import Homepage from "./pages/homepage/Homepage.tsx";
-import AlbumsPage from "./pages/AlbumsPage";
 import AlbumPage from "./pages/AlbumPage";
-import PhotosPage from "./pages/PhotosPage";
 import PhotoPage from "./pages/PhotoPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
@@ -24,9 +22,7 @@ export const router = createBrowserRouter([
   element: <GalleryLayout />,
   children: [
     { index: true, element: <Homepage /> },
-    { path: "albums", element: <AlbumsPage /> },
     { path: "albums/:albumId", element: <AlbumPage /> },
-    { path: "photos", element: <PhotosPage /> },
     { path: "photos/:photoId", element: <PhotoPage /> },
     { path: "contact", element: <ContactPage /> },
   ],

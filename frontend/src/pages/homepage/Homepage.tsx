@@ -99,11 +99,11 @@ function loadMore() {
   if (error) return <div className="hp hp-error">{error}</div>;
 
 return (
-  <div className="homepage">
+  <div className="homepage font-copperplate">
     {/* Photos */}
-    <section className="hp-section">
+    <section className="hp-section"  id="photos">
       <header className="hp-head">
-        <h1 className="hp-title">Photos</h1>
+        <h1 className="hp-title ">Photos</h1>
       </header>
 {photosLoading && (<div className="hp">Photos Loading…</div>)}
      <div className={`photos-preview ${hasHiddenInCurrent ? "is-clamped" : ""}`}>
@@ -138,7 +138,7 @@ return (
 
 
     {/* Albums */}
-    <section className="hp-section">
+    <section className="hp-section"  id="albums">
       <header className="hp-head">
         <h1 className="hp-title">Albums</h1>
       </header>

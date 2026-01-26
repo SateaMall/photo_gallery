@@ -15,15 +15,14 @@ export function Navbar() {
       ? "Alexis Cordier"
       : "Mohamad Satea Almallouhi";
 
-      const backgroundColor = context === "undefined" ? "#c2c2c20c" : "#1a1818e5"
   // Base for albums/photos links and brand
   const base = isSharedMode ? "/shared" : `/${context}`;
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: backgroundColor }}>
+    <nav className="navbar navbar-expand-lg navbar-dark font-copperplate" style={{ backgroundColor: "#000000e5"  }}>
       <Link
         className="navbar-brand"
-        style={{  marginLeft: "30px", fontSize: "20px" }}
+        style={{  marginLeft: "30px", fontSize: "20px", fontWeight: "600" }}
         to={base}
       >
         {brandText}
@@ -42,15 +41,20 @@ export function Navbar() {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul className="navbar-nav">
+        <ul className="navbar-nav w-100 text-center align-items-center
+               justify-content-center justify-content-lg-start">
           <li className="nav-item">
-            <NavLink className="nav-link" to={`${base}/albums`}>Albums</NavLink>
+            <NavLink className="nav-link" to={`${base}#albums`}>Albums</NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to={`${base}/photos`}>Photos</NavLink>
+            <NavLink className="nav-link" to={`${base}#photos`}>Photos</NavLink>
           </li>
 
-          <li className="nav-item dropdown">
+          <li className="nav-item">
+            <NavLink className="nav-link" to={`${base}/contact`}>Contact</NavLink>
+          </li>
+
+          <li className="nav-item dropdown ms-lg-auto me-lg-3">
             <button
               className="nav-link dropdown-toggle btn btn-link"
               id="navbarDropdownMenuLink"
@@ -62,7 +66,7 @@ export function Navbar() {
               Spaces
             </button>
 
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink" style={{ backgroundColor: "#dcdbdbff"  }} >
               <li><Link className="dropdown-item" to="/shared">Shared</Link></li>
               <li><hr className="dropdown-divider" /></li>
               <li><Link className="dropdown-item" to="/satea">Satea</Link></li>

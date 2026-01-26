@@ -39,33 +39,6 @@
 }
 
 
-.photo-card {
-  break-inside: avoid;
-  margin: 0 0 18px;
-  border-radius: 16px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
-  transform: translateZ(0);
-  aspect-ratio: 4 / 5;   /* ✅ choose your vibe */
-}
-
-.photo-img {
-  width: 100%;
-  height: 100%;     
-  display: block;     /* removes inline-gap issues */
-  object-fit: cover;
-  transition: transform 220ms ease, opacity 220ms ease;
-}
-
-.photo-card:hover .photo-img {
-  transform: scale(1.02);
-  opacity: 0.98;
-}
-
-
-
-
 
 /******* show photos on columns 
 /* Beautifull but we end up with alot of limitaions and bugs

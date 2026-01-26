@@ -5,7 +5,6 @@ import bgSatea from "../assets/bg-satea.jpg";
 import bgShared from "../assets/bg-shared.jpg";
 import bgAlexis from "../assets/bg-alexis.jpg";
 import { UserIcon, LinkIcon } from "../components/Icons";
-import { Navbar } from "../components/Navbar";
 import type { Profile } from "../types/types";
 
 const PROFILES: Profile[] = [
@@ -54,7 +53,7 @@ export default function ProfilesPages() {
   return (
 
 
-    <div className="page" style={{ backgroundImage: `url(${currentBg})` }}>
+    <div className="page font-copperplate" style={{ backgroundImage: `url(${currentBg})` }}>
        
           <div className="ps-grid">
             {PROFILES.map((p) => {

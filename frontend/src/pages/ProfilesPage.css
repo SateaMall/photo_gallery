@@ -1,9 +1,3 @@
-/* The fonts used throughout the page */
-:root{
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
-}
-
 /* The full page background */
 .page{
   background-size: cover;
@@ -50,7 +44,6 @@
 
 /* THE CUBE */
 .ps-card{
-  font-family: var(--font-serif);
   border-radius: 26px;
   backdrop-filter: blur(10px);
   background: rgba(255,255,255,0.08);  
@@ -81,6 +74,7 @@
 /* The label inside the cube - Phone */
 .ps-label{
   font-size: 20px;
+  font-weight: 501;
   opacity: 0.9;
 }
 .ps-card:hover .ps-label {
