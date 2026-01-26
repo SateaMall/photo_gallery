@@ -1,22 +1,24 @@
 .photo-card {
-  display: grid;
-  gap: 10px;
-  content-visibility: auto;
-  contain-intrinsic-size: 300px 380px;
+  break-inside: avoid;
+  margin: 0 0 18px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  transform: translateZ(0);
+  aspect-ratio: 4 / 5;   /* ✅ choose your vibe */
 }
 
-.image{
+.photo-img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 100%;     
+  display: block;     /* removes inline-gap issues */
   object-fit: cover;
-  border-radius: 10px;
-  background: #111;
-  will-change: transform;
+  transition: transform 220ms ease, opacity 220ms ease;
 }
 
-.image--empty {
-  display: grid;
-  place-items: center;
-  color: #888;
+.photo-card:hover .photo-img {
+  transform: scale(1.02);
+  opacity: 0.98;
 }
 

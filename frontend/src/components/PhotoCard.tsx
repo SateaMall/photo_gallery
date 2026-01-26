@@ -1,8 +1,9 @@
 import type {PhotoResponse } from "../types/types";
 import { photoFileUrl } from "../api/photos";
-import "./AlbumCard.css";
+import "./PhotoCard.css";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+
 
 export function PhotoCard({ photo }: { photo: PhotoResponse }) {
   const navigate = useNavigate();
