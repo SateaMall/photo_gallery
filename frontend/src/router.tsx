@@ -1,7 +1,7 @@
 // src/router.tsx
 import { Navigate, createBrowserRouter } from "react-router-dom";
 
-import ProfilesPage from "./pages/ProfilesPage";
+import ProfilesPage from "./pages/ProfilesPage/ProfilesPage.tsx";
 import GalleryLayout from "./layouts/GalleryLayout";
 import RootLayout from "./layouts/RootLayout.tsx";
 import Homepage from "./pages/homepage/Homepage.tsx";
