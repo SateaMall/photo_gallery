@@ -3,11 +3,13 @@ package com.AlexiSatea.backend.repo;
 
 import com.AlexiSatea.backend.model.Album;
 import com.AlexiSatea.backend.model.Enum.AlbumScope;
+import com.AlexiSatea.backend.model.Interface.AlbumDetails;
 import com.AlexiSatea.backend.model.Interface.AlbumViewRow;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface AlbumRepository extends JpaRepository<Album, UUID> {
@@ -31,7 +33,7 @@ public interface AlbumRepository extends JpaRepository<Album, UUID> {
     List<AlbumViewRow> findAlbumViews(AlbumScope scope);
 
 
-
+    Optional<AlbumDetails> findProjectedById(UUID id);
 
 
 

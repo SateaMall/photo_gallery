@@ -9,18 +9,21 @@ import java.util.UUID;
 public record AlbumResponse(
         UUID id,
         String title,
-        AlbumScope scope,
-        String description,
-        List<AlbumPhotoItem> photos
+        String description
 
 ) {
-    public static AlbumResponse from(Album album, List<AlbumPhoto> albumPhotos) {
+    public static AlbumResponse from(Album album) {
         return new AlbumResponse(
                 album.getId(),
                 album.getTitle(),
-                album.getScope(),
-                album.getDescription(),
-                AlbumPhotoItem.from(albumPhotos)
+                album.getDescription()
+        );
+    }
+    public static AlbumResponse from (UUID id, String title, String description) {
+        return new AlbumResponse(
+                id,
+                title,
+                description
         );
     }
 }

@@ -5,6 +5,7 @@ import com.AlexiSatea.backend.dto.AlbumResponse;
 import com.AlexiSatea.backend.dto.AlbumViewResponse;
 import com.AlexiSatea.backend.model.*;
 import com.AlexiSatea.backend.model.Enum.AlbumScope;
+import com.AlexiSatea.backend.model.Interface.AlbumDetails;
 import com.AlexiSatea.backend.model.Interface.AlbumViewRow;
 import com.AlexiSatea.backend.repo.AlbumPhotoRepository;
 import com.AlexiSatea.backend.repo.AlbumRepository;
@@ -26,6 +27,8 @@ public class AlbumService {
     private final AlbumRepository albumRepository;
     private final AlbumPhotoRepository albumPhotoRepository;
 
+
+    /*********************   Admin   *********************/
     @Transactional
     public AlbumResponse  createAlbum(String title, AlbumScope scope, String description) {
         // Check
@@ -38,7 +41,7 @@ public class AlbumService {
                 .description(description)
                 .build();
         album = albumRepository.save(album);
-        return AlbumResponse.from(album,List.of());
+        return AlbumResponse.from(album);
     }
 
     @Transactional
@@ -74,9 +77,7 @@ public class AlbumService {
         return new AlbumResponse(
                 album.getId(),
                 album.getTitle(),
-                album.getScope(),
-                album.getDescription(),
-                AlbumPhotoItem.from(album.getPhotoLinks())
+                album.getDescription()
         );
     }
 
@@ -98,17 +99,31 @@ public class AlbumService {
         albumPhotoRepository.deleteById(id);
 
     }
-    @Transactional(readOnly = true)
-    public AlbumResponse getAlbum(UUID albumId) {
-        Album album = albumRepository.findById(albumId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Album not found"));
-        List<AlbumPhoto> relations = albumPhotoRepository.findByAlbumIdWithPhoto(albumId);
-        return AlbumResponse.from(album, relations);
-    }
+
+
+
+    /*********************   Homepage(Album)   *********************/
     @Transactional(readOnly = true)
     public List<AlbumViewResponse> getAlbums(AlbumScope scope) {
             List<AlbumViewRow> Rows= albumRepository.findAlbumViews(scope);
         return AlbumViewResponse.from(Rows);
         }
+
+
+        /*********************   PhotoBrowser(Album)   *********************/
+    @Transactional(readOnly = true)
+    public List<AlbumPhotoItem> getAlbumItems(UUID albumId){
+        List<AlbumPhoto> relations = albumPhotoRepository.findByAlbumIdWithPhoto(albumId);
+        return AlbumPhotoItem.from(relations);
+    }
+
+    @Transactional(readOnly = true)
+    public AlbumResponse getAlbumDetails(UUID albumId) {
+        AlbumDetails albumDetails = albumRepository.findProjectedById(albumId).orElseThrow(() -> new IllegalArgumentException("Album not found"+ albumId));
+        return AlbumResponse.from(albumDetails.getId(), albumDetails.getTitle(), albumDetails.getDescription());
+
+    }
+
+
     }
 

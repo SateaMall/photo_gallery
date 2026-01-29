@@ -11,8 +11,8 @@ import java.util.UUID;
 public record AlbumPhotoItem(
         UUID photoId,
         Owner owner,
-        String fileUrl,
-        int position,
+        String title,
+        String description,
         Instant addedAt
 ) {
     public static AlbumPhotoItem from(AlbumPhoto ap) {
@@ -20,8 +20,8 @@ public record AlbumPhotoItem(
         return new AlbumPhotoItem(
                 p.getId(),
                 p.getOwner(),
-                "/api/photos/" + p.getId() + "/file",
-                ap.getPosition(),
+                p.getTitle(),
+                p.getDescription(),
                 ap.getAddedAt()
         );
     }
@@ -33,8 +33,8 @@ public record AlbumPhotoItem(
                     new AlbumPhotoItem(
                     photo.getId(),
                     photo.getOwner(),
-                "/api/photos/" + photo.getId() + "/file",
-                    ap.getPosition(),
+                    photo.getTitle(),
+                    photo.getDescription(),
                     ap.getAddedAt()
         );
         items.add(item);

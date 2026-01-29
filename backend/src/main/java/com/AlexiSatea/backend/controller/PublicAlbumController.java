@@ -17,10 +17,5 @@ import java.util.UUID;
 public class PublicAlbumController {
     private final AlbumService albumService;
 
-    @GetMapping("/{id}")
-    public AlbumResponse getAlbum(@PathVariable UUID id) {
-        return albumService.getAlbum(id);
-    }
-
 
 }
