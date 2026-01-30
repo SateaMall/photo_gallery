@@ -6,6 +6,9 @@ import { PhotoCard } from "../../components/PhotoCard";
 import "./HomePage.css";
 import { useParams } from "react-router-dom";
 import type { PhotoResponse } from "../../types/types";
+import { ContactSection } from "../../components/ContactSection";
+
+
 export default function Homepage() {
 
 const { context } = useParams(); // "satea" | "alexis" | "shared"
@@ -149,6 +152,11 @@ return (
         ))}
       </div>
     </section>
+
+    <section className="hp-section" id="contact">
+      <ContactSection />
+    </section>
+    
   </div>
 );
 

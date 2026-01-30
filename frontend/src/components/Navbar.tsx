@@ -51,7 +51,7 @@ export function Navbar() {
           </li>
 
           <li className="nav-item">
-            <NavLink className="nav-link" to={`${base}/contact`}>Contact</NavLink>
+            <NavLink className="nav-link" to={`${base}#contact`}>Contact</NavLink>
           </li>
 
           <li className="nav-item dropdown ms-lg-auto me-lg-3">

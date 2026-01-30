@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import "./ProfilesPage.css";
 import { useNavigate } from "react-router-dom";
-import bgSatea from "../assets/bg-satea.jpg";
-import bgShared from "../assets/bg-shared.jpg";
-import bgAlexis from "../assets/bg-alexis.jpg";
+import bgSatea from "../../assets/bg-satea.jpg";
+import bgShared from "../../assets/bg-shared.jpg";
+import bgAlexis from "../../assets/bg-alexis.jpg";
 import { UserIcon, LinkIcon } from "../../components/Icons";
 import type { Profile } from "../../types/types";
 
