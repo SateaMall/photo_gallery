@@ -1,35 +1,10 @@
 import { useMemo, useState } from "react";
 import "./ProfilesPage.css";
 import { useNavigate } from "react-router-dom";
-import bgSatea from "../assets/bg-satea.jpg";
-import bgShared from "../assets/bg-shared.jpg";
-import bgAlexis from "../assets/bg-alexis.jpg";
-import { UserIcon, LinkIcon } from "../components/Icons";
-import type { Profile } from "../types/types";
 
-const PROFILES: Profile[] = [
-      {
-    id: "satea",
-    label: "Mohamad Satea Almallouhi",
-    avatar: { type: "initials", bg: "#d98a8652"},
-  },
-      {
-    id: "shared",
-    label: "Shared space",
-    avatar: { type: "initials", bg:"#5b67816f"   },
-  },
-  {
-    id: "alexis",
-    label: "Alexis Cordier",
-    avatar: { type: "initials", bg: "#8e8b6b73" },
-  },
-];
-
-const BG_BY_ID: Record<Profile["id"], string> = {
-  satea: bgSatea,
-  shared: bgShared,
-  alexis: bgAlexis,
-};
+import { UserIcon, LinkIcon } from "../../components/Icons";
+import type { Profile } from "../../types/types";
+import { PROFILES, BG_BY_ID } from "../../constants/constants";
 
 
 export default function ProfilesPages() {
@@ -39,12 +14,11 @@ export default function ProfilesPages() {
   const [hoveredId, setHoveredId] = useState<Profile["id"] | null>(null);
 
   const currentBg = useMemo(() => {
-    return hoveredId ? BG_BY_ID[hoveredId] : bgShared;
+    return hoveredId ? BG_BY_ID[hoveredId] : BG_BY_ID["SHARED"];
   }, [hoveredId]);
 
  async function onPickProfile(p: Profile) {
-    const routeContext = p.id; // "satea" | "alexis" | "shared"
-    // set profile in the backend & Go
+    const routeContext = p.id; // "SATEA" | "ALEXIS" | "SHARED"
     navigate(`/${routeContext}`);
   }
 
@@ -57,7 +31,7 @@ export default function ProfilesPages() {
        
           <div className="ps-grid">
             {PROFILES.map((p) => {
-              const isShared = p.id === "shared";
+              const isShared = p.id === "SHARED";
               return(
               <button
                 key={p.id}

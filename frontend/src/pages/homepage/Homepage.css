@@ -1,5 +1,5 @@
 .homepage {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 28px 18px 60px;
 }
@@ -36,6 +36,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 18px;
+}
+@media (min-width: 800px) {
+.photos-masonry {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
 }
 
 
