@@ -6,7 +6,7 @@ import { PhotoCard } from "../../components/PhotoCard";
 import "./HomePage.css";
 import { useParams } from "react-router-dom";
 import type { PhotoResponse } from "../../types/types";
-import { ContactSection } from "../../components/ContactSection";
+import { SocialBioSection } from "./SocialBioSection";
 
 
 export default function Homepage() {
@@ -103,6 +103,23 @@ function loadMore() {
 
 return (
   <div className="homepage font-copperplate">
+        <section className="hp-section" id="contact">
+      <SocialBioSection />
+    </section>
+
+      {/* Albums */}
+    <section className="hp-section"  id="albums">
+      <header className="hp-head">
+        <h1 className="hp-title">Albums</h1>
+      </header>
+      {albumsLoading && (<div className="hp">Albums Loading…</div>)}
+      <div className="albums-grid">
+        {albums.map((a) => (
+          <AlbumCard key={a.albumId} album={a} />
+        ))}
+      </div>
+    </section>
+
     {/* Photos */}
     <section className="hp-section"  id="photos">
       <header className="hp-head">
@@ -139,24 +156,6 @@ return (
   )}
 </section>
 
-
-    {/* Albums */}
-    <section className="hp-section"  id="albums">
-      <header className="hp-head">
-        <h1 className="hp-title">Albums</h1>
-      </header>
-      {albumsLoading && (<div className="hp">Albums Loading…</div>)}
-      <div className="albums-grid">
-        {albums.map((a) => (
-          <AlbumCard key={a.albumId} album={a} />
-        ))}
-      </div>
-    </section>
-
-    <section className="hp-section" id="contact">
-      <ContactSection />
-    </section>
-    
   </div>
 );
 

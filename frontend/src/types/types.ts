@@ -44,7 +44,7 @@ export type Owner = "SATEA" | "ALEXIS";
 export type Context = "PERSONAL" | "SHARED";
 
 export type Profile = {
-  id: "satea" | "shared" | "alexis";
+  id: Scope;
   label: string;
   avatar?: { type: "initials"; bg: string };
 };

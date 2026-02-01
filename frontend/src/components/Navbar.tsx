@@ -7,16 +7,16 @@ export function Navbar() {
   // "shared mode" when:
   // - we are on /profiles
   // - OR context is shared
-  const isSharedMode = location.pathname.startsWith("/profiles") || context === "shared";
+  const isSharedMode = location.pathname.startsWith("/profiles") || context === "SHARED";
 
   const brandText = isSharedMode
     ? "Almallouhi &  Cordier"
-    : context === "alexis"
+    : context === "ALEXIS"
       ? "Alexis Cordier"
       : "Mohamad Satea Almallouhi";
 
   // Base for albums/photos links and brand
-  const base = isSharedMode ? "/shared" : `/${context}`;
+  const base = isSharedMode ? "/SHARED" : `/${context}`;
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark font-copperplate" style={{ backgroundColor: "#000000e5"  }}>
@@ -67,10 +67,10 @@ export function Navbar() {
             </button>
 
             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink" style={{ backgroundColor: "#dcdbdbff"  }} >
-              <li><Link className="dropdown-item" to="/shared">Shared</Link></li>
+              <li><Link className="dropdown-item" to="/SHARED">Shared</Link></li>
               <li><hr className="dropdown-divider" /></li>
-              <li><Link className="dropdown-item" to="/satea">Satea</Link></li>
-              <li><Link className="dropdown-item" to="/alexis">Alexis</Link></li>
+              <li><Link className="dropdown-item" to="/SATEA">Satea</Link></li>
+              <li><Link className="dropdown-item" to="/ALEXIS">Alexis</Link></li>
               <li><hr className="dropdown-divider" /></li>
               <li><Link className="dropdown-item" to="/profiles">Profile picker</Link></li>
             </ul>
