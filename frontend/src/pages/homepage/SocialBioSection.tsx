@@ -1,4 +1,9 @@
 
 export function SocialBioSection() {
-    return <div>Social Bio Section</div>;
+    return(
+     <section className="profile-header">
+      <div className="profile-bio">...</div>
+      <div className="profile-socials">...</div>
+    </section>
+    );
 }

@@ -33,7 +33,7 @@
 .ps-card{
   border-radius: 26px;
   backdrop-filter: blur(10px);
-  background: rgba(255,255,255,0.08);  
+  background: var(--bgCard);
   border: 3px solid rgba(0, 0, 0, 0.364);
   color: rgb(255, 255, 255);
   display: grid;
@@ -50,7 +50,7 @@
 
 /* HOVER: background changes + a bit bigger + more shadow */
 .ps-card:hover{
-  background: rgba(255,255,255,0.18);
+  background: var(--bgCardHover);
   transform: scale(1.05);
   box-shadow:
     0 18px 38px rgba(0, 0, 0, 0.548),

@@ -4,7 +4,6 @@ import "./PhotoCard.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { LinkIcon, UserIcon } from ".././components/Icons";
-import { PROFILES } from "../constants/constants";
 import { PROFILE_BY_ID } from "../constants/constants";
 
 export function PhotoCard({ photo }: { photo: PhotoResponse }) {
@@ -18,8 +17,9 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
     navigate(`/${context}/photos/${photoId}`);
   }
 
-  function onOwnerClick() {
-    navigate(`/${photo.owner}/profiles`);
+  function onOwnerClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();     // prevents the article onClick
+    navigate(`/${photo.owner}`);
   }
 
   async function onShare(e: React.MouseEvent<HTMLButtonElement>) {
@@ -42,9 +42,6 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
       role="button"
       tabIndex={0}
       onClick={() => onPickPhoto(photo.id)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") onPickPhoto(photo.id);
-      }}
       onMouseLeave={() => setCopied(false)} // reset when hover ends
     >
       <div className="photo-media">
@@ -78,7 +75,9 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
           className="photo-owner"
           onClick={onOwnerClick}
         >
-          <span className="photo-owner-avatar" style={{ background: p.avatar?.bg ?? "#111827" }}>
+          <span className="photo-owner-avatar"  style={{ ["--bgCard" as any]: p.avatar?.bg  ?? "#111827" ,
+                  ["--bgCardHover" as any]: p.avatar?.bgHoverOn
+                }}>
           <UserIcon/>
           </span>
             <span className="photo-owner-name"> {p.label}</span>

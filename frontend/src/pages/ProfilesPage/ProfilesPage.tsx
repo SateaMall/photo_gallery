@@ -42,7 +42,9 @@ export default function ProfilesPages() {
                 onMouseLeave={() => setHoveredId(null)}
                 onFocus={() => setHoveredId(p.id)}   // nice for keyboard
                 onBlur={() => setHoveredId(null)}
-                style={{ background: p.avatar?.bg ?? "#111827" }}
+                style={{ ["--bgCard" as any]: p.avatar?.bg  ?? "#111827" ,
+                  ["--bgCardHover" as any]: p.avatar?.bgHoverOn
+                }}
               >
                 <div className="ps-icon" aria-hidden="true">
                 {isShared ? <LinkIcon /> : <UserIcon />}

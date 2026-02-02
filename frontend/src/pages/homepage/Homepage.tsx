@@ -1,5 +1,5 @@
 import { useEffect, useState,useRef } from "react";
-import { fetchHomepageAlbums, fetchHomepagePhotos} from "../../api/homepage";
+import { fetchAlbums, fetchPhotos} from "../../api/homepage";
 import type { AlbumViewResponse } from "../../types/types";
 import { AlbumCard } from "../../components/AlbumCard";
 import { PhotoCard } from "../../components/PhotoCard";
@@ -48,7 +48,7 @@ useEffect(() => {
 // Fetch photos when page or scope changes
 useEffect(() => {
   setPhotosLoading(true);
-  fetchHomepagePhotos(scope, page, PAGE_SIZE)
+  fetchPhotos(scope, page, PAGE_SIZE)
     .then((res) => {
       setPhotos((prev) => {
         // 🔒 prevent duplicate pages
@@ -93,7 +93,7 @@ function loadMore() {
 
   useEffect(() => {
      setAlbumsLoading(true);
-    fetchHomepageAlbums(context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED")
+    fetchAlbums(context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED")
       .then(setAlbums)
       .catch((e) => setError(e.message))
       .finally(() => setAlbumsLoading(false));

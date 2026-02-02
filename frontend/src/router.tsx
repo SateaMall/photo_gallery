@@ -5,8 +5,8 @@ import ProfilesPage from "./pages/ProfilesPage/ProfilesPage.tsx";
 import GalleryLayout from "./layouts/GalleryLayout";
 import RootLayout from "./layouts/RootLayout.tsx";
 import Homepage from "./pages/homepage/Homepage.tsx";
-import AlbumPage from "./pages/AlbumPage";
-import PhotoBrowser from "./pages/PhotoBrowser/PhotoBrowser.tsx";
+import AlbumPage from "./pages/PhotoBrowser/AlbumPage.tsx";
+import PhotoBrowser from "./pages/PhotoBrowser/PhotoPage.tsx";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./AdminSection/admin_upload";
 
@@ -21,8 +21,8 @@ export const router = createBrowserRouter([
   element: <GalleryLayout />,
   children: [
     { index: true, element: <Homepage /> },
-    { path: "albums/:albumId", element: <AlbumPage /> },
-    { path: "photos/:photoId", element: <PhotoBrowser /> },
+    { path: "album/:albumId/:photoId?", element: <AlbumPage /> },
+    { path: "photo/:photoId", element: <PhotoBrowser /> },
   ],
 },
   { path: "*", element: <NotFound /> } 

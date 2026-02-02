@@ -26,7 +26,6 @@ public interface AlbumPhotoRepository extends JpaRepository<AlbumPhoto, AlbumPho
         order by ap.position asc, ap.addedAt asc
     """)
     List<AlbumPhoto> findByAlbumIdWithPhoto(@Param("albumId") UUID albumId);
-
     @Query("""
         select ap
         from AlbumPhoto ap

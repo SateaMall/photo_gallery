@@ -7,6 +7,20 @@ export type AlbumViewResponse = {
   numberOfPhotos: number;
 };
 
+export type AlbumDetailsResponse = {
+  albumId: string;
+  title: string;
+  description: string | null;
+}
+
+export type AlbumPhotoItem = {
+  photoId: string,
+  Owner: Owner,
+  title: string,
+  description: string | null;
+  addedAt: string;
+}
+
 export type PageResponse<T> = {
   content: T[];
   number: number;        // current page (0-based)
@@ -46,7 +60,13 @@ export type Context = "PERSONAL" | "SHARED";
 export type Profile = {
   id: Scope;
   label: string;
-  avatar?: { type: "initials"; bg: string };
+  avatar?: { type: "initials"; bg: string; bgHoverOn: string };
+  linkedIn: string;
+  instagram: string;
+  location: string;
+  bio: string;
+  email: string;
+
 };
 
 export type photoVariant= "ORIGINAL"| "MEDIUM"| "THUMB";
