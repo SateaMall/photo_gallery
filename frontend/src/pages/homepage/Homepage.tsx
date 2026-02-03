@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 import type { PhotoResponse } from "../../types/types";
 import { SocialBioSection } from "./SocialBioSection";
 
-
 export default function Homepage() {
 
 const { context } = useParams(); // "satea" | "alexis" | "shared"
@@ -110,9 +109,7 @@ function loadMore() {
 
 return (
   <div className="homepage font-copperplate">
-        <section className="hp-section" id="contact">
-      <SocialBioSection />
-    </section>
+
 
       {/* Albums */}
     <section className="hp-section"  id="albums">
@@ -158,6 +155,10 @@ return (
     </div>
   )}
 </section>
+
+        <section className="hp-section" id="contact">
+      <SocialBioSection />
+    </section>
 
   </div>
 );

@@ -94,7 +94,7 @@
 /* PHOTOS PREVIEW: clamp + fade + button */
 .photos-preview {
   position: relative;
-    margin-bottom: 30px;;
+  margin-bottom: 5%;;
 }
 
 /* clamp only when there are more photos */
@@ -145,44 +145,6 @@
 .hp-more-btn:hover {
   color: rgb(254, 254, 254); ;
   background: rgb(229, 181, 35);
-}
-
-
-/* ----------------------------- */
-/* ALBUMS: clean regular grid      */
-/* ----------------------------- */
-
-/* Horizontal albums row (one line + swipe) */
-.albums-row {
-  display: flex;
-  gap: 18px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 6px; /* space for scrollbar / comfy swipe */
-}
-
-/* each item decides how many are visible */
-.albums-row-item {
-  flex: 0 0 calc((100% - 18px) / 2); /* 2 visible on small screens */
-  scroll-snap-align: start;
-}
-
-/* >= 800px -> 3 visible max */
-@media (min-width: 800px) {
-  .albums-row-item {
-    flex-basis: calc((100% - 18px * 2) / 3); /* 3 items, 2 gaps */
-  }
-}
-
-/* Optional: hide scrollbar but keep scrolling */
-.albums-row::-webkit-scrollbar {
-  height: 8px;
-}
-.albums-row::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.25);
-  border-radius: 999px;
 }
 
 
