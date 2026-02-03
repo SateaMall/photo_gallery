@@ -112,13 +112,15 @@ return (
 
 
       {/* Albums */}
-    <section className="hp-section"  id="albums">
+    {albums.length!==0 && (
+      <section className="hp-section"  id="albums">
       <header className="hp-head">
         <h1 className="hp-title">Albums</h1>
       </header>
       {albumsLoading && (<div className="hp">Albums Loading…</div>)}
        <AlbumsRow albums={albums} />
-    </section>
+    </section> 
+    )}
 
     {/* Photos */}
     <section className="hp-section"  id="photos">
