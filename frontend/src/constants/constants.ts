@@ -19,7 +19,7 @@ export const PROFILES: Profile[] = [
       {
     id: "SHARED",
     label: "Shared space",
-    avatar: { type: "initials", bg:"#5b67816f", bgHoverOn: "#2a3857c6"   },
+    avatar: { type: "initials", bg:"#8a9cc46f", bgHoverOn: "#384b74c6"   },
     linkedIn: "",
     instagram: "",
     location: "",
@@ -29,7 +29,7 @@ export const PROFILES: Profile[] = [
   {
     id: "ALEXIS",
     label: "Alexis Cordier",
-    avatar: { type: "initials", bg: "#8e8b6b73", bgHoverOn:  "#5c572ac0" },
+    avatar: { type: "initials", bg: "#c0bb8773", bgHoverOn:  "#b9af4dc0" },
     linkedIn: "alexis683off",
     instagram: "alexis683off",
     location: "Toulouse, France",

@@ -1,7 +1,7 @@
 import { useEffect, useState,useRef } from "react";
 import { fetchAlbums, fetchPhotos} from "../../api/homepage";
 import type { AlbumViewResponse } from "../../types/types";
-import { AlbumCard } from "../../components/AlbumCard";
+import {AlbumsRow} from "../../components/AlbumsRow"
 import { PhotoCard } from "../../components/PhotoCard";
 import "./HomePage.css";
 import { useParams } from "react-router-dom";
@@ -78,7 +78,7 @@ useEffect(() => {
 
 function revealHidden() {
   setVisibleCount(photos.length);
-    setInitialRevealDone(true); // 👈 mark as done forever
+    setInitialRevealDone(true); 
 }
 
 function loadMore() {
@@ -99,7 +99,14 @@ function loadMore() {
       .finally(() => setAlbumsLoading(false));
   }, [context]);
 
+
+
+
+
+
+  
   if (error) return <div className="hp hp-error">{error}</div>;
+
 
 return (
   <div className="homepage font-copperplate">
@@ -113,11 +120,7 @@ return (
         <h1 className="hp-title">Albums</h1>
       </header>
       {albumsLoading && (<div className="hp">Albums Loading…</div>)}
-      <div className="albums-grid">
-        {albums.map((a) => (
-          <AlbumCard key={a.albumId} album={a} />
-        ))}
-      </div>
+       <AlbumsRow albums={albums} />
     </section>
 
     {/* Photos */}
