@@ -1,12 +1,12 @@
 import { useEffect, useState,useRef } from "react";
 import { fetchAlbums, fetchPhotos} from "../../api/homepage";
 import type { AlbumViewResponse } from "../../types/types";
-import {AlbumsRow} from "../../components/AlbumsRow"
-import { PhotoCard } from "../../components/PhotoCard";
+import {AlbumsRow} from "./components/AlbumsRow"
+import { PhotoCard } from "./components/PhotoCard";
 import "./HomePage.css";
 import { useParams } from "react-router-dom";
 import type { PhotoResponse } from "../../types/types";
-import { SocialBioSection } from "./SocialBioSection";
+import { SocialBioSection } from "./components/SocialBioSection";
 
 export default function Homepage() {
 

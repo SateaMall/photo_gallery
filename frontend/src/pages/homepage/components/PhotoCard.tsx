@@ -1,10 +1,10 @@
-import type { PhotoResponse } from "../types/types";
-import { photoFileUrl } from "../api/photos";
+import type { PhotoResponse } from "../../../types/types";
+import { photoFileUrl } from "../../../api/photos";
 import "./PhotoCard.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import { LinkIcon, UserIcon } from ".././components/Icons";
-import { PROFILE_BY_ID } from "../constants/constants";
+import { LinkIcon, UserIcon } from "../../../components/Icons";
+import { PROFILE_BY_ID } from "../../../constants/constants";
 
 export function PhotoCard({ photo }: { photo: PhotoResponse }) {
   const navigate = useNavigate();

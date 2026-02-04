@@ -17,3 +17,8 @@ export async function httpJson<T>(path: string, init?: RequestInit): Promise<T> 
 
   return res.json() as Promise<T>;
 }
+
+export function logger(data : any, name: string){
+    console.log(name, data);
+    console.log(name + " json:", JSON.stringify(data));
+}

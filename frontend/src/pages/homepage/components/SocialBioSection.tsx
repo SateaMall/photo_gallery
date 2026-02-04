@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { PROFILE_BY_ID } from "../../constants/constants";
+import { PROFILE_BY_ID } from "../../../constants/constants";
 import './SocialBioSection.css'
 type ContextId = "SATEA" | "ALEXIS" | "SHARED";
 

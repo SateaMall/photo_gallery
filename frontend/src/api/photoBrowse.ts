@@ -1,19 +1,24 @@
-import type { AlbumDetailsResponse,AlbumPhotoItem } from "../types/types";
-import { httpJson } from "./http";
+import type { AlbumViewResponse ,AlbumPhotoItem, MainPhotoResponse} from "../types/types";
+import { httpJson, logger } from "./http";
 
 
 export async function fetchAlbumInfo (albumId: string) {
-    const data = await httpJson<AlbumDetailsResponse>(`/api/Photobrowser/albumDetails/${albumId}`);
-    console.log("albums:", data);
-    console.log("albums json:", JSON.stringify(data));
+    const data = await httpJson<AlbumViewResponse>(`/api/Photobrowser/albumDetails/${albumId}`);
+    logger(data, "Album Info");
     return data;
 }
 
 export async function fetchAlbumItems (albumId: string) {
     const data = await httpJson<AlbumPhotoItem[]>(`/api/Photobrowser/albumItems/${albumId}`);
-    console.log("albums:", data);
-    console.log("albums json:", JSON.stringify(data));
+    logger(data, "Album Items");
     return data;
 }
+
+export async function fetchMainPhoto (photoId: string){
+    const data = await httpJson<MainPhotoResponse>(`/api/Photobrowser/albumMainPhoto/${photoId}`)
+    logger(data, "Main Photo");
+    return data;
+}
+
 
 

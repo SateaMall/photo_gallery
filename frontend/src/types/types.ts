@@ -7,19 +7,18 @@ export type AlbumViewResponse = {
   numberOfPhotos: number;
 };
 
-export type AlbumDetailsResponse = {
-  albumId: string;
-  title: string;
-  description: string | null;
-}
 
 export type AlbumPhotoItem = {
   photoId: string,
   Owner: Owner,
-  title: string,
+  title: string | null,
   description: string | null;
+  country: string | null;
+  city: string | null;
+  captureYear: number | null;
   addedAt: string;
 }
+
 
 export type PageResponse<T> = {
   content: T[];
@@ -34,12 +33,24 @@ export type PageResponse<T> = {
 export type PhotoResponse = {
   id: string;
   owner: Owner;
-  context: Context;
   createdAt: string; // ISO date string
-  themes: Theme[]
-  title: string;
+  title: string | null;
   description: string | null;
-  index: number| null;
+  country: string | null;
+  city: string | null;
+  captureYear: number | null;
+};
+
+export type MainPhotoResponse = {
+  id: string;
+  owner: Owner;
+  createdAt: string; // ISO date string
+  title: string | null;
+  description: string | null;
+  country: string | null;
+  city: string | null;
+  captureYear: number | null;
+  themes: Theme[] | null;
 };
 
 export type Theme =
@@ -61,11 +72,11 @@ export type Profile = {
   id: Scope;
   label: string;
   avatar?: { type: "initials"; bg: string; bgHoverOn: string };
-  linkedIn: string;
-  instagram: string;
-  location: string;
-  bio: string;
-  email: string;
+  linkedIn: string | null;
+  instagram: string | null;
+  location: string | null;
+  bio: string | null;
+  email: string | null;
 
 };
 
