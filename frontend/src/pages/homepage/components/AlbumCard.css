@@ -1,10 +1,10 @@
 .album-card {
   display: grid;
   gap: 10px;
-
   overflow: hidden;
   background: rgba(255, 255, 255, 0.04);
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
 }
 
 .album-cover {

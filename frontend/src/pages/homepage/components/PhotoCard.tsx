@@ -1,11 +1,10 @@
-import type { PhotoResponse } from "../types/types";
-import { photoFileUrl } from "../api/photos";
+import type { PhotoResponse } from "../../../types/types";
+import { photoFileUrl } from "../../../api/photos";
 import "./PhotoCard.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import { LinkIcon, UserIcon } from ".././components/Icons";
-import { PROFILES } from "../constants/constants";
-import { PROFILE_BY_ID } from "../constants/constants";
+import { LinkIcon, UserIcon } from "../../../components/Icons";
+import { PROFILE_BY_ID } from "../../../constants/constants";
 
 export function PhotoCard({ photo }: { photo: PhotoResponse }) {
   const navigate = useNavigate();
@@ -15,17 +14,18 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
   const [copied, setCopied] = useState(false);
 
   function onPickPhoto(photoId: string) {
-    navigate(`/${context}/photos/${photoId}`);
+    navigate(`/${context}/photo/${photoId}`);
   }
 
-  function onOwnerClick() {
-    navigate(`/${photo.owner}/profiles`);
+  function onOwnerClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();     // prevents the article onClick
+    navigate(`/${photo.owner}`);
   }
 
   async function onShare(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
 
-    const urlToCopy = `${window.location.origin}/${context}/photos/${photo.id}`;
+    const urlToCopy = `${window.location.origin}/${context}/photo/${photo.id}`;
 
     try {
       await navigator.clipboard.writeText(urlToCopy);
@@ -42,16 +42,13 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
       role="button"
       tabIndex={0}
       onClick={() => onPickPhoto(photo.id)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") onPickPhoto(photo.id);
-      }}
       onMouseLeave={() => setCopied(false)} // reset when hover ends
     >
       <div className="photo-media">
         <img
           className="photo-img"
           src={image}
-          alt={photo.title}
+          alt={photo.title??""}
           loading="lazy"
           decoding="async"
           fetchPriority="low"
@@ -78,7 +75,9 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
           className="photo-owner"
           onClick={onOwnerClick}
         >
-          <span className="photo-owner-avatar" style={{ background: p.avatar?.bg ?? "#111827" }}>
+          <span className="photo-owner-avatar"  style={{ ["--bgCard" as any]: p.avatar?.bg  ?? "#111827" ,
+                  ["--bgCardHover" as any]: p.avatar?.bgHoverOn
+                }}>
           <UserIcon/>
           </span>
             <span className="photo-owner-name"> {p.label}</span>

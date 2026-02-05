@@ -94,7 +94,7 @@
 /* PHOTOS PREVIEW: clamp + fade + button */
 .photos-preview {
   position: relative;
-    margin-bottom: 30px;;
+  margin-bottom: 5%;;
 }
 
 /* clamp only when there are more photos */
@@ -147,20 +147,4 @@
   background: rgb(229, 181, 35);
 }
 
-
-/* ----------------------------- */
-/* ALBUMS: clean regular grid      */
-/* ----------------------------- */
-
-.albums-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-
-@media (min-width: 800px) {
-  .albums-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
 

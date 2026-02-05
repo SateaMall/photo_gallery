@@ -1,13 +1,12 @@
 import { useEffect, useState,useRef } from "react";
-import { fetchHomepageAlbums, fetchHomepagePhotos} from "../../api/homepage";
+import { fetchAlbums, fetchPhotos} from "../../api/homepage";
 import type { AlbumViewResponse } from "../../types/types";
-import { AlbumCard } from "../../components/AlbumCard";
-import { PhotoCard } from "../../components/PhotoCard";
+import {AlbumsRow} from "./components/AlbumsRow"
+import { PhotoCard } from "./components/PhotoCard";
 import "./HomePage.css";
 import { useParams } from "react-router-dom";
 import type { PhotoResponse } from "../../types/types";
-import { SocialBioSection } from "./SocialBioSection";
-
+import { SocialBioSection } from "./components/SocialBioSection";
 
 export default function Homepage() {
 
@@ -48,7 +47,7 @@ useEffect(() => {
 // Fetch photos when page or scope changes
 useEffect(() => {
   setPhotosLoading(true);
-  fetchHomepagePhotos(scope, page, PAGE_SIZE)
+  fetchPhotos(scope, page, PAGE_SIZE)
     .then((res) => {
       setPhotos((prev) => {
         // 🔒 prevent duplicate pages
@@ -78,7 +77,7 @@ useEffect(() => {
 
 function revealHidden() {
   setVisibleCount(photos.length);
-    setInitialRevealDone(true); // 👈 mark as done forever
+    setInitialRevealDone(true); 
 }
 
 function loadMore() {
@@ -93,32 +92,35 @@ function loadMore() {
 
   useEffect(() => {
      setAlbumsLoading(true);
-    fetchHomepageAlbums(context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED")
+    fetchAlbums(context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED")
       .then(setAlbums)
       .catch((e) => setError(e.message))
       .finally(() => setAlbumsLoading(false));
   }, [context]);
 
+
+
+
+
+
+  
   if (error) return <div className="hp hp-error">{error}</div>;
+
 
 return (
   <div className="homepage font-copperplate">
-        <section className="hp-section" id="contact">
-      <SocialBioSection />
-    </section>
+
 
       {/* Albums */}
-    <section className="hp-section"  id="albums">
+    {albums.length!==0 && (
+      <section className="hp-section"  id="albums">
       <header className="hp-head">
         <h1 className="hp-title">Albums</h1>
       </header>
       {albumsLoading && (<div className="hp">Albums Loading…</div>)}
-      <div className="albums-grid">
-        {albums.map((a) => (
-          <AlbumCard key={a.albumId} album={a} />
-        ))}
-      </div>
-    </section>
+       <AlbumsRow albums={albums} />
+    </section> 
+    )}
 
     {/* Photos */}
     <section className="hp-section"  id="photos">
@@ -155,6 +157,10 @@ return (
     </div>
   )}
 </section>
+
+        <section className="hp-section" id="contact">
+      <SocialBioSection />
+    </section>
 
   </div>
 );

@@ -7,6 +7,19 @@ export type AlbumViewResponse = {
   numberOfPhotos: number;
 };
 
+
+export type AlbumPhotoItem = {
+  photoId: string,
+  Owner: Owner,
+  title: string | null,
+  description: string | null;
+  country: string | null;
+  city: string | null;
+  captureYear: number | null;
+  addedAt: string;
+}
+
+
 export type PageResponse<T> = {
   content: T[];
   number: number;        // current page (0-based)
@@ -20,12 +33,24 @@ export type PageResponse<T> = {
 export type PhotoResponse = {
   id: string;
   owner: Owner;
-  context: Context;
   createdAt: string; // ISO date string
-  themes: Theme[]
-  title: string;
+  title: string | null;
   description: string | null;
-  index: number| null;
+  country: string | null;
+  city: string | null;
+  captureYear: number | null;
+};
+
+export type MainPhotoResponse = {
+  id: string;
+  owner: Owner;
+  createdAt: string; // ISO date string
+  title: string | null;
+  description: string | null;
+  country: string | null;
+  city: string | null;
+  captureYear: number | null;
+  themes: Theme[] | null;
 };
 
 export type Theme =
@@ -46,7 +71,13 @@ export type Context = "PERSONAL" | "SHARED";
 export type Profile = {
   id: Scope;
   label: string;
-  avatar?: { type: "initials"; bg: string };
+  avatar?: { type: "initials"; bg: string; bgHoverOn: string };
+  linkedIn: string | null;
+  instagram: string | null;
+  location: string | null;
+  bio: string | null;
+  email: string | null;
+
 };
 
 export type photoVariant= "ORIGINAL"| "MEDIUM"| "THUMB";
