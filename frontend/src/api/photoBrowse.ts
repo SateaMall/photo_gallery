@@ -1,4 +1,4 @@
-import type { AlbumViewResponse ,AlbumPhotoItem, MainPhotoResponse} from "../types/types";
+import type { AlbumViewResponse ,AlbumPhotoItem, MainPhotoResponse, PhotoResponse} from "../types/types";
 import { httpJson, logger } from "./http";
 
 
@@ -20,5 +20,10 @@ export async function fetchMainPhoto (photoId: string){
     return data;
 }
 
+export async function fetchPhotoSuggestions (photoId: string){
+    const data = await httpJson<PhotoResponse[]>(`/api/Photobrowser/photoSuggestions/${photoId}`)
+    logger(data, "Suggestion Photos");
+    return data;
+}
 
 

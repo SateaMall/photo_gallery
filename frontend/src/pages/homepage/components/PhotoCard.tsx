@@ -14,7 +14,7 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
   const [copied, setCopied] = useState(false);
 
   function onPickPhoto(photoId: string) {
-    navigate(`/${context}/photos/${photoId}`);
+    navigate(`/${context}/photo/${photoId}`);
   }
 
   function onOwnerClick(e: React.MouseEvent<HTMLButtonElement>) {
@@ -25,7 +25,7 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
   async function onShare(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
 
-    const urlToCopy = `${window.location.origin}/${context}/photos/${photo.id}`;
+    const urlToCopy = `${window.location.origin}/${context}/photo/${photo.id}`;
 
     try {
       await navigator.clipboard.writeText(urlToCopy);
@@ -48,7 +48,7 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
         <img
           className="photo-img"
           src={image}
-          alt={photo.title}
+          alt={photo.title??""}
           loading="lazy"
           decoding="async"
           fetchPriority="low"
