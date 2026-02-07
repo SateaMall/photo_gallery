@@ -1,0 +1,116 @@
+import { useEffect, useRef, useState } from "react";
+import type { PhotoResponse } from "../../../types/types";
+import { fetchPhotos } from "../../../api/homepage";
+import { useParams } from "react-router-dom";
+import { PhotoCard } from "../../../components/PhotoCard";
+
+import "./PhotosGrid.css"
+
+export function PhotosGrid({photoId}:{photoId?:string}){
+  const { context } = useParams(); // "satea" | "alexis" | "shared"
+  const scope = context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED";
+  const [error, setError] = useState<string | null>(null);
+
+  const PAGE_SIZE = 20;
+  const FIRST_VISIBLE = 12;
+  const [photos, setPhotos] = useState<PhotoResponse[]>([]);
+  const [page, setPage] = useState(0); // backend page index
+  
+  const [visibleCount, setVisibleCount] = useState(FIRST_VISIBLE);
+  const [hasMorePages, setHasMorePages] = useState(true);
+  const [initialRevealDone, setInitialRevealDone] = useState(false);
+  const hasHiddenInCurrent =
+  !initialRevealDone && visibleCount < photos.length;
+  const restoreScrollYRef = useRef<number | null>(null);
+  const [photosLoading, setPhotosLoading] = useState(false);
+
+
+// Context can change (via routing), we need to reset when that happens
+useEffect(() => {
+  setPhotos([]);
+  setPage(0);
+  setVisibleCount(FIRST_VISIBLE);
+  setHasMorePages(true);
+}, [context]);
+
+useEffect(() => {
+  if (initialRevealDone) {
+    setVisibleCount(photos.length);
+  }
+ }, [photos.length, initialRevealDone]);
+
+// Fetch photos when page or scope changes
+useEffect(() => {
+  setPhotosLoading(true);
+  fetchPhotos(scope, page, PAGE_SIZE,photoId)
+    .then((res) => {
+      setPhotos((prev) => {
+        // prevent duplicate pages
+        const existingIds = new Set(prev.map(p => p.id));
+        const newPhotos = res.content.filter(p => !existingIds.has(p.id));
+        return [...prev, ...newPhotos];
+      });
+
+      setHasMorePages(!res.last);
+    })
+    .catch((e) => setError(e.message))
+    .finally(() => setPhotosLoading(false));
+}, [scope, page]);
+
+useEffect(() => {
+  if (restoreScrollYRef.current == null) return;
+
+  // wait for DOM paint + layout
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: restoreScrollYRef.current!, behavior: "auto" });
+      restoreScrollYRef.current = null;
+    });
+  });
+}, [photos.length]);
+
+
+function revealHidden() {
+  setVisibleCount(photos.length);
+    setInitialRevealDone(true); 
+}
+
+function loadMore() {
+  restoreScrollYRef.current = window.scrollY;
+  setPage((p) => p + 1); // triggers API
+}
+
+return (
+    <>
+    {photosLoading && (<div className="hp">Photos Loading…</div>)}
+     <div className={`photos-preview ${hasHiddenInCurrent ? "is-clamped" : ""}`}>
+    <div className="photos-masonry">
+      {photos.slice(0, visibleCount).map((p) => (
+        <PhotoCard key={p.id} photo={p} />
+      ))}
+    </div>
+
+    {/* FIRST SEE MORE (fade reveal) */}
+    {hasHiddenInCurrent && (
+      <>
+        <div className="photos-fade" />
+        <div className="photos-more">
+          <button className="hp-more-btn" onClick={revealHidden}>
+            See more
+          </button>
+        </div>
+      </>
+    )}
+  </div>
+
+  {/* SECOND SEE MORE (pagination) */}
+  {!hasHiddenInCurrent && hasMorePages && (
+    <div style={{ textAlign: "center", marginTop: 20 }} >
+      <button className="hp-more-btn" onClick={loadMore}>
+        Load more photos
+      </button>
+    </div>
+  )}
+  </>
+);
+}
