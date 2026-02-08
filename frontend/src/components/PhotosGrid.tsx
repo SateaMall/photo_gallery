@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import type { PhotoResponse } from "../../../types/types";
-import { fetchPhotos } from "../../../api/homepage";
+import type { PhotoResponse } from "../types/types";
+import { fetchPhotos } from "../api/homepage";
 import { useParams } from "react-router-dom";
-import { PhotoCard } from "../../../components/PhotoCard";
+import { PhotoCard } from "./PhotoCard";
 
 import "./PhotosGrid.css"
 
 export function PhotosGrid({photoId}:{photoId?:string}){
   const { context } = useParams(); // "satea" | "alexis" | "shared"
   const scope = context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED";
-  const [error, setError] = useState<string | null>(null);
 
   const PAGE_SIZE = 20;
   const FIRST_VISIBLE = 12;
   const [photos, setPhotos] = useState<PhotoResponse[]>([]);
   const [page, setPage] = useState(0); // backend page index
-  
+  const [error, setError] = useState(); 
+
   const [visibleCount, setVisibleCount] = useState(FIRST_VISIBLE);
   const [hasMorePages, setHasMorePages] = useState(true);
   const [initialRevealDone, setInitialRevealDone] = useState(false);
@@ -31,7 +31,8 @@ useEffect(() => {
   setPage(0);
   setVisibleCount(FIRST_VISIBLE);
   setHasMorePages(true);
-}, [context]);
+  setInitialRevealDone(false);
+}, [context,photoId]);
 
 useEffect(() => {
   if (initialRevealDone) {
@@ -55,7 +56,7 @@ useEffect(() => {
     })
     .catch((e) => setError(e.message))
     .finally(() => setPhotosLoading(false));
-}, [scope, page]);
+}, [scope, page,photoId]);
 
 useEffect(() => {
   if (restoreScrollYRef.current == null) return;

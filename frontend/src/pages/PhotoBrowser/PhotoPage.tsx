@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchMainPhoto } from "../../api/photoBrowse";
 import type { PhotoResponse, MainPhotoResponse } from "../../types/types";
 import { fetchPhotos } from "../../api/homepage";
-import { PhotosGrid } from "../homepage/components/PhotosGrid";
+import { PhotosGrid } from "../../components/PhotosGrid";
 
 
 

@@ -5,7 +5,7 @@ import {AlbumsRow} from "./components/AlbumsRow"
 import "./HomePage.css";
 import { useParams } from "react-router-dom";
 import { SocialBioSection } from "./components/SocialBioSection";
-import { PhotosGrid } from "./components/PhotosGrid";
+import { PhotosGrid } from "../../components/PhotosGrid";
 
 export default function Homepage() {
 
