@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchMainPhoto } from "../../api/photoBrowse";
-import type { PhotoResponse, MainPhotoResponse } from "../../types/types";
-import { fetchPhotos } from "../../api/homepage";
+import type { MainPhotoResponse } from "../../types/types";
 import { PhotosGrid } from "../../components/PhotosGrid";
 
 
 
 export default function  PhotoPage () {
-    const {photoId,context} = useParams<{photoId: string; context: string}>();
-    const scope = context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED";
+    const {photoId} = useParams<{photoId: string}>();
     const [mainPhoto, setMainPhoto]= useState <MainPhotoResponse| null>(null);
 
     useEffect(() => {

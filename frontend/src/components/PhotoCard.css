@@ -107,15 +107,21 @@
   padding: 4px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.22);
-  place-items: center;
   color: #ffffffb3;
   background: var(--bgCard);
+  display: inline-grid;
+  place-items: center;
+
+  position: relative;
+  top: 5px;
+
 }
 
 .photo-owner-name{
   margin-left: 6px;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 13px;
+  font-size: 12px;
+  color:rgba(214, 214, 214, 0.652);
 }
 
 .photo-card:hover .photo-owner {
@@ -126,6 +132,59 @@
 .photo-owner:hover .photo-owner-avatar{
   background: var(--bgCardHover);
 }
+.photo-owner:hover .photo-owner-name{
+
+  color:rgba(255, 255, 255, 0.798);
+}
 
 
+/* --- Location button ---*/
+.photo-location {
+  position: absolute;
+  top: 12px;
+  left: 12px;
 
+  width: auto;
+  height: auto;
+  cursor: default;
+
+  opacity: 0;
+  transform: translateY(-4px) scale(0.98);
+  transition: opacity 160ms ease, transform 160ms ease, background 160ms ease;
+
+  background: none;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+.photo-card:hover .photo-location {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.photo-location-avatar {
+  padding: 6px;
+  border-radius: 999px;
+  border: none;
+  color: #ffffffd7;
+
+  display: inline-grid;
+  place-items: center;
+}
+.photo-location-avatar svg{
+  width: 18px;
+  height: 18px;
+}
+
+.photo-location-name {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 10px;
+  color:rgba(191, 189, 189, 0.644);
+}
+
+.photo-location:hover .photo-location-name{
+  color:rgba(255, 255, 255, 0.798);
+}

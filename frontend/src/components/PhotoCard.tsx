@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { LinkIcon, UserIcon } from "./Icons";
 import { PROFILE_BY_ID } from "../constants/constants";
+import { BsGeoAltFill } from "react-icons/bs";
 
 export function PhotoCard({ photo }: { photo: PhotoResponse }) {
   const navigate = useNavigate();
@@ -67,6 +68,17 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
           ) : (
             <LinkIcon />
           )}
+        </button>
+
+        <button
+          type="button"
+          className="photo-location"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <span className="photo-location-avatar">
+            <BsGeoAltFill />
+          </span>
+          <span className="photo-location-name">{p.location}</span>
         </button>
 
         <button
