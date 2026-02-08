@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchMainPhoto, fetchPhotoSuggestions } from "../../api/photoBrowse";
-import type { PhotoResponse, MainPhotoResponse } from "../../types/types";
+import { fetchMainPhoto } from "../../api/photoBrowse";
+import type { MainPhotoResponse } from "../../types/types";
+import { PhotosGrid } from "../../components/PhotosGrid";
 
 
 
 export default function  PhotoPage () {
-    const {photoId} = useParams();
-    const [photos, setPhotos] = useState<PhotoResponse[]> ([]) ;
+    const {photoId} = useParams<{photoId: string}>();
     const [mainPhoto, setMainPhoto]= useState <MainPhotoResponse| null>(null);
 
     useEffect(() => {
       if (!photoId) return;
       (async () => {
-        const [photo, suggestions] = await Promise.all([
-                fetchMainPhoto(photoId),
-                fetchPhotoSuggestions(photoId)
+        const [photo] = await Promise.all([
+                fetchMainPhoto(photoId)
                 ]);
         setMainPhoto(photo);
-        setPhotos(suggestions);
+  
       })();
     }, [photoId]);
 
@@ -27,12 +26,11 @@ export default function  PhotoPage () {
     
     <>
       <div>photoId: {mainPhoto?.id}</div>
-
-      <div>photos count: {photos.length}</div>
-
       <div>
         mainPhoto title: {mainPhoto ? mainPhoto?.title : "(mainPhoto is null because not loaded / no photoId)"}
-      </div>
+      </div> 
+      
+        <PhotosGrid photoId= {photoId}/>
     </>
     );
 }
