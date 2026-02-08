@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { LinkIcon, UserIcon } from "./Icons";
 import { PROFILE_BY_ID } from "../constants/constants";
-import { BsGeoAltFill } from "react-icons/bs";
+import { BsPersonFill, BsLink45Deg, BsGeoAltFill } from "react-icons/bs";
 
 export function PhotoCard({ photo }: { photo: PhotoResponse }) {
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
           {copied ? (
             <span className="photo-share-copied">Copied</span>
           ) : (
-            <LinkIcon />
+             <span className="photo-share-avatar">< BsLink45Deg /></span>
           )}
         </button>
 
@@ -89,7 +89,7 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
           <span className="photo-owner-avatar"  style={{ ["--bgCard" as any]: p.avatar?.bg  ?? "#111827" ,
                   ["--bgCardHover" as any]: p.avatar?.bgHoverOn
                 }}>
-          <UserIcon/>
+          <BsPersonFill/>
           </span>
             <span className="photo-owner-name"> {p.label}</span>
           
