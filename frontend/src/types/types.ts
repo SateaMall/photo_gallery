@@ -17,6 +17,8 @@ export type AlbumPhotoItem = {
   city: string | null;
   captureYear: number | null;
   addedAt: string;
+  height: number;
+  width: number;
 }
 
 
@@ -51,6 +53,9 @@ export type MainPhotoResponse = {
   city: string | null;
   captureYear: number | null;
   themes: Theme[] | null;
+  height: number;
+  width: number;
+
 };
 
 export type Theme =

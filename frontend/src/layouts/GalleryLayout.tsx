@@ -1,7 +1,6 @@
 import { Navigate, Outlet, useParams, useLocation} from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 
-
 const ALLOWED = new Set(["SATEA", "ALEXIS", "SHARED"]);
 import { useEffect } from "react";
 
@@ -28,11 +27,8 @@ export default function GalleryLayout() {
   return (
     <>
       <Navbar />
-      {/* gallery specific layout */}
       <Outlet />
       <ScrollToHash />
-
-      
     </>
   );
 }

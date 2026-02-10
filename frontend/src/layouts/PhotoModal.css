@@ -1,0 +1,24 @@
+.modal-overlay-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.modal-content-popup {
+  position: fixed;
+  inset: 40px;
+  z-index: 1000;
+
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: auto;
+  outline: none;
+}
+
+.modal-close-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1002;
+}

@@ -1,9 +1,8 @@
 import type { PhotoResponse } from "../types/types";
 import { photoFileUrl } from "../api/photos";
 import "./PhotoCard.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import { LinkIcon, UserIcon } from "./Icons";
 import { PROFILE_BY_ID } from "../constants/constants";
 import { BsPersonFill, BsLink45Deg, BsGeoAltFill } from "react-icons/bs";
 
@@ -11,11 +10,14 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
   const navigate = useNavigate();
   const { context } = useParams();
   const image = photoFileUrl(photo.id);
+  const location = useLocation();
 
   const [copied, setCopied] = useState(false);
 
   function onPickPhoto(photoId: string) {
-    navigate(`/${context}/photo/${photoId}`);
+      navigate(`/${context}/photo/${photoId}`, {
+    state: { backgroundLocation: location },
+  });
   }
 
   function onOwnerClick(e: React.MouseEvent<HTMLButtonElement>) {
@@ -78,7 +80,7 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
           <span className="photo-location-avatar">
             <BsGeoAltFill />
           </span>
-          <span className="photo-location-name">{p.location}</span>
+          <span className="photo-location-name">{photo.city}, {photo.country}</span>
         </button>
 
         <button

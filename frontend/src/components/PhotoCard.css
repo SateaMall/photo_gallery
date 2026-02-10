@@ -169,7 +169,7 @@
   border: none;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 
@@ -193,7 +193,7 @@
 
 .photo-location-name {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   color:rgba(191, 189, 189, 0.644);
 }
 
