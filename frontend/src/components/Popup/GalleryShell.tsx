@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation, useNavigate, useParams } from "react-router-dom";
-import Homepage from "../pages/homepage/Homepage";
-import AlbumPage from "../pages/PhotoBrowser/AlbumPage";
-import PhotoPage from "../pages/PhotoBrowser/PhotoPage";
+import Homepage from "../../pages/homepage/Homepage";
+import AlbumPage from "../../pages/PhotoBrowser/AlbumPage";
+import PhotoPage from "../../pages/PhotoBrowser/PhotoPage";
 import * as Dialog from "@radix-ui/react-dialog";
 import "./PhotoModal.css"
 
@@ -13,7 +13,8 @@ function PhotoModal() {
     <Dialog.Root open onOpenChange={(open) => !open && navigate(-1)}>
       <Dialog.Portal>
         <Dialog.Overlay className="modal-overlay-popup" />
-        <Dialog.Content className="modal-content-popup" aria-label="Photo viewer">
+        <Dialog.Content className="modal-content-popup" aria-label="Photo viewer"
+  >
             <Dialog.Title></Dialog.Title>
             <Dialog.Description>
             </Dialog.Description>

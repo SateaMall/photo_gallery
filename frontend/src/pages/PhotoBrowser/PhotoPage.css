@@ -83,11 +83,11 @@
 .photo-page__dl {
   margin: 0;
   display: grid;
-  gap: 12px;
+  gap: 15px;
 }
 
 .photo-page__row dt {
-  font-size: 12px;
+  font-size: 15px;
   opacity: 0.7;
   margin-bottom: 4px;
 }
@@ -106,15 +106,16 @@
   font-size: 12px;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(61, 61, 61, 0.08);
+  cursor:pointer;
 }
 
 .photo-page__related {
-  margin-top: 18px;
+  margin-top: 30px;
 }
 
 .photo-page__h2 {
-  margin: 0 0 10px;
-  font-size: 16px;
+  margin: 50px 0 18px 20px;
+  font-size: 20px;
   opacity: 0.9;
 }

@@ -1,23 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchMainPhoto } from "../../api/photoBrowse";
-import type { MainPhotoResponse } from "../../types/types";
+import type { MainPhotoResponse, Profile } from "../../types/types";
 import { PhotosGrid } from "../../components/PhotosGrid";
 import { photoFileUrl } from "../../api/photos";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import "./PhotoPage.css"
-function formatDate(value?: string | null) {
-  if (!value) return "—";
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return value; // fallback if backend sends non-ISO
-  return d.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
-}
+import { PROFILE_BY_ID } from "../../constants/constants";
 
-function joinList(v?: string[] | null) {
-  if (!v || v.length === 0) return "—";
-  return v.join(", ");
-}
 
 export default function PhotoPage() {
   const { photoId } = useParams<{ photoId: string }>();
@@ -25,6 +16,8 @@ export default function PhotoPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const image = photoFileUrl(photoId);
+  const [mainProfile, setMainProfile] = useState<Profile | null>(null);
+  
   
   useEffect(() => {
     if (!photoId) return;
@@ -36,6 +29,7 @@ export default function PhotoPage() {
       try {
         const photo = await fetchMainPhoto(photoId);
         setMainPhoto(photo);
+        setMainProfile(PROFILE_BY_ID[photo.owner]);
       } catch (e) {
         setError("Failed to load photo.");
       } finally {
@@ -45,11 +39,13 @@ export default function PhotoPage() {
   }, [photoId]);
 
   const title = mainPhoto?.title?.trim() || "Untitled";
-  const description = (mainPhoto as any)?.description?.trim?.() || (mainPhoto as any)?.description || "—";
-  const owner = (mainPhoto as any)?.owner ?? (mainPhoto as any)?.ownerId ?? "—";
-  const themes = (mainPhoto as any)?.themes ?? (mainPhoto as any)?.themeNames ?? [];
-  const location = (mainPhoto as any)?.location ?? (mainPhoto as any)?.place ?? "—";
-  const captureDate = (mainPhoto as any)?.captureDate ?? (mainPhoto as any)?.takenAt ?? (mainPhoto as any)?.createdAt ?? null;
+  const description = mainPhoto?.description?.trim?.() || mainPhoto?.description || "—";
+  const owner = mainProfile?.label || "—";
+  const themes = mainPhoto?.themes ?? (mainPhoto as any)?.themeNames ?? [];
+  const location = [mainPhoto?.city, mainPhoto?.country]
+    .filter(Boolean)
+    .join(", ") || "—";
+  const captureYear = mainPhoto?.captureYear?? "—";
 
   if (!photoId) return null;
 
@@ -63,7 +59,12 @@ export default function PhotoPage() {
           {/* Main viewer + metadata */}
           <div className="photo-page__hero">
             <div className="photo-page__viewer">
-              <PhotoProvider>
+                            {/* ✅ Lightbox (inside modal portal container) */}
+            <PhotoProvider
+
+                maskClosable={true}
+                photoClosable={true}
+            >
                 <PhotoView src={image}>
                   <button type="button" className="photo-page__imageBtn" aria-label="Open viewer">
                     <img
@@ -88,7 +89,7 @@ export default function PhotoPage() {
               <dl className="photo-page__dl">
                 <div className="photo-page__row">
                   <dt>Owner</dt>
-                  <dd>{String(owner)}</dd>
+                  <dd>{owner}</dd>
                 </div>
 
                 <div className="photo-page__row">
@@ -110,12 +111,12 @@ export default function PhotoPage() {
 
                 <div className="photo-page__row">
                   <dt>Location</dt>
-                  <dd>{String(location)}</dd>
+                  <dd>{location}</dd>
                 </div>
 
                 <div className="photo-page__row">
                   <dt>Capture date</dt>
-                  <dd>{formatDate(captureDate)}</dd>
+                  <dd>{captureYear}</dd>
                 </div>
               </dl>
             </aside>

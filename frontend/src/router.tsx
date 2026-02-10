@@ -9,7 +9,7 @@ import AlbumPage from "./pages/PhotoBrowser/AlbumPage.tsx";
 import PhotoPage from "./pages/PhotoBrowser/PhotoPage.tsx";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./AdminSection/admin_upload";
-import { GalleryShell } from "./layouts/GalleryShell.tsx";
+import { GalleryShell } from "./components/Popup/GalleryShell.tsx";
 function DebugMount({ name }: { name: string }) {
   console.log("MOUNT:", name);
   return null;

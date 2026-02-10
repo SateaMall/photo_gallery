@@ -10,7 +10,7 @@ export function PhotosGrid({photoId}:{photoId?:string}){
   const { context } = useParams(); // "satea" | "alexis" | "shared"
   const scope = context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED";
 
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = photoId? 8 : 20;
   const FIRST_VISIBLE = 12;
   const [photos, setPhotos] = useState<PhotoResponse[]>([]);
   const [page, setPage] = useState(0); // backend page index
@@ -105,7 +105,7 @@ return (
   </div>
 
   {/* SECOND SEE MORE (pagination) */}
-  {!hasHiddenInCurrent && hasMorePages && (
+  {!hasHiddenInCurrent && hasMorePages && !photoId && (
     <div style={{ textAlign: "center", marginTop: 20 }} >
       <button className="hp-more-btn" onClick={loadMore}>
         Load more photos
