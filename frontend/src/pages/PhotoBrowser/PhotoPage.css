@@ -67,13 +67,15 @@
 .photo-page__meta {
   border-radius: 18px;
   padding: 16px 16px;
-  background: rgb(107, 107, 107);
+  border: 1px solid rgb(6, 6, 6);
+  background-color:   rgb(36, 36, 36);;
 }
 
 .photo-page__title {
   margin: 0 0 8px;
   font-size: 22px;
   line-height: 1.15;
+
 }
 
 .photo-page__desc {
@@ -107,7 +109,7 @@
   font-size: 12px;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(153, 153, 153, 0.377);
+  background: rgba(135, 99, 59, 0.377);
   cursor:pointer;
 }
 
