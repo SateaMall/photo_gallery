@@ -88,12 +88,12 @@ export default function PhotoPage() {
 
               <dl className="photo-page__dl">
                 <div className="photo-page__row">
-                  <dt>Owner</dt>
-                  <dd>{owner}</dd>
+                  <dt className="meta-headlines">Owner</dt>
+                  <dd className="meta-info">{owner}</dd>
                 </div>
 
                 <div className="photo-page__row">
-                  <dt>Themes</dt>
+                  <dt className="meta-headlines">Themes</dt>
                   <dd>
                     {Array.isArray(themes) && themes.length > 0 ? (
                       <div className="photo-page__chips">
@@ -110,13 +110,13 @@ export default function PhotoPage() {
                 </div>
 
                 <div className="photo-page__row">
-                  <dt>Location</dt>
-                  <dd>{location}</dd>
+                  <dt className="meta-headlines">Location</dt>
+                  <dd className="meta-info">{location}</dd>
                 </div>
 
                 <div className="photo-page__row">
-                  <dt>Capture date</dt>
-                  <dd>{captureYear}</dd>
+                  <dt className="meta-headlines">Capture year</dt>
+                  <dd className="meta-info">{captureYear}</dd>
                 </div>
               </dl>
             </aside>
@@ -132,3 +132,5 @@ export default function PhotoPage() {
     </section>
   );
 }
+
+//TODO , work on the styling of the meta data, it looks so impersonal

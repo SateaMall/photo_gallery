@@ -7,17 +7,24 @@
 
 .modal-content-popup {
   position: fixed;
-  inset: 40px;
+  inset: 10px;
   z-index: 1000;
-  margin-left: 8%;
-  margin-right: 8%;
+  margin-left: 5%;
+  margin-right: 5%;
   padding: 20px;
-  background: #ffffff;
+  background: #848484;
   border-radius: 16px;
   overflow: auto;
   outline: none;
 }
-
+/* ≥ 600px */
+@media (min-width: 800px) {
+  .modal-content-popup {
+    margin-left: 8%;
+    margin-right: 8%;
+    inset: 10px;
+  }
+}
 .modal-close-popup {
   position: absolute;
   top: 10px;

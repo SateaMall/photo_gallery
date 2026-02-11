@@ -2,6 +2,7 @@
   padding: 18px;
   max-width: 1600px;
   margin: 0 auto;
+  color:rgb(223, 223, 223);
 }
 
 .photo-page__status {
@@ -16,7 +17,7 @@
 
 .photo-page__hero {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.5fr 0.8fr;
   gap: 18px;
   align-items: start;
 }
@@ -66,7 +67,7 @@
 .photo-page__meta {
   border-radius: 18px;
   padding: 16px 16px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgb(107, 107, 107);
 }
 
 .photo-page__title {
@@ -106,7 +107,7 @@
   font-size: 12px;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(61, 61, 61, 0.08);
+  background: rgba(153, 153, 153, 0.377);
   cursor:pointer;
 }
 
@@ -119,3 +120,7 @@
   font-size: 20px;
   opacity: 0.9;
 }
+.meta-info{
+  font-size: 13px;
+}
+
