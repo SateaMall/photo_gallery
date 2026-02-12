@@ -32,7 +32,7 @@ public class AdminPhotoController {
             @RequestParam(required = false) List<Theme> themes
     ) {
         Photo photo = photoService.upload(file, owner, albumId,themes);
-        return PhotoResponse.from(photo, null);
+        return PhotoResponse.from(photo);
     }
 
     @DeleteMapping("/{id}")

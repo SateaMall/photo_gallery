@@ -23,4 +23,10 @@ public record AlbumViewResponse (
         }
         return list;
     }
+
+    public static AlbumViewResponse from (AlbumViewRow albumView)
+    {
+        int count = albumView.getNumberOfPhotos() == null ? 0 : albumView.getNumberOfPhotos();
+        return  new AlbumViewResponse(albumView.getAlbumId(),albumView.getFirstPhotoId(),albumView.getTitle(), albumView.getDescription(), count);
+    }
 }

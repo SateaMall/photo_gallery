@@ -1,12 +1,10 @@
 package com.AlexiSatea.backend.service;
 
 
+import com.AlexiSatea.backend.dto.MainPhotoResponse;
 import com.AlexiSatea.backend.dto.PhotoResponse;
 import com.AlexiSatea.backend.model.*;
-import com.AlexiSatea.backend.model.Enum.FeatureContext;
-import com.AlexiSatea.backend.model.Enum.Owner;
-import com.AlexiSatea.backend.model.Enum.PhotoVariant;
-import com.AlexiSatea.backend.model.Enum.Theme;
+import com.AlexiSatea.backend.model.Enum.*;
 import com.AlexiSatea.backend.repo.AlbumRepository;
 import com.AlexiSatea.backend.repo.PhotoFeatureRepository;
 import com.AlexiSatea.backend.repo.PhotoRepository;
@@ -15,6 +13,8 @@ import com.AlexiSatea.backend.storage.StorageService;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,10 +32,7 @@ import java.io.InputStream;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.AlexiSatea.backend.model.Enum.PhotoVariant.MEDIUM;
@@ -49,6 +46,7 @@ public class PhotoService {
     private final AlbumPhotoRepository albumPhotoRepository;
     private final StorageService storageService;
     private final PhotoFeatureRepository photoFeatureRepository;
+    private static final Logger logger = LoggerFactory.getLogger(PhotoService.class);
 
     // We can expand later (HEIC, etc.)
     private static final Set<String> ALLOWED_CONTENT_TYPES = Set.of(
@@ -67,15 +65,16 @@ public class PhotoService {
 
 
     @Transactional(readOnly = true)
-    public Page <PhotoResponse> getPhotos (Owner owner, FeatureContext context, Pageable pageable){
+    public Page <PhotoResponse> getPhotos (Owner owner, FeatureContext context,UUID photoId, Pageable pageable){
+        if(photoId == null){
         return photoRepository.findFeatured(context, owner, pageable)
-                .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()));
-    }
-
-    @Transactional(readOnly = true)
-    public Page <PhotoResponse> getPhotos (FeatureContext context, Pageable pageable){
-        return photoRepository.findFeatured(context,null,pageable)
-                .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()));
+                .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()));}
+        else{
+            List<Theme> themes = photoRepository.findThemesByPhotoId(photoId);
+            logger.info(themes.toString());
+            return  photoRepository.findFeaturedPriorityThemes(context, owner,themes, pageable)
+                    .map(r-> PhotoResponse.from(r.getPhoto(),r.getPhotoFeature()));
+        }
     }
 
 
@@ -240,6 +239,12 @@ public class PhotoService {
     }
 
     @Transactional(readOnly = true)
+    public MainPhotoResponse getPhoto(UUID id){
+        Optional<Photo> photo= photoRepository.findById(id);
+        return  MainPhotoResponse.from(photo.orElseThrow(() -> new IllegalArgumentException("Photo not found: " + id)));
+    }
+
+    @Transactional(readOnly = true)
     public Resource loadFile(UUID id, PhotoVariant variant) {
         Photo photo = get(id);
 
@@ -343,8 +348,10 @@ public class PhotoService {
     }
 
 
-
-
+    public List<PhotoResponse> getPhotoSuggestions(UUID photoId, AlbumScope scope) {
+        // Si scope == shared => pas de filtre owner, else owner c'est le filtre
+        return new ArrayList<>(); //TODO complete suggestions with themes
+    }
 }
 
 

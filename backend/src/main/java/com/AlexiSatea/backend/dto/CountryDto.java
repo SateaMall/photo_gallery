@@ -1,4 +1,3 @@
 package com.AlexiSatea.backend.dto;
 
-public class CountryDto {
-}
+public record CountryDto(String code, String label) {    }
