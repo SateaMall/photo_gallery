@@ -1,14 +1,25 @@
 .homepage {
-  max-width: 1300px;
-  margin: 0 auto;
+
   padding: 28px 18px 60px;
 }
 
 /* section spacing */
 .hp-section {
   margin-bottom: 42px;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
+.hp-section-album{
+  margin-bottom: 42px;
+  
+}
+
+.hp-head-album {
+  padding-bottom: 10px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
 .hp-head {
   display: flex;
   align-items: baseline;

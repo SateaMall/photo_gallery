@@ -2,10 +2,9 @@ import { useMemo, useState } from "react";
 import "./ProfilesPage.css";
 import { useNavigate } from "react-router-dom";
 
-import { UserIcon, LinkIcon } from "../../components/Icons";
+import { BsPersonFill, BsLink45Deg } from "react-icons/bs";
 import type { Profile } from "../../types/types";
 import { PROFILES, BG_BY_ID } from "../../constants/constants";
-
 
 export default function ProfilesPages() {
  const navigate = useNavigate();
@@ -47,7 +46,7 @@ export default function ProfilesPages() {
                 }}
               >
                 <div className="ps-icon" aria-hidden="true">
-                {isShared ? <LinkIcon /> : <UserIcon />}
+                {isShared ? <BsLink45Deg /> : <BsPersonFill />}
               </div>
                 <div className="ps-label">{p.label}</div>
               </button>

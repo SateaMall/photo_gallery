@@ -3,11 +3,14 @@ package com.AlexiSatea.backend.model;
 import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Enum.Theme;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Getter @Setter
@@ -84,6 +87,19 @@ public class Photo {
     private String title;
 
 
+    @Column(nullable = true, length = 255)
+    private String description;
+
+    @Column(nullable = true)
+    private String country;
+
+    @Column(nullable = true)
+    private String city;
+
+    @Column(nullable = true)
+    @Min(1999)
+    @Max(2100)
+    private Integer captureYear;
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
@@ -110,17 +126,37 @@ public class Photo {
     @Column(name = "theme", nullable = false, length = 50)
     private List<Theme> themes = new ArrayList<>();
 
-    @Column(nullable = true, length = 255)
-    private String description;
-
-    //ToDo add country & city or just location??
-
 
 
     @PrePersist
     void onCreate() {
         if (createdAt == null) createdAt = Instant.now();
+        this.city = normalizeCity(this.city);
+        this.country = normalizeCountryCode(this.country);
+
     }
 
+
+    @PreUpdate
+    private void OnModification() {
+        this.city = normalizeCity(this.city);
+        this.country = normalizeCountryCode(this.country);
+    }
+
+    // Make city Lower case and deletes spaces
+    private static String normalizeCity(String city) {
+        if (city == null) return null;
+        city = city.trim().replaceAll("\\s+", " ");
+        if (city.isEmpty()) return null;
+        String lower = city.toLowerCase(Locale.ROOT);
+        return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
+    }
+
+    // Make Counrty Codes uppercase
+    private static String normalizeCountryCode(String code) {
+        if (code == null) return null;
+        code = code.trim().toUpperCase(Locale.ROOT);
+        return code.isEmpty() ? null : code;
+    }
 
 }

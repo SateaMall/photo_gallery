@@ -1,0 +1,134 @@
+.photo-page {
+  padding: 18px;
+  max-width: 1600px;
+  margin: 0 auto;
+  color:rgb(223, 223, 223);
+}
+
+.photo-page__status {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.photo-page__status--error {
+  background: rgba(255, 0, 0, 0.12);
+}
+
+.photo-page__hero {
+  display: grid;
+  grid-template-columns: 1.5fr 0.8fr;
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .photo-page__hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+.photo-page__viewer {
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.photo-page__imageBtn {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.photo-page__image {
+  width: 100%;
+  height: min(70vh, 620px);
+  object-fit: contain;
+  display: block;
+  background: #0b0b0c;
+}
+
+.photo-page__hint {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.55);
+  color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+}
+
+.photo-page__meta {
+  border-radius: 18px;
+  padding: 16px 16px;
+  background-color:   rgba(42, 42, 42, 0.883);
+}
+
+.photo-page__title {
+  margin: 0 0 8px;
+  font-size: 22px;
+  line-height: 1.15;
+
+}
+
+.photo-page__desc {
+  margin: 0 0 14px;
+  opacity: 0.9;
+}
+
+.photo-page__dl {
+  margin: 0;
+  display: grid;
+  gap: 15px;
+}
+
+.photo-page__row dt {
+  font-size: 15px;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+.photo-page__row dd {
+  margin: 0;
+}
+
+.photo-page__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.photo-page__chip {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(135, 99, 59, 0.377);
+  cursor:pointer;
+}
+
+.photo-page__related {
+  margin-top: 30px;
+}
+
+.photo-page__h2 {
+  margin: 50px 0 18px 20px;
+  font-size: 20px;
+  opacity: 0.9;
+}
+.meta-info{
+  font-size: 13px;
+}
+
+/* Lightbox */
+/* Keep close/toolbar always clickable */
+.PhotoView-Slider__toolbar,
+.PhotoView-Slider__toolbar * {
+  pointer-events: auto !important;
+  z-index: 9999;
+}

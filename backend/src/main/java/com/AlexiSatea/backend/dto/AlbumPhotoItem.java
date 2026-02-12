@@ -13,7 +13,12 @@ public record AlbumPhotoItem(
         Owner owner,
         String title,
         String description,
-        Instant addedAt
+        String country,
+        String city,
+        Integer captureYear,
+        Instant addedAt,
+        Integer width,
+        Integer height
 ) {
     public static AlbumPhotoItem from(AlbumPhoto ap) {
         Photo p = ap.getPhoto();
@@ -22,9 +27,15 @@ public record AlbumPhotoItem(
                 p.getOwner(),
                 p.getTitle(),
                 p.getDescription(),
-                ap.getAddedAt()
+                p.getCountry(),
+                p.getCity(),
+                p.getCaptureYear(),
+                ap.getAddedAt(),
+                p.getWidth(),
+                p.getHeight()
         );
     }
+
     public static List<AlbumPhotoItem> from(List<AlbumPhoto> relations) {
         List<AlbumPhotoItem> items = new ArrayList<>();
         for (AlbumPhoto ap : relations) {
@@ -35,7 +46,12 @@ public record AlbumPhotoItem(
                     photo.getOwner(),
                     photo.getTitle(),
                     photo.getDescription(),
-                    ap.getAddedAt()
+                    photo.getCountry(),
+                    photo.getCity(),
+                    photo.getCaptureYear(),
+                    ap.getAddedAt(),
+                            photo.getWidth(),
+                            photo.getHeight()
         );
         items.add(item);
         }

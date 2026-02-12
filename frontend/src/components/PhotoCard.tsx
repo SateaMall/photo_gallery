@@ -3,25 +3,22 @@ import { photoFileUrl } from "../api/photos";
 import "./PhotoCard.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import { LinkIcon, UserIcon } from "./Icons";
 import { PROFILE_BY_ID } from "../constants/constants";
 import { BsPersonFill, BsLink45Deg, BsGeoAltFill } from "react-icons/bs";
+import { useOpenPhoto } from "./Popup/useOpenPhoto";
 
 export function PhotoCard({ photo }: { photo: PhotoResponse }) {
   const navigate = useNavigate();
   const { context } = useParams();
   const image = photoFileUrl(photo.id);
-
   const [copied, setCopied] = useState(false);
-
-  function onPickPhoto(photoId: string) {
-    navigate(`/${context}/photo/${photoId}`);
-  }
+  const openPhoto = useOpenPhoto();
 
   function onOwnerClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();     // prevents the article onClick
     navigate(`/${photo.owner}`);
   }
+
 
   async function onShare(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
@@ -35,6 +32,7 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
     }
     setCopied(true); 
   }
+  
   const p = PROFILE_BY_ID[photo.owner];
 
   return (
@@ -42,7 +40,7 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
       className="photo-card"
       role="button"
       tabIndex={0}
-      onClick={() => onPickPhoto(photo.id)}
+      onClick={() => openPhoto(photo.id,"modal")}
       onMouseLeave={() => setCopied(false)} // reset when hover ends
     >
       <div className="photo-media">
@@ -78,7 +76,7 @@ export function PhotoCard({ photo }: { photo: PhotoResponse }) {
           <span className="photo-location-avatar">
             <BsGeoAltFill />
           </span>
-          <span className="photo-location-name">{p.location}</span>
+          <span className="photo-location-name">{photo.city}, {photo.country}</span>
         </button>
 
         <button

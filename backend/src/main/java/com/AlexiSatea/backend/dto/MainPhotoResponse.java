@@ -3,13 +3,13 @@ package com.AlexiSatea.backend.dto;
 import com.AlexiSatea.backend.model.Enum.Owner;
 import com.AlexiSatea.backend.model.Enum.Theme;
 import com.AlexiSatea.backend.model.Photo;
-import com.AlexiSatea.backend.model.PhotoFeature;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-public record SinglePhotoResponse(
+public record MainPhotoResponse(
             UUID id,
             Owner owner,
             Instant createdAt,
@@ -18,12 +18,14 @@ public record SinglePhotoResponse(
             String country,
             String city,
             Integer captureYear,
-            ArrayList<Theme> themes
+            List<Theme> themes,
+            Integer width,
+            Integer height
 
     ) {
         //For single photo (photo's page)
-        public static SinglePhotoResponse from(Photo p) {
-            return new SinglePhotoResponse(
+        public static MainPhotoResponse from(Photo p) {
+            return new MainPhotoResponse(
                     p.getId(),
                     p.getOwner(),
                     p.getCreatedAt(),
@@ -32,7 +34,9 @@ public record SinglePhotoResponse(
                     p.getCountry(),
                     p.getCity(),
                     p.getCaptureYear(),
-                    new ArrayList<Theme>()  //TODO (populate the themes)
+                    new ArrayList<>(p.getThemes()),
+                    p.getWidth(),
+                    p.getHeight()
                     );
         }
 

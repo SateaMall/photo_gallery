@@ -2,22 +2,23 @@ package com.AlexiSatea.backend.repo;
 
 import com.AlexiSatea.backend.model.Enum.FeatureContext;
 import com.AlexiSatea.backend.model.Enum.Owner;
+import com.AlexiSatea.backend.model.Enum.Theme;
 import com.AlexiSatea.backend.model.Interface.PhotoAndFeature;
 import com.AlexiSatea.backend.model.Photo;
-import com.AlexiSatea.backend.model.PhotoFeature;
 import jakarta.annotation.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface PhotoRepository extends JpaRepository<Photo, UUID> {
     Page<Photo> findByOwnerOrderByCreatedAtDesc(Owner owner, Pageable pageable);
+
 
 
     @Query("""
@@ -39,6 +40,36 @@ public interface PhotoRepository extends JpaRepository<Photo, UUID> {
             @Param("owner") @Nullable Owner owner,
             Pageable pageable
     );
+    @Query("""
+    select p as photo, pf as photoFeature
+    from Photo p
+    left join PhotoFeature pf
+        on pf.photo = p
+       and pf.context = :context
+       and pf.enabled = true
+    left join p.themes t
+    where (:owner is null or p.owner = :owner)
+    group by p, pf
+    order by
+      coalesce(sum(case when t in :themes then 1 else 0 end), 0) desc,
+      pf.orderIndex asc nulls last,
+      pf.featuredAt desc,
+      p.createdAt desc
+""")
+Page<PhotoAndFeature> findFeaturedPriorityThemes(
+            @Param("context") FeatureContext context,
+            @Param("owner") @Nullable Owner owner,
+            @Param("themes")@Nullable List<Theme> themes,
+            Pageable pageable
+    );
+
+
+    @Query("""
+      select t
+      from Photo p join p.themes t
+      where p.id = :photoId
+    """)
+    List<Theme> findThemesByPhotoId(@Param("photoId") UUID photoId);
 
 }
 

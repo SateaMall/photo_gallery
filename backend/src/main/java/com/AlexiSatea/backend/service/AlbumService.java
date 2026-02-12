@@ -5,16 +5,13 @@ import com.AlexiSatea.backend.dto.AlbumResponse;
 import com.AlexiSatea.backend.dto.AlbumViewResponse;
 import com.AlexiSatea.backend.model.*;
 import com.AlexiSatea.backend.model.Enum.AlbumScope;
-import com.AlexiSatea.backend.model.Interface.AlbumDetails;
 import com.AlexiSatea.backend.model.Interface.AlbumViewRow;
 import com.AlexiSatea.backend.repo.AlbumPhotoRepository;
 import com.AlexiSatea.backend.repo.AlbumRepository;
 import com.AlexiSatea.backend.repo.PhotoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -118,9 +115,9 @@ public class AlbumService {
     }
 
     @Transactional(readOnly = true)
-    public AlbumResponse getAlbumDetails(UUID albumId) {
-        AlbumDetails albumDetails = albumRepository.findProjectedById(albumId).orElseThrow(() -> new IllegalArgumentException("Album not found"+ albumId));
-        return AlbumResponse.from(albumDetails.getId(), albumDetails.getTitle(), albumDetails.getDescription());
+    public AlbumViewResponse getAlbumDetails(UUID albumId) {
+        AlbumViewRow albumDetails = albumRepository.findAlbumViewById(albumId);
+        return AlbumViewResponse.from(albumDetails);
 
     }
 
