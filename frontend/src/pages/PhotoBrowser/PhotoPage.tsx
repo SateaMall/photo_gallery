@@ -15,10 +15,10 @@ export default function PhotoPage() {
   const [mainPhoto, setMainPhoto] = useState<MainPhotoResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const image = photoFileUrl(photoId);
   const [mainProfile, setMainProfile] = useState<Profile | null>(null);
-  
-  
+
+  if (!photoId) return;
+  const image = photoFileUrl(photoId);
   useEffect(() => {
     if (!photoId) return;
 
@@ -59,12 +59,11 @@ export default function PhotoPage() {
           {/* Main viewer + metadata */}
           <div className="photo-page__hero">
             <div className="photo-page__viewer">
-                            {/* ✅ Lightbox (inside modal portal container) */}
-            <PhotoProvider
-
+                            {/* Lightbox (inside modal portal container) */}
+              <PhotoProvider
                 maskClosable={true}
                 photoClosable={true}
-            >
+                >
                 <PhotoView src={image}>
                   <button type="button" className="photo-page__imageBtn" aria-label="Open viewer">
                     <img
@@ -75,7 +74,7 @@ export default function PhotoPage() {
                       decoding="async"
                     />
                     <div className="photo-page__hint">
-                      Click to zoom / fullscreen
+                      Click to fullscreen
                     </div>
                   </button>
                 </PhotoView>
@@ -132,5 +131,3 @@ export default function PhotoPage() {
     </section>
   );
 }
-
-//TODO , work on the styling of the meta data, it looks so impersonal

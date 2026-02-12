@@ -67,8 +67,7 @@
 .photo-page__meta {
   border-radius: 18px;
   padding: 16px 16px;
-  border: 1px solid rgb(6, 6, 6);
-  background-color:   rgb(36, 36, 36);;
+  background-color:   rgba(42, 42, 42, 0.883);
 }
 
 .photo-page__title {
@@ -126,3 +125,10 @@
   font-size: 13px;
 }
 
+/* Lightbox */
+/* Keep close/toolbar always clickable */
+.PhotoView-Slider__toolbar,
+.PhotoView-Slider__toolbar * {
+  pointer-events: auto !important;
+  z-index: 9999;
+}

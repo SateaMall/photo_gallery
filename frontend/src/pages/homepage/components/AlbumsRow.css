@@ -23,10 +23,14 @@
 
 @media (min-width: 800px) {
   .embla__slide {
-    flex-basis: calc((100% - 18px * 2) / 3); /* 3 visible on desktop */
+    flex-basis: calc((100% - 18px * 2) / 3); /* 3 visible on medium screens */
   }
 }
-
+@media (min-width: 1300px) {
+   .embla__slide {
+    flex-basis: calc((100% - 18px * 2) / 4); /* 3 visible on medium screens */
+  }
+}
 /* Optional: fade edges to hint scrollability */
 .albums-carousel::before,
 .albums-carousel::after {

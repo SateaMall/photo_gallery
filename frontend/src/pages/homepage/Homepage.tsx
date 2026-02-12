@@ -44,8 +44,8 @@ return (
 
       {/* Albums */}
     {albums.length!==0 && (
-      <section className="hp-section"  id="albums">
-      <header className="hp-head">
+      <section className="hp-section-album"  id="albums">
+      <header className="hp-head-album">
         <h1 className="hp-title">Albums</h1>
       </header>
       {albumsLoading && (<div className="hp">Albums Loading…</div>)}
