@@ -71,11 +71,10 @@ return (
       <header className="hp-head">
         <h1 className="hp-title ">Photos</h1>
       </header>
-    <PhotosGrid onCarrouselPhotosChange={setCarrouselPhotos}/>
-</section>
+      <PhotosGrid onCarrouselPhotosChange={setCarrouselPhotos}/>
+    </section>
   </div>
-
-
+  
   </div>
 );
 
