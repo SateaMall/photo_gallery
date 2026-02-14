@@ -24,18 +24,19 @@
   overflow: hidden; /* Hide any overflow from the carousel */
 }
 
-
+.content {
+  padding: 10px 10px;
+}
 /* section spacing */
 .hp-section {
-  margin-bottom: 42px;
   max-width: 1300px;
   margin: 0 auto;
+  margin-bottom: 42px;
 }
 
 .hp-section-album{
-  margin-bottom: 42px;
   margin-top: 42px;
-  
+  margin-bottom: 42px;
 }
 
 .hp-head-album {

@@ -39,7 +39,7 @@ useEffect(() => {
 
 
 return (
-  <div className="homepage font-copperplate">
+  <div className="homepage">
 
     <div className="Topper">
       <div className="navbar-container">
@@ -54,7 +54,7 @@ return (
       </div>
     </div>
   
-
+  <div className="content">
       {/* Albums */}
     {albums.length!==0 && (
       <section className="hp-section-album"  id="albums">
@@ -73,7 +73,7 @@ return (
       </header>
     <PhotosGrid onCarrouselPhotosChange={setCarrouselPhotos}/>
 </section>
-
+  </div>
 
 
   </div>
