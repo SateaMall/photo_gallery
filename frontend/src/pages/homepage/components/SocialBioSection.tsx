@@ -1,19 +1,27 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
+import { BsLinkedin, BsInstagram, BsEnvelope } from "react-icons/bs";
 import { PROFILE_BY_ID } from "../../../constants/constants";
-import './SocialBioSection.css'
+import "./SocialBioSection.css";
+
 type ContextId = "SATEA" | "ALEXIS" | "SHARED";
 
-function buildLinks(profile: { linkedIn?: string; instagram?: string }) {
+function buildLinks(profile: {
+  linkedIn?: string | null;
+  instagram?: string | null;
+  email?: string | null;
+}) {
   const linkedInUrl = profile.linkedIn?.trim()
     ? `https://www.linkedin.com/in/${profile.linkedIn.trim()}`
     : "";
 
   const instagramUrl = profile.instagram?.trim()
-    ? `https://www.instagram.com/${profile.instagram.trim()}/`
+    ? `https://www.instagram.com/${profile.instagram.trim().replace(/^@/, "")}/`
     : "";
 
-  return { linkedInUrl, instagramUrl };
+  const emailUrl = profile.email?.trim() ? `mailto:${profile.email.trim()}` : "";
+
+  return { linkedInUrl, instagramUrl, emailUrl };
 }
 
 export function SocialBioSection() {
@@ -29,54 +37,77 @@ export function SocialBioSection() {
   }, [ctx]);
 
   const hasAny = profilesToShow.some((p) => {
-    const { linkedInUrl, instagramUrl } = buildLinks(p);
-    return Boolean(linkedInUrl || instagramUrl);
+    const { linkedInUrl, instagramUrl, emailUrl } = buildLinks(p);
+    return Boolean(linkedInUrl || instagramUrl || emailUrl || p.bio);
   });
 
   if (!hasAny) return null;
 
   return (
-    <footer className="social-footer" aria-label="Social links">
-      <div className="social-footer-inner">
+    <section className="hero-bio" aria-label="Bio and social links">
+      <div className={profilesToShow.length===1 
+      ? "hero-bio__inner"
+      : "hearo-bio_ineer_two-columns"}>
         {profilesToShow.map((p) => {
-          const { linkedInUrl, instagramUrl } = buildLinks(p);
+          const { linkedInUrl, instagramUrl, emailUrl } = buildLinks(p);
 
-          // If one profile has no links, just skip rendering it
-          if (!linkedInUrl && !instagramUrl) return null;
+          const hasLinks = Boolean(linkedInUrl || instagramUrl || emailUrl);
+          const hasBio = Boolean(p.bio?.trim());
+
+          if (!hasLinks && !hasBio) return null;
 
           return (
-            <div className="social-footer-person" key={p.id}>
-              <span className="social-footer-label">{p.label}</span>
+            <article className="hero-bio__card" key={p.id}>
+              <h2 className="hero-bio__name">{p.label}</h2>
 
-              <div className="social-footer-links">
-                {instagramUrl && (
-                  <a
-                    className="social-btn"
-                    href={instagramUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`${p.label} Instagram`}
-                  >
-                    Instagram
-                  </a>
-                )}
+              {p.bio?.trim() ? (
+                <p className="hero-bio__text">{p.bio.trim()}</p>
+              ) : (
+                <div className="hero-bio__text hero-bio__text--empty" />
+              )}
 
+              <div className="hero-bio__icons" aria-label={`${p.label} social links`}>
                 {linkedInUrl && (
                   <a
-                    className="social-btn"
+                    className="hero-bio__icon"
                     href={linkedInUrl}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={`${p.label} LinkedIn`}
+                    title="LinkedIn"
                   >
-                    LinkedIn
+                    <BsLinkedin />
+                  </a>
+                )}
+
+                {instagramUrl && (
+                  <a
+                    className="hero-bio__icon"
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${p.label} Instagram`}
+                    title="Instagram"
+                  >
+                    <BsInstagram />
+                  </a>
+                )}
+
+                {emailUrl && (
+                  <a
+                    className="hero-bio__icon"
+                    href={emailUrl}
+                    aria-label={`${p.label} Email`}
+                    title="Email"
+                  >
+                    <BsEnvelope />
                   </a>
                 )}
               </div>
-            </div>
+            </article>
           );
         })}
       </div>
-    </footer>
+    </section>
   );
 }

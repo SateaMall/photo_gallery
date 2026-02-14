@@ -10,10 +10,7 @@ import PhotoPage from "./pages/PhotoBrowser/PhotoPage.tsx";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./AdminSection/admin_upload";
 import { GalleryShell } from "./components/Popup/GalleryShell.tsx";
-function DebugMount({ name }: { name: string }) {
-  console.log("MOUNT:", name);
-  return null;
-}
+
 
 export const router = createBrowserRouter([
   { path: "/",  element: <RootLayout />, children: [
@@ -24,8 +21,7 @@ export const router = createBrowserRouter([
 {
   path: ":context/*",
   element: (
-  <><DebugMount name=":context route element (GalleryLayout wrapper)" />
-  <GalleryLayout /></>),
+  <GalleryLayout />),
   children: [
      { path: "*", element: <GalleryShell /> }
     /*{ index: true, element: <Homepage /> },

@@ -5,6 +5,7 @@
   background-repeat: no-repeat;
   position: absolute;
   inset: 0;
+  
 }
 
 .page::before{
@@ -44,6 +45,8 @@
     0 0 0 1px rgba(255,255,255,0.12) inset;
   cursor: pointer;
   padding: 20px;
+   font-family: "Roboto Condensed", "Roboto", sans-serif;
+
 }
 
 
@@ -60,8 +63,9 @@
 
 /* The label inside the cube - Phone */
 .ps-label{
+  text-transform: uppercase;
   font-size: 20px;
-  font-weight: 501;
+  font-weight: 500 ;
   opacity: 0.9;
 }
 .ps-card:hover .ps-label {
@@ -90,7 +94,6 @@
 
 /* Phone */
 .ps-card{
-  font-size: 18px;
   width: 170px;
   height: 170px;
 }
@@ -110,13 +113,17 @@
   }
 
   .ps-card{
+
     font-size: 23px;
     width: 270px;
     height: 270px;
   }
   
   .ps-label{
-    font-size: 22px;
+    text-transform: uppercase;
+    font-size: 25px;
+    font-weight: 500 ;
+    opacity: 0.9;
   }
 
   .ps-icon {

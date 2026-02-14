@@ -6,7 +6,7 @@ import { PhotoCard } from "./PhotoCard";
 
 import "./PhotosGrid.css"
 
-export function PhotosGrid({photoId}:{photoId?:string}){
+export function PhotosGrid({photoId,  onCarrouselPhotosChange, }:{photoId?:string , onCarrouselPhotosChange?: (photos: PhotoResponse[]) => void;}){
   const { context } = useParams(); // "satea" | "alexis" | "shared"
   const scope = context?.toUpperCase() as "SATEA" | "ALEXIS" | "SHARED";
 
@@ -15,7 +15,6 @@ export function PhotosGrid({photoId}:{photoId?:string}){
   const [photos, setPhotos] = useState<PhotoResponse[]>([]);
   const [page, setPage] = useState(0); // backend page index
   const [error, setError] = useState(); 
-
   const [visibleCount, setVisibleCount] = useState(FIRST_VISIBLE);
   const [hasMorePages, setHasMorePages] = useState(true);
   const [initialRevealDone, setInitialRevealDone] = useState(false);
@@ -23,6 +22,7 @@ export function PhotosGrid({photoId}:{photoId?:string}){
   !initialRevealDone && visibleCount < photos.length;
   const restoreScrollYRef = useRef<number | null>(null);
   const [photosLoading, setPhotosLoading] = useState(false);
+
 
 
 // Context can change (via routing), we need to reset when that happens
@@ -56,7 +56,14 @@ useEffect(() => {
     })
     .catch((e) => setError(e.message))
     .finally(() => setPhotosLoading(false));
+ 
 }, [scope, page,photoId]);
+
+
+useEffect(() => {
+  loadCarrouselPhotos(photos.slice(0, 4));
+  // console.log("photos changed:", photos.length);
+}, [photos]);
 
 useEffect(() => {
   if (restoreScrollYRef.current == null) return;
@@ -70,6 +77,12 @@ useEffect(() => {
   });
 }, [photos.length]);
 
+  // Loading carrousel photos
+  const loadCarrouselPhotos = (photos: PhotoResponse[]) => {
+    if(onCarrouselPhotosChange)
+      {onCarrouselPhotosChange(photos);}
+
+  };
 
 function revealHidden() {
   setVisibleCount(photos.length);

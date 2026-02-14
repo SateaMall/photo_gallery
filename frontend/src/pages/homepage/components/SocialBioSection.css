@@ -1,77 +1,96 @@
-.social-footer {
-  margin-top: 40px;
-  padding: 18px 0 26px;
+/* Put this section inside your HERO wrapper (position: absolute over carousel) */
+.hero-bio {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: clamp(90px, 14vh, 160px); /* moves it down under navbar */
+  z-index: 0;
+
+  padding: 0 clamp(12px, 3vw, 28px);
+  color: #fff;
 }
 
-.social-footer-inner {
+.hero-bio__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 26px);
+}
+.hearo-bio_ineer_two-columns {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 26px);
+}
+@media (max-width: 900px) {
+  .hero-bio__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero-bio__card {
+  text-align: center;
+
+  /* subtle glass look on top of photos */
+  background: rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+
+  padding: clamp(14px, 2vw, 22px);
+}
+
+.hero-bio__name {
+  margin: 0;
+  font-size: clamp(22px, 3.4vw, 36px);
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero-bio__text {
+  margin: 10px auto 0 auto;
+  max-width: 55ch;
+  font-size: clamp(14px, 1.6vw, 18px);
+  line-height: 1.45;
+  opacity: 0.95;
+}
+
+.hero-bio__text--empty {
+  height: 18px; /* keeps layout stable if bio is null */
+}
+
+.hero-bio__icons {
+  margin-top: 14px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  border-top: 1px solid rgba(0,0,0,0.10);
-  padding-top: 16px;
-}
-
-.social-footer-label {
-  opacity: 0.75;
-  font-size: 14px;
-}
-
-.social-footer-links {
-  display: flex;
-  gap: 10px;
-}
-
-.social-btn {
-  display: inline-flex;
-  align-items: center;
   justify-content: center;
-  height: 36px;
-  padding: 0 14px;
+  gap: 14px;
+}
 
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+.hero-bio__icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
 
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.08);
+
+  color: #fff;
   text-decoration: none;
-  color: inherit;
 
-  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+  transition: transform 140ms ease, background 140ms ease, border-color 140ms ease, color 140ms ease;
+  font-size: 20px;
 }
 
-.social-btn:hover {
+.hero-bio__icon:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.14);
-  background: rgba(255,255,255,0.92);
-}
-
-.social-btn:active {
-  transform: translateY(0px);
-}
-.social-footer-inner {
-  display: flex;
-  flex-direction: column; /* stack people */
-  gap: 14px;
-  border-top: 1px solid rgba(0,0,0,0.10);
-  padding-top: 16px;
-}
-
-.social-footer-person {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-@media (min-width: 800px) {
-  .social-footer-inner {
-    flex-direction: row; /* side by side on desktop */
-    justify-content: space-between;
-    gap:20%;
-  }
-  .social-footer-person {
-    flex: 1;
-  }
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.3);
+  color: rgb(229, 181, 35);
 }

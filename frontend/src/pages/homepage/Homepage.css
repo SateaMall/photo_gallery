@@ -1,7 +1,29 @@
 .homepage {
-
-  padding: 28px 18px 60px;
+  font-family: "Roboto Condensed", "Roboto", sans-serif;
+  padding: 0px;
 }
+
+/** Topper **/
+.Topper{
+ font-family:inherit;
+  position: relative;
+  width: 100%;
+  height: 95vh;
+}
+.navbar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; /* Ensure it stays above the carousel */
+}
+.carrousel-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Hide any overflow from the carousel */
+}
+
 
 /* section spacing */
 .hp-section {
@@ -12,6 +34,7 @@
 
 .hp-section-album{
   margin-bottom: 42px;
+  margin-top: 42px;
   
 }
 
