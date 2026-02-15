@@ -110,6 +110,7 @@
   display: flex;
   justify-content: center;
   pointer-events: none; /* so only button catches clicks */
+
 }
 
 .hp-more-btn {

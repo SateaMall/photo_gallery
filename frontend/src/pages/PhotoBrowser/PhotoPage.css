@@ -3,6 +3,7 @@
   max-width: 1600px;
   margin: 0 auto;
   color:rgb(223, 223, 223);
+  font-family: var(--font-roboto);
 }
 
 .photo-page__status {

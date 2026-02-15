@@ -1,0 +1,68 @@
+/* 3) Carousel full width + limit height */
+.carousel_topper {
+  margin: 0;
+  padding: 0;
+  z-index: 0;
+}
+
+.embla__container_topper {
+  display: flex;
+}
+
+/* Control how big each slide is */
+.embla__slide_topper {
+  flex: 0 0  100%; 
+}
+
+/* LIMIT “long” photos: fixed height (responsive) + cover */
+.embla-img_topper {
+  width: 100%;
+  height: 100vh; 
+  object-fit: cover;                 /* ✅ fills area, crops if needed */
+  display: block;  
+  filter: brightness(0.6) contrast(1.05);               /* removes tiny image baseline gap */
+}
+
+/* Optional: remove any extra spacing around the topper wrapper */
+.carousel_topper,
+.carrousel-topper-wrapper_topper {
+  margin: 0;
+  padding: 0;
+}
+
+/* Nav buttons */
+.nav_topper {
+  position: absolute;
+  top: 35%;
+  z-index: 2;
+  font-size: 30px;
+  width: 40px;
+  height: 90px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(6px);
+  color: white;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.33);
+  display: grid;
+  place-items: center;
+  transition: background 140ms ease, color 140ms ease, transform 140ms ease, opacity 140ms ease;
+}
+
+.nav_topper:hover {
+  color: aliceblue;
+  background: rgb(229, 181, 35);
+}
+
+
+.nav-left_topper { left: 4px; }
+.nav-right_topper { right: 4px; }
+
+.nav_topper:active {
+  transform: translateY(0%) scale(0.9);
+}
+
+.nav_topper.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}

@@ -1,13 +1,15 @@
-.font-copperplate {
-  font-family: "Cinzel", serif;
-}
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700;900&display=swap");
+
 
 :root {
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --font-copperplate: "Cinzel", serif;
+  --font-roboto: "Roboto Condensed", "Roboto", sans-serif;
 }
 
-body {
-  font-family: var( --font-body);
+html, body {
+  font-family: var(--font-roboto);
 }
-
+* {
+  font-family: inherit;
+}
